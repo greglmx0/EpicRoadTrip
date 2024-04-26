@@ -52,12 +52,12 @@ services:
     restart: always
 
   frontend:
-    build: ./front
-    container_name: front
+    build: ./frontend
+    container_name: frontend
     ports:
       - "4200:4200"
     volumes:
-      - ./front:/app
+      - ./frontend:/app
     depends_on:
       - backend
     networks:
