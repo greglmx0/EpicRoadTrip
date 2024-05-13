@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
-from flask_validators import validate_form
 from src.config.database import db
 from src.routes import routes
+from flask_swagger_ui import get_swaggerui_blueprint
 import os
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'no secret key found'
@@ -22,6 +22,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PA
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
 app.config['SECURITY_PASSWORD_SALT'] = b'$2b$12$wqKlYjmOfXPghx3FuC3Pu.'
+
+SWAGGER_URL="/swagger"
+API_URL="/static/swagger.json"
+
+swagger_ui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': 'Access API'
+    }
+)
+app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
 
 cors = CORS(app)
 

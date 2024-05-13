@@ -1,0 +1,93 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Access API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "description": "Returns message showing app is up",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "hello world"
+          }
+        }
+      },
+      "/register": {
+        "post": {
+          "description": "Register a new user",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "username",
+              "in": "formData",
+              "description": "Username of the user",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "in": "formData",
+              "description": "Email of the user",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "password",
+              "in": "formData",
+              "description": "Password of the user",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User registered successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "409": {
+              "description": "User already exists"
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "description": "Login a user",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "email",
+              "in": "formData",
+              "description": "Email of the user",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "password",
+              "in": "formData",
+              "description": "Password of the user",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User logged in successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        }
+      }
+    }
+  }
+}

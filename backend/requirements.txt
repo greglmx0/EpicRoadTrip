@@ -10,3 +10,4 @@ pymysql
 cryptography
 flask-cors
 flask-validate-json
+flask_swagger_ui
