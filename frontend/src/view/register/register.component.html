@@ -12,7 +12,18 @@
         d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
       />
     </svg>
-    <input type="text" class="grow" placeholder="Username" />
+    <input #username type="text" class="grow" placeholder="Username" />
+  </label>
+  <label class="input input-bordered flex items-center gap-2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 8 6"
+      fill="currentColor"
+      class="w-4 h-4 opacity-70"
+    >
+      <path d="m0 0h8v6h-8zm.75 .75v4.5h6.5v-4.5zM0 0l4 3 4-3v1l-4 3-4-3z" />
+    </svg>
+    <input #email type="email" class="grow" placeholder="Email" />
   </label>
   <label class="input input-bordered flex items-center gap-2">
     <svg
@@ -27,7 +38,13 @@
         clip-rule="evenodd"
       />
     </svg>
-    <input type="password" class="grow" value="password" />
+    <input #password type="password" class="grow" value="password" />
   </label>
-  <button class="btn btn-outline">Inscription</button>
+  <button
+    class="btn btn-outline"
+    (click)="register(username.value, password.value, email.value)"
+  >
+    S'inscrire
+  </button>
+  <p ngIf="failure" class="text-red-500">{{ failure }}</p>
 </div>

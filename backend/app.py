@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from src.config.database import db
 from src.routes import routes
@@ -35,7 +35,9 @@ swagger_ui_blueprint = get_swaggerui_blueprint(
 )
 app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
 
-cors = CORS(app)
+cors = CORS(app, supports_credentials=True)
+app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['CONTENT_TYPE'] = 'application/json'
 
 db.init_app(app)
 
@@ -44,6 +46,13 @@ with app.app_context():
     db.create_all()
 
 app.register_blueprint(routes)
+
+if app.config['DEBUG']:
+    @app.before_request
+    def log_request_info():
+        app.logger.debug('-------------------------------')
+        # app.logger.debug('Headers: %s', request.headers)
+        app.logger.debug('Body: %s', request.get_data())
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

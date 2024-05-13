@@ -17,9 +17,13 @@ class user_service:
             password = payload.get('password')
             email = payload.get('email')
 
-            user = User.query.filter_by(username=username).first()
-            if user:
-                return jsonify({'message': 'User already exists'}), 409
+            username_db = User.query.filter_by(username=username).first()
+            if username_db:
+                return jsonify({'message': 'Username already exists'}), 409
+
+            email_db = User.query.filter_by(email=email).first()
+            if email_db:
+                return jsonify({'message': 'Email already exists'}), 409
 
             user = User(username=username, email=email, password=password)
             db.session.add(user)
@@ -41,7 +45,7 @@ class user_service:
 
             if not user :
                 return jsonify({'message': 'User not found'}), 404
-            
+
             if not user_service.verify_password(user.password_hash, password):
                 return jsonify({'message': 'Could not verify', 'authenticated': False}), 401
 
@@ -77,7 +81,7 @@ class user_service:
 
     def verify_password(password_hash, password):
         return bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
-    
+
     def get_users():
         users = User.query.all()
         return jsonify([user.serialize() for user in users])
