@@ -10,55 +10,48 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 
 class user_service:
     def create_user():
-        print("user_service.create_user")
-        print(request.json)
-        print("request.json")
-        data = request.json
-        print(data)
-        username = data.get('username')
-        password = data.get('password')
-        email = data.get('email')
+        try:
+            print("user_service.create_user", request.json)
+            payload = request.json
+            username = payload.get('username')
+            password = payload.get('password')
+            email = payload.get('email')
 
-        if not username or not email or not password:
-            return jsonify({'message': 'Username, email and password are required'}), 400
+            user = User.query.filter_by(username=username).first()
+            if user:
+                return jsonify({'message': 'User already exists'}), 409
 
-        # Check if user already exists by email or username
-        user = User.query.filter_by(username=username).first()
-        if user:
-            return jsonify({'message': 'User already exists'}), 400
+            user = User(username=username, email=email, password=password)
+            db.session.add(user)
+            db.session.commit()
+            return jsonify({'message': 'User created successfully'}), 201
 
-        user = User(username=username, email=email, password=password)
-        db.session.add(user)
-        db.session.commit()
-
-        return jsonify({'message': 'User created successfully'}), 201
+        except Exception as e:
+            return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
 
     def login_user():
-        print("user_service.login_user")
-        data = request.json
-        print(data)
-        username = data.get('username')
-        password = data.get('password')
+        try:
 
-        if not username or not password:
-            return jsonify({'message': 'Username and password are required'}), 400
+            print("user_service.login_user", request.json)
+            payload = request.json
+            username = payload.get('username')
+            password = payload.get('password')
 
-        user = User.query.filter_by(username=username).first()
-        if not user:
-            return jsonify({'message': 'User does not exist'}), 400
+            user = User.query.filter_by(username=username).first()
 
-        # Check if password is correct with bcrypt
-        if not user_service.verify_password(user.password_hash, password):
-            return jsonify({'message': 'Invalid password'}), 400
-        
-        if user:
-            json_user = {
-                "id": user.id,
-                "username": user.username,
-                "email": user.email
-            }
-            print(json_user)
-            try:
+            if not user :
+                return jsonify({'message': 'User not found'}), 404
+            
+            if not user_service.verify_password(user.password_hash, password):
+                return jsonify({'message': 'Could not verify', 'authenticated': False}), 401
+
+            if user:
+                json_user = {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email
+                }
+                print("user json: ", json_user)
                 expires_at = datetime.now() + timedelta(hours=24)
                 payload = {
                     "user_id": user.id,
@@ -73,13 +66,14 @@ class user_service:
                     "message": "Successfully fetched auth token",
                     "token": token,
                 }
-            except Exception as e:
-                return {
-                    "error": "Something went wrong",
-                    "message": str(e)
-                }, 500
+            return jsonify({'message': 'User logged in successfully'}), 200
 
-        return jsonify({'message': 'User logged in successfully'}), 200
+        except Exception as e:
+            return {
+                "error": "Something went wrong",
+                "message": str(e)
+            }, 500
+
 
     def verify_password(password_hash, password):
         return bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
