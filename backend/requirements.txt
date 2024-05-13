@@ -8,3 +8,5 @@ Flask-Migrate
 flask-bcrypt
 pymysql
 cryptography
+flask-cors
+flask-validate-json

@@ -6,7 +6,7 @@ from src.models.user_model import User
 from src.services.user_service import user_service
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
-print('test auth', SECRET_KEY)
+# print('test auth', SECRET_KEY)
 
 
 def token_required(f):

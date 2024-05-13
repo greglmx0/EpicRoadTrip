@@ -11,6 +11,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 class user_service:
     def create_user():
         print("user_service.create_user")
+        print(request.json)
+        print("request.json")
         data = request.json
         print(data)
         username = data.get('username')
