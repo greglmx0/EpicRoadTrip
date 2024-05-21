@@ -11,3 +11,5 @@ cryptography
 flask-cors
 flask-validate-json
 flask_swagger_ui
+requests
+Flask-Parameter-Validation
