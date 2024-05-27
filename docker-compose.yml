@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   db:
     image: mysql:latest
@@ -55,6 +53,9 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - PREDICTHQ_ACCESS_TOKEN=${PREDICTHQ_ACCESS_TOKEN}
       - PREDICTHQ_API_URL=${PREDICTHQ_API_URL}
+      - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}
+      - MPABOX_API_URL=${MPABOX_API_URL}
+      - MAPBOX_SESSION_TOKEN=${MAPBOX_SESSION_TOKEN}
       - PYTHONUNBUFFERED=1
     networks:
       - backend
