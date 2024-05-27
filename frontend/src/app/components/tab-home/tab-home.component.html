@@ -1,26 +1,47 @@
-<p>tab-home works!</p>
-<div role="tablist" class="tabs tabs-boxed">
+<!-- <p>tab-home works!</p> -->
+<div role="tablist" class="tabs tabs-boxed tabs-lg m-8">
   <input
     type="radio"
-    name="my_tabs_2"
+    name="my_tabs"
     role="tab"
     class="tab"
-    aria-label="Lieu"
+    aria-label="Recherche des activités à proximité"
     checked
   />
   <div
     role="tabpanel"
     class="tab-content bg-base-100 border-base-300 rounded-box p-6"
   >
-    Rechercher un lieu
+    <div class="flex flex-col gap-4">
+      <div class="dropdown">
+        <input
+          #searchInput
+          tabindex="0"
+          type="text"
+          id="searchInput"
+          placeholder="Ville, adresse ou code postal"
+          class="input input-bordered w-full max-w-xs"
+          (input)="search(searchInput.value)"
+        />
+        <ul
+          tabindex="0"
+          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          <li *ngFor="let result of searchResults">
+            <a> {{ result.mapbox_id }}</a>
+          </li>
+        </ul>
+      </div>
+      <button class="btn btn-primary">Rechercher</button>
+    </div>
   </div>
 
   <input
     type="radio"
-    name="my_tabs_2"
+    name="my_tabs"
     role="tab"
     class="tab"
-    aria-label="Itineraire"
+    aria-label="Recherche un itinéraire avec des points d'intérêt"
   />
   <div
     role="tabpanel"
