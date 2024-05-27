@@ -1,5 +1,4 @@
-import { log } from 'node:console';
-import axiosInstance from '../src/.config/axios';
+import axiosInstance from '../.config/axios';
 
 class auth {
   static async register(username: string, email: string, password: string) {
