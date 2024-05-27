@@ -20,19 +20,30 @@
           type="text"
           id="searchInput"
           placeholder="Ville, adresse ou code postal"
-          class="input input-bordered w-full max-w-xs"
-          (input)="search(searchInput.value)"
+          class="input input-bordered w-full"
+          (input)="performSearch(searchInput.value)"
         />
         <ul
           tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+          class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full"
         >
-          <li *ngFor="let result of searchResults">
-            <a> {{ result.mapbox_id }}</a>
+          <li
+            *ngFor="let result of searchResults"
+            class="shadow bg-base-100 w-full p-2 rounded-box"
+          >
+            <div
+              class="flex flex-col gap-2 justify-left"
+              (click)="selectLocation(result)"
+            >
+              <div class="text-xl font-medium">{{ result.name }}</div>
+              <p>{{ result.place_formatted }}</p>
+            </div>
           </li>
         </ul>
       </div>
-      <button class="btn btn-primary">Rechercher</button>
+      <button class="btn btn-primary" (click)="serachLocation()">
+        Rechercher
+      </button>
     </div>
   </div>
 

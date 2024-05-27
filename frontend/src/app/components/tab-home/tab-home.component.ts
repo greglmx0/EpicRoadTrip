@@ -10,39 +10,35 @@ import { debounceTime, Subject } from 'rxjs';
   templateUrl: './tab-home.component.html',
   styleUrl: './tab-home.component.scss',
 })
-export class TabHomeComponent implements OnInit, OnDestroy {
+export class TabHomeComponent implements OnInit {
   searchResults: any[] = [];
-  searchSubject = new Subject<string>();
-  private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
+  subject: Subject<any> = new Subject();
+  selectedLocation: any = null;
+  private readonly debounceTimeMs = 700; // Set the debounce time (in milliseconds)
+
+  constructor() {
+    this.searchResults = new Array();
+  }
 
   ngOnInit() {
-    this.searchSubject
+    this.subject
       .pipe(debounceTime(this.debounceTimeMs))
       .subscribe((searchValue) => {
         this.performSearch(searchValue);
       });
   }
-  ngOnDestroy(): void {
-    this.searchSubject.unsubscribe();
-  }
 
-  performSearch(searchValue: string) {
-    throw new Error('Method not implemented.');
-  }
-
-  async search(searchInput: string) {
-    console.log('Search');
-    if (searchInput.length < 3) {
+  async performSearch(searchValue: string) {
+    if (searchValue.length < 3) {
+      this.searchResults = [];
       return;
     }
 
     try {
-      const response = (await ApiMapbox.getSuggestions(searchInput)) as any;
-      // console.log('Response: ', response);
+      const response = (await ApiMapbox.getSuggestions(searchValue)) as any;
 
       if (response.status === 200) {
         this.searchResults = response.data;
-        // console.log('Search results: ', this.searchResults.length);
       } else {
         console.log('Failed to search');
         console.log('Response: ', response);
@@ -50,5 +46,26 @@ export class TabHomeComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Error: ', error);
     }
+  }
+
+  async search(searchInput: string) {
+    this.subject.next(searchInput);
+  }
+
+  async selectLocation(location: any) {
+    console.log('Selected location: ', location);
+
+    this.selectedLocation = location;
+  }
+
+  async serachLocation() {
+    console.log('Search location: ', this.selectedLocation);
+
+    if (!this.selectedLocation) {
+      return;
+    }
+
+    console.log('Selected Location: ', this.selectedLocation);
+    console.log('Location id: ', this.selectedLocation.mapbox_id);
   }
 }
