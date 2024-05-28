@@ -1,16 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import ApiMapbox from '../../../api/mapbox';
 import { debounceTime, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tab-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './tab-home.component.html',
   styleUrl: './tab-home.component.scss',
 })
 export class TabHomeComponent implements OnInit {
+  searchInputValue: string = '';
   searchResults: any[] = [];
   subject: Subject<any> = new Subject();
   selectedLocation: any = null;
@@ -56,6 +58,10 @@ export class TabHomeComponent implements OnInit {
     console.log('Selected location: ', location);
 
     this.selectedLocation = location;
+    this.searchResults = [];
+    console.log('Selected location: ', this.selectedLocation);
+
+    this.searchInputValue = this.selectedLocation.place_formatted;
   }
 
   async serachLocation() {
