@@ -12,39 +12,8 @@
     role="tabpanel"
     class="tab-content bg-base-100 border-base-300 rounded-box p-6"
   >
-    <div class="flex flex-col gap-4">
-      <div class="dropdown">
-        <input
-          tabindex="0"
-          type="text"
-          id="searchInput"
-          placeholder="Ville, adresse ou code postal"
-          class="input input-bordered w-full"
-          (input)="search(searchInputValue)"
-          [(ngModel)]="searchInputValue"
-        />
-        <ul
-          tabindex="0"
-          class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full"
-        >
-          <li
-            *ngFor="let result of searchResults"
-            class="shadow bg-base-100 w-full p-2 rounded-box"
-          >
-            <div
-              class="flex flex-col gap-2 justify-left"
-              (click)="selectLocation(result)"
-            >
-              <div class="text-xl font-medium">{{ result.name }}</div>
-              <p>{{ result.place_formatted }}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <button class="btn btn-primary" (click)="serachLocation()">
-        Rechercher
-      </button>
-    </div>
+    <app-search-places-of-interest (sendLocation)="onSendLocation($event)">
+    </app-search-places-of-interest>
   </div>
 
   <input

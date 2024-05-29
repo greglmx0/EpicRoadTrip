@@ -1,77 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import ApiMapbox from '../../../api/mapbox';
 import { debounceTime, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { SearchPlacesOfInterestComponent } from '../search-places-of-interest/search-places-of-interest.component';
 
 @Component({
   selector: 'app-tab-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SearchPlacesOfInterestComponent],
   templateUrl: './tab-home.component.html',
   styleUrl: './tab-home.component.scss',
 })
-export class TabHomeComponent implements OnInit {
-  searchInputValue: string = '';
-  searchResults: any[] = [];
-  subject: Subject<any> = new Subject();
-  selectedLocation: any = null;
-  private readonly debounceTimeMs = 700; // Set the debounce time (in milliseconds)
-
-  constructor() {
-    this.searchResults = new Array();
-  }
-
-  ngOnInit() {
-    this.subject
-      .pipe(debounceTime(this.debounceTimeMs))
-      .subscribe((searchValue) => {
-        this.performSearch(searchValue);
-      });
-  }
-
-  async performSearch(searchValue: string) {
-    if (searchValue.length < 3) {
-      this.searchResults = [];
-      return;
-    }
-
-    try {
-      const response = (await ApiMapbox.getSuggestions(searchValue)) as any;
-
-      if (response.status === 200) {
-        this.searchResults = response.data;
-      } else {
-        console.log('Failed to search');
-        console.log('Response: ', response);
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    }
-  }
-
-  async search(searchInput: string) {
-    this.subject.next(searchInput);
-  }
-
-  async selectLocation(location: any) {
-    console.log('Selected location: ', location);
-
-    this.selectedLocation = location;
-    this.searchResults = [];
-    console.log('Selected location: ', this.selectedLocation);
-
-    this.searchInputValue = this.selectedLocation.place_formatted;
-  }
-
-  async serachLocation() {
-    console.log('Search location: ', this.selectedLocation);
-
-    if (!this.selectedLocation) {
-      return;
-    }
-
-    console.log('Selected Location: ', this.selectedLocation);
-    console.log('Location id: ', this.selectedLocation.mapbox_id);
+export class TabHomeComponent {
+  @Output() sendLocation = new EventEmitter();
+  onSendLocation(location: any) {
+    this.sendLocation.emit(location);
   }
 }
