@@ -14,7 +14,13 @@ import { SearchPlacesOfInterestComponent } from '../search-places-of-interest/se
 })
 export class TabHomeComponent {
   @Output() sendLocation = new EventEmitter();
+  @Output() sendMapCenter = new EventEmitter();
+
   onSendLocation(location: any) {
     this.sendLocation.emit(location);
+  }
+
+  onSendMapCenter(coordinates: any) {
+    this.sendMapCenter.emit(coordinates);
   }
 }

@@ -14,11 +14,12 @@ import ApiEnjoy from 'src/api/enjoy';
 })
 export class SearchPlacesOfInterestComponent {
   @Output() sendLocation = new EventEmitter();
+  @Output() sendMapCenter = new EventEmitter();
   searchInputValue: string = '';
   searchResults: any[] = [];
   subject: Subject<any> = new Subject();
   selectedLocation: any = null;
-  private readonly debounceTimeMs = 400; // Set the debounce time (in milliseconds)
+  private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
   pointofinterest: any = [
     {
       name: 'enjoy',
@@ -86,7 +87,8 @@ export class SearchPlacesOfInterestComponent {
 
       if (response.status === 200) {
         this.selectedLocation = response.data;
-        this.sendLocationToParent();
+        await this.sendMapCenterToParent();
+        await this.sendLocationToParent();
       }
     } catch (error) {
       console.error('Error: ', error);
@@ -95,5 +97,12 @@ export class SearchPlacesOfInterestComponent {
 
   async sendLocationToParent() {
     this.sendLocation.emit(this.selectedLocation);
+  }
+
+  async sendMapCenterToParent() {
+    this.sendMapCenter.emit({
+      lat: this.selectedLocation[0].geometry.coordinates[1],
+      lng: this.selectedLocation[0].geometry.coordinates[0],
+    });
   }
 }

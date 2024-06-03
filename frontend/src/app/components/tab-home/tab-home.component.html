@@ -12,8 +12,10 @@
     role="tabpanel"
     class="tab-content bg-base-100 border-base-300 rounded-box p-6"
   >
-    <app-search-places-of-interest (sendLocation)="onSendLocation($event)">
-    </app-search-places-of-interest>
+    <app-search-places-of-interest
+      (sendLocation)="onSendLocation($event)"
+      (sendMapCenter)="onSendMapCenter($event)"
+    ></app-search-places-of-interest>
   </div>
 
   <input

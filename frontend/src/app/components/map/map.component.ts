@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment.dev';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import mapboxgl from 'mapbox-gl';
 
 @Component({
@@ -11,51 +17,53 @@ import mapboxgl from 'mapbox-gl';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  @Input() points: any = [];
   map: mapboxgl.Map | undefined;
-  lat: number = 48.1173;
-  lng: number = -1.6778;
+  @Input() points: Array<{ name: string; coordinates: number[] }> = [];
+  @Input() lat: number = 0;
+  @Input() lng: number = 0;
+  style = 'mapbox://styles/mapbox/streets-v11';
 
   ngOnInit() {
     this.map = new mapboxgl.Map({
       accessToken: environment.mapbox.accessToken,
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
-      zoom: 9,
+      zoom: 11,
       center: [this.lng, this.lat],
     });
-  }
 
-  // if point will be changed we need to update the map
-  ngOnChanges() {
-    console.log('update map', this.points);
-
-    if (this.map) {
-      // new mapboxgl.Marker()
-      //   .setLngLat([this.points[0].lng, this.points[0].lat])
-      //   .addTo(this.map);
-
-      this.map.addSource('points', {
+    this.map.on('load', () => {
+      this.map?.addSource('Rennes Points', {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
-          features: this.points.map(
-            (point: { lng: any; lat: any; name: any }) => {
-              console.log('point', point);
-              return {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [point.lng, point.lat],
-                },
-                properties: {
-                  title: point.name,
-                },
-              };
-            }
-          ),
+          features: this.points.map((point) => {
+            return {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: point.coordinates,
+              },
+              properties: {
+                title: point.name,
+              },
+            };
+          }) as any,
         },
       });
-    }
+
+      this.map?.addLayer({
+        id: 'Rennes Points',
+        type: 'circle', // circle marker types
+        source: 'Rennes Points', // reference the data source
+        layout: {},
+        paint: {
+          'circle-color': 'blue',
+          'circle-radius': 6,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': 'white',
+        },
+      });
+    });
   }
 }
