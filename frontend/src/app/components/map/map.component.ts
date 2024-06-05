@@ -32,6 +32,8 @@ export class MapComponent implements OnInit {
       center: [this.lng, this.lat],
     });
 
+    console.log('points', this.points);
+
     this.map.on('load', () => {
       this.map?.addSource('Rennes Points', {
         type: 'geojson',

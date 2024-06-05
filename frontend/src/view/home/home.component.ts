@@ -29,8 +29,8 @@ export class HomeComponent {
 
     location.forEach((element: any) => {
       this.points.push({
-        name: element.properties.full_address,
-        coordinates: element.geometry.coordinates,
+        name: element.name,
+        coordinates: [element.latitude, element.longitude],
       });
     });
   }

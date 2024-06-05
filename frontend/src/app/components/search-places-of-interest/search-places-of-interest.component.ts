@@ -88,21 +88,30 @@ export class SearchPlacesOfInterestComponent {
       if (response.status === 200) {
         this.selectedLocation = response.data;
         await this.sendMapCenterToParent();
-        await this.sendLocationToParent();
+        // await this.sendLocationToParent();
       }
     } catch (error) {
       console.error('Error: ', error);
     }
   }
 
-  async sendLocationToParent() {
-    this.sendLocation.emit(this.selectedLocation);
-  }
+  // async sendLocationToParent() {
+  //   this.sendLocation.emit(this.selectedLocation);
+  // }
 
   async sendMapCenterToParent() {
-    this.sendMapCenter.emit({
+    await this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
     });
+
+    const enjoy = await ApiEnjoy.getEnjoy(
+      this.selectedLocation[0].geometry.coordinates[1],
+      this.selectedLocation[0].geometry.coordinates[0],
+      '2022-01-01',
+      '2022-12-31'
+    );
+
+    this.sendLocation.emit(enjoy);
   }
 }
