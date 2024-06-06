@@ -30,7 +30,7 @@ export class HomeComponent {
     location.forEach((element: any) => {
       this.points.push({
         name: element.name,
-        coordinates: [element.latitude, element.longitude],
+        coordinates: [element.longitude, element.latitude],
       });
     });
   }
