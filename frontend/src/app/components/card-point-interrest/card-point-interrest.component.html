@@ -1,0 +1,12 @@
+<div class="m-4">
+  <a class="block max-w-ms p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700" [href]="point.link">
+    <h1>{{ point.name }} </h1>
+    <p>{{ point.description }}</p>
+    <!-- add picture -->
+    <img [src]="point.picture" alt="Picture of {{ point.name }}" class="w-full h-48 object-cover mt-4">
+    <div class="mt-4">
+      <a href="{{ point.link }}" class="text-blue-500 hover:text-blue-700">More info</a>
+    </div>
+  </a>
+</div>
+

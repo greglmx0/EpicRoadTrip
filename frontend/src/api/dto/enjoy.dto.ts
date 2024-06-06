@@ -1,20 +1,24 @@
 class EnjoyDto {
   id: string;
+  category: string;
   name: string;
   description: string;
   link: string;
   dateTime: string;
   latitude: string;
   longitude: string;
+  picture?: string;
 
   constructor(data: Event) {
     this.id = data.id;
+    this.category = 'enjoy';
     this.name = data.name;
     this.description = data.type;
     this.link = data.url;
-    this.dateTime = data.dates.start.dateTime;
+    this.dateTime = data.dates?.start?.dateTime;
     this.latitude = data._embedded.venues[0].location.latitude;
     this.longitude = data._embedded.venues[0].location.longitude;
+    this.picture = data?.images[0]?.url;
   }
 }
 

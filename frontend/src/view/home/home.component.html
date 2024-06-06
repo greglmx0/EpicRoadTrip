@@ -6,10 +6,8 @@
   (sendMapCenter)="onSendMapCenter($event)"
 ></app-tab-home>
 <main>
-  <app-map
-    [points]="points"
-    [lat]="lat"
-    [lng]="lng"
-    *ngIf="points.length > 0"
-  ></app-map>
+  <app-map [points]="points" [lat]="lat" [lng]="lng" *ngIf="points.length > 0"></app-map>
+  <div class="flex flex-wrap justify-center">
+    <app-card-point-interrest *ngFor="let location of locations" [point]="location" class="flex-none"></app-card-point-interrest>
+  </div>
 </main>
