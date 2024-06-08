@@ -1,13 +1,13 @@
 <header>
   <app-navbar-home></app-navbar-home>
 </header>
-<app-tab-home
-  (sendLocation)="onSendLocation($event)"
-  (sendMapCenter)="onSendMapCenter($event)"
-></app-tab-home>
+<app-tab-home (sendLocation)="onSendLocation($event)" (sendMapCenter)="onSendMapCenter($event)"></app-tab-home>
 <main>
-  <app-map [points]="points" [lat]="lat" [lng]="lng" *ngIf="points.length > 0"></app-map>
-  <div class="flex flex-wrap justify-center">
-    <app-card-point-interrest *ngFor="let location of locations" [point]="location" class="flex-none"></app-card-point-interrest>
-  </div>
+  <app-points-of-interest-container
+    [points]="points"
+    [locations]="locations"
+    [lat]="lat"
+    [lng]="lng"
+    *ngIf="points.length > 0"
+  ></app-points-of-interest-container>
 </main>
