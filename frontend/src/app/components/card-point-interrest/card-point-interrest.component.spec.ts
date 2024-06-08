@@ -8,10 +8,9 @@ describe('CardPointInterrestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CardPointInterrestComponent]
-    })
-    .compileComponents();
-    
+      imports: [CardPointInterrestComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CardPointInterrestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

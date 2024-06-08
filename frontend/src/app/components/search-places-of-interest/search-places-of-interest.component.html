@@ -14,14 +14,8 @@
       tabindex="0"
       class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full"
     >
-      <li
-        *ngFor="let result of searchResults"
-        class="shadow bg-base-100 w-full p-2 rounded-box"
-      >
-        <div
-          class="flex flex-col gap-2 justify-left"
-          (click)="selectLocation(result)"
-        >
+      <li *ngFor="let result of searchResults" class="shadow bg-base-100 w-full p-2 rounded-box">
+        <div class="flex flex-col gap-2 justify-left" (click)="selectLocation(result)">
           <div class="text-xl font-medium">{{ result.name }}</div>
           <p>{{ result.place_formatted }}</p>
         </div>
@@ -41,8 +35,6 @@
     </div>
   </div>
   <div class="flex">
-    <button class="btn btn-primary" (click)="serachLocation()">
-      Rechercher
-    </button>
+    <button class="btn btn-primary" (click)="serachLocation()">Rechercher</button>
   </div>
 </div>

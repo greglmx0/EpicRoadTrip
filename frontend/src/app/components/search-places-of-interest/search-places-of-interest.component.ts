@@ -41,11 +41,9 @@ export class SearchPlacesOfInterestComponent {
   constructor() {}
 
   ngOnInit() {
-    this.subject
-      .pipe(debounceTime(this.debounceTimeMs))
-      .subscribe((searchValue) => {
-        this.performSearch(searchValue);
-      });
+    this.subject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
+      this.performSearch(searchValue);
+    });
   }
 
   async performSearch(searchValue: string) {
@@ -81,9 +79,7 @@ export class SearchPlacesOfInterestComponent {
     }
 
     try {
-      const response = (await ApiMapbox.getRetrieve(
-        this.selectedLocation.mapbox_id
-      )) as any;
+      const response = (await ApiMapbox.getRetrieve(this.selectedLocation.mapbox_id)) as any;
 
       if (response.status === 200) {
         this.selectedLocation = response.data;
@@ -109,7 +105,7 @@ export class SearchPlacesOfInterestComponent {
       this.selectedLocation[0].geometry.coordinates[1],
       this.selectedLocation[0].geometry.coordinates[0],
       '2022-01-01',
-      '2022-12-31'
+      '2022-12-31',
     );
 
     this.sendLocation.emit(enjoy);

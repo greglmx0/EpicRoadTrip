@@ -1,12 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment.dev';
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import mapboxgl from 'mapbox-gl';
 
 @Component({
@@ -31,8 +25,6 @@ export class MapComponent implements OnInit {
       zoom: 11,
       center: [this.lng, this.lat],
     });
-
-    console.log('points', this.points);
 
     this.map.on('load', () => {
       this.map?.addSource('Rennes Points', {

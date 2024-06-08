@@ -4,6 +4,7 @@ import { NavbarHomeComponent } from 'src/app/components/navbar-home/navbar-home.
 import { MapComponent } from 'src/app/components/map/map.component';
 import { TabHomeComponent } from 'src/app/components/tab-home/tab-home.component';
 import { CardPointInterrestComponent } from 'src/app/components/card-point-interrest/card-point-interrest.component';
+import { PointsOfInterestContainerComponent } from 'src/app/components/points-of-interest-container/points-of-interest-container.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -17,12 +18,13 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     CommonModule,
     CardPointInterrestComponent,
+    PointsOfInterestContainerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  locations: EnjoyDto[] = [ ];
+  locations: EnjoyDto[] = [];
   points: any = [];
   lat: number = 0;
   lng: number = 0;

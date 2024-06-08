@@ -6,17 +6,14 @@ import type EnjoyDto from 'src/api/dto/enjoy.dto';
   standalone: true,
   imports: [],
   templateUrl: './card-point-interrest.component.html',
-  styleUrl: './card-point-interrest.component.scss'
+  styleUrl: './card-point-interrest.component.scss',
 })
 export class CardPointInterrestComponent implements OnInit {
   @Input() point!: EnjoyDto;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit() {
     console.log(this.point);
   }
-
 }
