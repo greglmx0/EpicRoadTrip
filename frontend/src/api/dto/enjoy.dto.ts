@@ -1,24 +1,58 @@
+// class EnjoyDto {
+//   id: string;
+//   category: string;
+//   name: string;
+//   description?: string;
+//   genre?: string;
+//   link: string;
+//   dateTime: string;
+//   latitude: string;
+//   longitude: string;
+//   picture?: string;
+//   priceRanges?: PriceRange[];
+
+//   constructor(data: Event) {
+//     this.id = data.id;
+//     this.category = 'enjoy';
+//     this.name = data.name;
+//     this.description = data.description;
+//     this.genre = data?.classifications[0]?.genre?.name;
+//     this.link = data.url;
+//     this.dateTime = data.dates?.start?.dateTime;
+//     this.latitude = data._embedded.venues[0].location.latitude;
+//     this.longitude = data._embedded.venues[0].location.longitude;
+//     this.picture = data?.images[0]?.url;
+//     this.priceRanges = data.priceRanges;
+//   }
+// }
+
 class EnjoyDto {
   id: string;
   category: string;
   name: string;
-  description: string;
+  description?: string;
+  genre?: string;
   link: string;
   dateTime: string;
   latitude: string;
   longitude: string;
   picture?: string;
+  priceRangeMin?: number;
+  priceRangeMax?: number;
 
   constructor(data: Event) {
     this.id = data.id;
     this.category = 'enjoy';
     this.name = data.name;
-    this.description = data.type;
+    this.description = data.description;
+    this.genre = data.classifications?.[0]?.genre?.name;
     this.link = data.url;
     this.dateTime = data.dates?.start?.dateTime;
-    this.latitude = data._embedded.venues[0].location.latitude;
-    this.longitude = data._embedded.venues[0].location.longitude;
-    this.picture = data?.images[0]?.url;
+    this.latitude = data._embedded?.venues?.[0]?.location?.latitude;
+    this.longitude = data._embedded?.venues?.[0]?.location?.longitude;
+    this.picture = data.images?.[0]?.url;
+    this.priceRangeMin = data.priceRanges?.[0]?.min;
+    this.priceRangeMax = data.priceRanges?.[0]?.max;
   }
 }
 
@@ -29,6 +63,7 @@ export interface Event {
   type: string;
   id: string;
   test: boolean;
+  description?: string;
   url: string;
   locale: string;
   images: Image[];
@@ -384,34 +419,4 @@ export interface Links3 {
 
 export interface Self3 {
   href: string;
-}
-
-export interface Links4 {
-  first: First;
-  self: Self4;
-  next: Next;
-  last: Last;
-}
-
-export interface First {
-  href: string;
-}
-
-export interface Self4 {
-  href: string;
-}
-
-export interface Next {
-  href: string;
-}
-
-export interface Last {
-  href: string;
-}
-
-export interface Page {
-  size: number;
-  totalElements: number;
-  totalPages: number;
-  number: number;
 }

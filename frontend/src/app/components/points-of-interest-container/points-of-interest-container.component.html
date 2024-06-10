@@ -1,17 +1,14 @@
-<!-- <app-map [points]="points" [lat]="lat" [lng]="lng" *ngIf="points.length > 0"></app-map>
 <div class="flex flex-wrap justify-center">
-  <app-card-point-interrest *ngFor="let location of locations" [point]="location" class="flex-none"></app-card-point-interrest>
-</div> -->
-
-<div class="flex flex-wrap justify-center">
-  <div class="w-1/2">
-    <app-card-point-interrest
+  <div class="w-1/4">
+    <div class="overflow-y-auto" style="height: 700px;">
+      <app-card-point-interrest
       *ngFor="let location of locations"
       [point]="location"
       class="flex-none"
-    ></app-card-point-interrest>
+      ></app-card-point-interrest>
+    </div>
   </div>
-  <div class="w-1/2">
+  <div class="w-3/4">
     <app-map [points]="points" [lat]="lat" [lng]="lng" *ngIf="points.length > 0"></app-map>
   </div>
 </div>
