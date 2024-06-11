@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prettier:fix": "prettier --write \"src/{app,environments,assets,view}/**/*{.ts,.js,.json,.css,.scss,.html}\""
+    "prettier:fix": "prettier --write \"src/{app,environments,components,utils,view}/**/*{.ts,.js,.json,.css,.scss,.html}\""
   },
   "private": true,
   "dependencies": {

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import ApiMapbox from '../../../api/mapbox';
+import ApiMapbox from '../../api/mapbox';
 import { debounceTime, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { SearchPlacesOfInterestComponent } from '../search-places-of-interest/search-places-of-interest.component';

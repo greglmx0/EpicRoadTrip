@@ -1,10 +1,10 @@
 import type EnjoyDto from './../../api/dto/enjoy.dto';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NavbarHomeComponent } from 'src/app/components/navbar-home/navbar-home.component';
-import { MapComponent } from 'src/app/components/map/map.component';
-import { TabHomeComponent } from 'src/app/components/tab-home/tab-home.component';
-import { CardPointInterrestComponent } from 'src/app/components/card-point-interrest/card-point-interrest.component';
-import { PointsOfInterestContainerComponent } from 'src/app/components/points-of-interest-container/points-of-interest-container.component';
+import { NavbarHomeComponent } from 'src/components/navbar-home/navbar-home.component';
+import { MapComponent } from 'src/components/map/map.component';
+import { TabHomeComponent } from 'src/components/tab-home/tab-home.component';
+import { CardPointInterrestComponent } from 'src/components/card-point-interrest/card-point-interrest.component';
+import { PointsOfInterestContainerComponent } from 'src/components/points-of-interest-container/points-of-interest-container.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

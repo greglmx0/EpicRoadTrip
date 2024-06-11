@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../environments/environment.dev';
+import { environment } from '../../environments/environment.dev';
 import {
   Component,
   Input,

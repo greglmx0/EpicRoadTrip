@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { debounceTime, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import ApiMapbox from '../../../api/mapbox';
+import ApiMapbox from '../../api/mapbox';
 import ApiEnjoy from 'src/api/enjoy';
 
 @Component({
