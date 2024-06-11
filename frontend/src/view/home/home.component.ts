@@ -1,5 +1,5 @@
 import type EnjoyDto from './../../api/dto/enjoy.dto';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavbarHomeComponent } from 'src/app/components/navbar-home/navbar-home.component';
 import { MapComponent } from 'src/app/components/map/map.component';
 import { TabHomeComponent } from 'src/app/components/tab-home/tab-home.component';
@@ -12,12 +12,10 @@ import { CommonModule } from '@angular/common';
   selector: 'app-home',
   standalone: true,
   imports: [
-    NavbarHomeComponent,
-    MapComponent,
-    TabHomeComponent,
     FormsModule,
     CommonModule,
-    CardPointInterrestComponent,
+    NavbarHomeComponent,
+    TabHomeComponent,
     PointsOfInterestContainerComponent,
   ],
   templateUrl: './home.component.html',
@@ -30,16 +28,34 @@ export class HomeComponent {
   lng: number = 0;
   constructor() {}
 
-  onSendLocation(location: any) {
-    this.locations = location;
-    this.points = [];
+  createMarker(point: any) {
+    point.forEach((element: any) => {
 
-    location.forEach((element: any) => {
+      // check if the element already exists in the array (lat, lng)
+      const exists = this.points.some((el: any) => {
+        return el.coordinates[0] === element.longitude && el.coordinates[1] === element.latitude;
+      });
+
+      if (exists) {
+        return;
+      }
+
       this.points.push({
         name: element.name,
         coordinates: [element.longitude, element.latitude],
       });
     });
+  }
+
+  initMap() {
+    this.points = [];
+    this.locations = [];
+  }
+
+  onSendLocation(location: any) {
+    this.initMap();
+    this.locations = location;
+    this.createMarker(location);
   }
 
   onSendMapCenter(coordinates: any) {

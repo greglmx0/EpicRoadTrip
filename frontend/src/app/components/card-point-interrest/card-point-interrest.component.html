@@ -1,51 +1,37 @@
-<!-- <div class="m-4">
-  <a
-    class="block max-w-ms p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-    [href]="point.link"
-  >
-    <h1>{{ point.name }}</h1>
-    <p>{{ point.description }}</p>
-    <img [src]="point.picture" alt="Picture of {{ point.name }}" class="w-full h-48 object-cover mt-4" />
-    <div class="mt-4">
-      <a href="{{ point.link }}" class="text-blue-500 hover:text-blue-700">More info</a>
-    </div>
-  </a>
-</div> -->
-
 <div class="m-4">
-  <a
+  <div
     class="block max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-    [href]="point.link"
   >
-    <h1 class="text-xl font-bold">{{ point.name }}</h1>
-    <p class="text-gray-700">{{ point.description }}</p>
-
-    <!-- Event Image -->
-    <img [src]="point.picture" alt="Picture of {{ point.name }}" class="w-full h-48 object-cover mt-4" />
-
-    <!-- Event Date and Time -->
+    <h1 class="text-xl font-bold mb-4">{{ event.name }}</h1>
+    <div *ngIf="description">
+      <p class="text-withe-700">{{ description }}</p>
+    </div>
+    <button
+      class="text-blue-500 hover:text-blue-700"
+      (click)="showMore = !showMore"
+      *ngIf="event.description && event.description.length > 100"
+    >
+      {{ showMore ? 'Moins de détails' : 'Plus de détails' }}
+    </button>
+    <img [src]="event.picture" alt="Picture of {{ event.name }}" class="w-full h-48 object-cover mt-4" />
     <div class="mt-4">
-      <p class="text-gray-600">Date and Time: {{ point.dateTime }}</p>
+      <p class="text-withe-600">Le {{ date }}, {{ time }} à {{ event.location }}</p>
     </div>
-
-    <!-- Venue Location -->
-    <div class="mt-4">
-      <p class="text-gray-600">Location: Latitude {{ point.latitude }}, Longitude {{ point.longitude }}</p>
+    <div class="mt-4" *ngIf="event.genre">
+      <p class="text-withe-600">Genre: {{ event.genre }}</p>
     </div>
-
-    <!-- Genre -->
-    <div class="mt-4" *ngIf="point.genre">
-      <p class="text-gray-600">Genre: {{ point.genre }}</p>
+    <div class="flex flex-row justify-between mt-4">
+      <div *ngIf="event.priceRangeMin !== undefined">
+        <p class="text-withe-600">A partir de {{ event.priceRangeMin }}€</p>
+      </div>
+      <div>
+        <a
+          [href]="event.extraLink || event.link"
+          *ngIf="event.extraLink || event.link"
+          class="text-blue-500 hover:text-blue-700"
+          >En savoir plus</a
+        >
+      </div>
     </div>
-
-    <!-- Ticket Price Range -->
-    <div class="mt-4" *ngIf="point.priceRangeMin !== undefined && point.priceRangeMax !== undefined">
-      <p class="text-gray-600">Price Range: {{ point.priceRangeMin  }} - {{ point.priceRangeMax  }}</p>
-    </div>
-
-    <!-- More Info Link -->
-    <div class="mt-4">
-      <a [href]="point.link" class="text-blue-500 hover:text-blue-700">More info</a>
-    </div>
-  </a>
+  </div>
 </div>

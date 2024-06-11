@@ -1,38 +1,12 @@
-// class EnjoyDto {
-//   id: string;
-//   category: string;
-//   name: string;
-//   description?: string;
-//   genre?: string;
-//   link: string;
-//   dateTime: string;
-//   latitude: string;
-//   longitude: string;
-//   picture?: string;
-//   priceRanges?: PriceRange[];
-
-//   constructor(data: Event) {
-//     this.id = data.id;
-//     this.category = 'enjoy';
-//     this.name = data.name;
-//     this.description = data.description;
-//     this.genre = data?.classifications[0]?.genre?.name;
-//     this.link = data.url;
-//     this.dateTime = data.dates?.start?.dateTime;
-//     this.latitude = data._embedded.venues[0].location.latitude;
-//     this.longitude = data._embedded.venues[0].location.longitude;
-//     this.picture = data?.images[0]?.url;
-//     this.priceRanges = data.priceRanges;
-//   }
-// }
-
 class EnjoyDto {
   id: string;
   category: string;
   name: string;
+  location: string;
   description?: string;
   genre?: string;
   link: string;
+  extraLink?: string;
   dateTime: string;
   latitude: string;
   longitude: string;
@@ -43,10 +17,12 @@ class EnjoyDto {
   constructor(data: Event) {
     this.id = data.id;
     this.category = 'enjoy';
-    this.name = data.name;
+    this.name = data?.name;
+    this.location = data?._embedded?.venues?.[0]?.city?.name;
     this.description = data.description;
     this.genre = data.classifications?.[0]?.genre?.name;
     this.link = data.url;
+    this.extraLink = data?._embedded?.attractions?.[0]?.url;
     this.dateTime = data.dates?.start?.dateTime;
     this.latitude = data._embedded?.venues?.[0]?.location?.latitude;
     this.longitude = data._embedded?.venues?.[0]?.location?.longitude;

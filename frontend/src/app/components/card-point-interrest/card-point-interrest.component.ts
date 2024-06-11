@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import type EnjoyDto from 'src/api/dto/enjoy.dto';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { formatDate, formatTime } from 'src/utils/utils';
 
 @Component({
   selector: 'app-card-point-interrest',
@@ -9,12 +10,23 @@ import {CommonModule} from '@angular/common';
   templateUrl: './card-point-interrest.component.html',
   styleUrl: './card-point-interrest.component.scss',
 })
-export class CardPointInterrestComponent implements OnInit {
-  @Input() point!: EnjoyDto;
+export class CardPointInterrestComponent {
+  @Input() event!: EnjoyDto;
+  showMore: boolean = false;
 
-  constructor() {}
+  get date() {
+    return formatDate(this.event.dateTime);
+  }
 
-  ngOnInit() {
-    console.log(this.point);
+  get time() {
+    return formatTime(this.event.dateTime);
+  }
+
+  get description() {
+    if (this.showMore) {
+      return this.event.description;
+    } else {
+      return this.event.description?.slice(0, 200);
+    }
   }
 }
