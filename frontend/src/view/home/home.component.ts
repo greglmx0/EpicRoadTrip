@@ -30,10 +30,12 @@ export class HomeComponent {
 
   createMarker(point: any) {
     point.forEach((element: any) => {
-
       // check if the element already exists in the array (lat, lng)
       const exists = this.points.some((el: any) => {
-        return el.coordinates[0] === element.longitude && el.coordinates[1] === element.latitude;
+        return (
+          el.coordinates[0] === element.longitude &&
+          el.coordinates[1] === element.latitude
+        );
       });
 
       if (exists) {

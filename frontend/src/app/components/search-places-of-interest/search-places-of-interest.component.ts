@@ -41,9 +41,11 @@ export class SearchPlacesOfInterestComponent {
   constructor() {}
 
   ngOnInit() {
-    this.subject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
-      this.performSearch(searchValue);
-    });
+    this.subject
+      .pipe(debounceTime(this.debounceTimeMs))
+      .subscribe((searchValue) => {
+        this.performSearch(searchValue);
+      });
   }
 
   async performSearch(searchValue: string) {
@@ -79,7 +81,9 @@ export class SearchPlacesOfInterestComponent {
     }
 
     try {
-      const response = (await ApiMapbox.getRetrieve(this.selectedLocation.mapbox_id)) as any;
+      const response = (await ApiMapbox.getRetrieve(
+        this.selectedLocation.mapbox_id,
+      )) as any;
 
       if (response.status === 200) {
         this.selectedLocation = response.data;

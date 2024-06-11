@@ -1,7 +1,10 @@
 <header>
   <app-navbar-home></app-navbar-home>
 </header>
-<app-tab-home (sendLocation)="onSendLocation($event)" (sendMapCenter)="onSendMapCenter($event)"></app-tab-home>
+<app-tab-home
+  (sendLocation)="onSendLocation($event)"
+  (sendMapCenter)="onSendMapCenter($event)"
+></app-tab-home>
 <main>
   <app-points-of-interest-container
     [locations]="locations"

@@ -11,7 +11,7 @@ import EnjoyDto from 'src/api/dto/enjoy.dto';
   templateUrl: './points-of-interest-container.component.html',
   styleUrl: './points-of-interest-container.component.scss',
 })
-export class PointsOfInterestContainerComponent  {
+export class PointsOfInterestContainerComponent {
   @Input() locations: EnjoyDto[] = [];
   @Input() lat: number = 0;
   @Input() lng: number = 0;

@@ -1,7 +1,17 @@
 <!-- <p>tab-home works!</p> -->
 <div role="tablist" class="tabs tabs-boxed tabs-lg m-8">
-  <input type="radio" name="my_tabs" role="tab" class="tab" aria-label="Recherche des activités à proximité" checked />
-  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+  <input
+    type="radio"
+    name="my_tabs"
+    role="tab"
+    class="tab"
+    aria-label="Recherche des activités à proximité"
+    checked
+  />
+  <div
+    role="tabpanel"
+    class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+  >
     <app-search-places-of-interest
       (sendLocation)="onSendLocation($event)"
       (sendMapCenter)="onSendMapCenter($event)"
@@ -15,5 +25,10 @@
     class="tab"
     aria-label="Recherche un itinéraire avec des points d'intérêt"
   />
-  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">Rechercher un itinéraire</div>
+  <div
+    role="tabpanel"
+    class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+  >
+    Rechercher un itinéraire
+  </div>
 </div>
