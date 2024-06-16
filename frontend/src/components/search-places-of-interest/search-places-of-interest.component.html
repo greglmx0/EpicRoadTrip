@@ -6,7 +6,7 @@
       id="searchInput"
       placeholder="Ville, adresse ou code postal"
       class="input input-bordered w-full"
-      (input)="search(searchInputValue)"
+      (input)="searchSuggestions(searchInputValue)"
       [(ngModel)]="searchInputValue"
     />
     <ul
@@ -20,7 +20,7 @@
       >
         <div
           class="flex flex-col gap-2 justify-left"
-          (click)="selectLocation(result)"
+          (click)="selectSuggestions(result)"
         >
           <div class="text-xl font-medium">{{ result.name }}</div>
           <p>{{ result.place_formatted }}</p>
@@ -31,7 +31,12 @@
 
   <div class="flex flex-row gap-2">
     <div class="m-2" *ngFor="let point of pointofinterest">
-      <input type="checkbox" [id]="point.name" class="peer hidden" />
+      <input
+        type="checkbox"
+        [id]="point.name"
+        class="peer hidden"
+        [(ngModel)]="point.checked"
+      />
       <label
         [for]="point.name"
         class="select-none cursor-pointer rounded-lg border-2 border-gray-200 py-3 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200"
@@ -41,7 +46,7 @@
     </div>
   </div>
   <div class="flex">
-    <button class="btn btn-primary" (click)="serachLocation()">
+    <button class="btn btn-primary" (click)="serachRetrieve()">
       Rechercher
     </button>
   </div>

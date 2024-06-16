@@ -23,20 +23,26 @@ export class SearchPlacesOfInterestComponent {
   pointofinterest: any = [
     {
       name: 'enjoy',
+      checked: true,
     },
     {
       name: 'sleep',
+      checked: true,
     },
     {
       name: 'travel',
+      checked: false,
     },
     {
       name: 'eat',
+      checked: false,
     },
     {
       name: 'drink',
+      checked: false,
     },
   ];
+  failure: string = '';
 
   constructor() {}
 
@@ -51,7 +57,9 @@ export class SearchPlacesOfInterestComponent {
   async performSearch(searchValue: string) {
     if (searchValue.length < 3) {
       this.searchResults = [];
-      return;
+      this.failure = 'Veuillez saisir au moins 3 caractères';
+    } else {
+      this.failure = '';
     }
 
     try {
@@ -65,19 +73,20 @@ export class SearchPlacesOfInterestComponent {
     }
   }
 
-  async search(searchInput: string) {
+  async searchSuggestions(searchInput: string) {
     this.subject.next(searchInput);
   }
 
-  async selectLocation(location: any) {
+  async selectSuggestions(location: any) {
     this.selectedLocation = location;
-    this.searchResults = [];
-    this.searchInputValue = this.selectedLocation.place_formatted;
+    this.searchResults = []; // clear search results
+    this.searchInputValue = `${this.selectedLocation.name} ${this.selectedLocation.place_formatted}`;
   }
 
-  async serachLocation() {
+  // retrieve = recuperer (la location subgerer)
+  async serachRetrieve() {
     if (!this.selectedLocation) {
-      return;
+      this.failure = 'Recherchez une location';
     }
 
     try {
