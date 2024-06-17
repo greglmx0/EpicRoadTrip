@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: 18.17.0
           cache: "npm"
+        path: frontend
 
       - name: Install dependencies
         run: npm install
