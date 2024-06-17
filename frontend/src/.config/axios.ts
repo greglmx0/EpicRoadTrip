@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { environment } from '../environments/environment.dev';
+import { environment } from '../environments/environment';
 
 console.log('environment.apiUrl', environment.apiUrl);
 

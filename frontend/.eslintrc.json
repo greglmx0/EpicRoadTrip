@@ -26,6 +26,12 @@
             "argsIgnorePattern": "_"
           }
         ],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["../../environments/environment"]
+          }
+        ],
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/no-explicit-any": "warn"
       }

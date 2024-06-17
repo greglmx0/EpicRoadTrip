@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { environment } from '../../environments/environment.dev';
+import { environment } from '../../environments/environment';
 import {
   Component,
   Input,
   OnChanges,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
 import mapboxgl from 'mapbox-gl';
 
