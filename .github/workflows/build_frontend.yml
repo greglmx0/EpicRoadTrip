@@ -14,7 +14,9 @@ jobs:
       MAPBOX_ACCES_TOKEN: ${{ secrets.MAPBOX_ACCES_TOKEN }}
 
     runs-on: ubuntu-latest
-    working-directory: ./frontend
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
