@@ -1,0 +1,14 @@
+# copy file to the server with ansible playbook
+# playbook: deploy_frontend.yml
+
+- name: Deploy Frontend
+  hosts: VPS
+  become: yes
+  tasks:
+    - name: Copy frontend files to the server
+      copy:
+        src: ../frontend/dist
+        dest: /var/www/html
+        owner: www-data
+        group: www-data
+        mode: 0755

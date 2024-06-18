@@ -1,0 +1,58 @@
+- name: setup VPS
+  hosts: VPS
+  become: yes
+  tasks:
+    - name: update apt packages
+      command: apt update
+
+    - name: upgrade apt packages
+      command: apt upgrade -y
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ansible_distribution_release}} stable
+
+    # if warning about "sud oapt update" this task is crashing
+    # delete this warning in /etc/apt/sources.list.d/
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Update apt packages
+      command: apt update
+
+    - name: Install Docker docker-ce
+      command: apt install docker-ce -y
+
+    - name: Install Docker docker-ce-cli
+      command: apt install docker-ce-cli -y
+
+    - name: Install Docker containerd.io
+      command: apt install containerd.io -y
+
+    - name: Install Docker docker-buildx-plugin -y
+      command: apt install docker-buildx-plugin -y
+
+    - name: Install Docker docker-compose-plugin -y
+      command: apt install docker-compose-plugin -y
+
+    - name: if group docker not exist, create it
+      group:
+        name: docker
+        state: present
+
+    - name: Check if user belongs to docker group
+      command: chown root:docker /var/run/docker.sock
+
+    - name: add user to docker group
+      command: usermod -aG docker $USER
+
+    - name: restart docker
+      command: systemctl restart docker
