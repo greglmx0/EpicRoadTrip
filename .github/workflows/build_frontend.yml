@@ -12,10 +12,6 @@ jobs:
   build:
     env:
       MAPBOX_ACCES_TOKEN: ${{ secrets.MAPBOX_ACCES_TOKEN }}
-      VPS_HOST: ${{ secrets.VPS_HOST }}
-      VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
-      VPS_PORT: ${{ secrets.VPS_PORT }}
-      VPS_SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
 
     runs-on: ubuntu-latest
     defaults:
