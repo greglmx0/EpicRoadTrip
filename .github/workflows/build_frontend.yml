@@ -46,7 +46,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "dist/*"
           target: /var/www/html
-          strip_components: 2
 
       # - name: Run playbook build_frontend.yml
       #   uses: dawidd6/action-ansible-playbook@v2
