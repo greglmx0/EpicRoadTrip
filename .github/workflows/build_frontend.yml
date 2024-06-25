@@ -37,11 +37,11 @@ jobs:
       - name: print files
         run: ls -la ./dist/
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
 
-    steps:
+  #   steps:
       - name: log files
         run: ls -la .
 
