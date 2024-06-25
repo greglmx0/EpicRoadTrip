@@ -44,8 +44,11 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "dist/*"
+          source: "./dist/*"
           target: /var/www/html
+          rm: true
+          overwrite: true
+          strip_components: 2
 
       # - name: Run playbook build_frontend.yml
       #   uses: dawidd6/action-ansible-playbook@v2
