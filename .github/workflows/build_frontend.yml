@@ -44,7 +44,7 @@ jobs:
         run: ls -la ./dist/
 
       - name: deploy angular app
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
