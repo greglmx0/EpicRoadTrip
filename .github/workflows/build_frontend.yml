@@ -54,7 +54,7 @@ jobs:
           target: "/var/www/html"
           strip_components: 1
           overwrite: true
-          rm: true
+          # rm: true
 
   deploy:
     needs: build
