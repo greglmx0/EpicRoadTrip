@@ -73,5 +73,5 @@ jobs:
             mv frontend/* .
             mv prod/* .
             rm -rf frontend prod
-            docker-compose down
-            docker-compose up --build -d frontend
+            docker compose down
+            docker compose up --build -d frontend
