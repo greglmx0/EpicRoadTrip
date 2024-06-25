@@ -56,3 +56,10 @@
 
     - name: restart docker
       command: systemctl restart docker
+
+    - name: rights to docker.sock
+      command: sudo chown $USER /var/run/docker.sock
+
+      # cat id_rsa.pub >> authorized_keys if key is not added
+    - name: add ssh key to authorized_keys
+      command: cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
