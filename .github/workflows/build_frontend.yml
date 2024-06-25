@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: log files
-        run: ls -la ./frontend/dist/
+        run: ls -la .
 
       - name: deploy angular app
         uses: appleboy/scp-action@master
