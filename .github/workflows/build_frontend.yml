@@ -56,7 +56,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "./dist/*"
+          source: "frontend/dist/*"
           target: "/var/www/html"
           strip_components: 1
           overwrite: true
