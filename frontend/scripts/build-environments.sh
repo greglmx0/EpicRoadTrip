@@ -11,7 +11,7 @@ echo "export const environment = {
     accessToken:
       '"$MAPBOX_ACCESS_TOKEN"',
   },
-  };" > environment.produtcion.ts
+  };" > environment.production.ts
 
 echo 'Finished setting up environment'
 
