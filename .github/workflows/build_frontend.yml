@@ -37,9 +37,6 @@ jobs:
       - name: print files
         run: ls -la ./dist
 
-      - name: print secrets
-        run: echo ${{ secrets.VPS_HOST }}
-
       - name: copy dist to VPS
         uses: appleboy/scp-action@master #easingthemes/ssh-deploy@main
         with:
