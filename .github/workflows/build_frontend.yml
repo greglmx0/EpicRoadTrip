@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "./frontend/dist/*, ./frontend/Dockerfile.prod, ./frontend/nginx.default.conf.template"
+          source: "./frontend/dist/*, ./frontend/Dockerfile.prod, ./frontend/nginx.default.conf.template, ./frontend/prod/docker-compose.yml"
           target: "/var/www/html"
           strip_components: 1
           overwrite: true
@@ -71,6 +71,7 @@ jobs:
           script: |
             cd /var/www/html
             mv frontend/* .
-            rm -rf frontend
+            mv prod/* .
+            rm -rf frontend prod
             docker-compose down
             docker-compose up --build -d frontend
