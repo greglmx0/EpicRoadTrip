@@ -34,20 +34,11 @@ jobs:
       - name: Run build project
         run: npm run build:production
 
-      - name: print files
-        run: ls -la ./dist/
-
-      # deploy:
-      #   needs: build
-      #   runs-on: ubuntu-latest
-
-      #   steps:
-
       - name: log files
         run: ls -la ./dist/
 
       - name: chmod add permission
-        run: chmod -R 755 ./dist/
+        run: chmod -R 777 ./../frontend/dist/*
 
       - name: log files
         run: ls -la ./dist/
