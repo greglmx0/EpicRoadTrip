@@ -47,7 +47,7 @@ jobs:
         run: ls -la ./dist/
 
       - name: chmod add permission
-        run: chmod +x ./dist/
+        run: chmod -R 755 ./dist/
 
       - name: log files
         run: ls -la ./dist/
