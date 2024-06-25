@@ -11,4 +11,4 @@
 FROM nginx:1.25.4-alpine
 COPY nginx.default.conf.template /etc/nginx/templates/default.conf.template
 EXPOSE 4200
-COPY /var/www/html/dist/frontend/browser /usr/share/nginx/html/frontend
+COPY dist/frontend/browser /usr/share/nginx/html/frontend
