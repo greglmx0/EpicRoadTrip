@@ -46,8 +46,11 @@ jobs:
       - name: log files
         run: ls -la ./dist/
 
-      - name: pwd
-        run: pwd
+      - name: chmod add permission
+        run: chmod +x ./dist/
+
+      - name: log files
+        run: ls -la ./dist/
 
       - name: deploy angular app
         uses: appleboy/scp-action@master
