@@ -35,8 +35,8 @@ jobs:
       - name: Build environment variables
         run: npm run build:production:env
 
-      - name: log environment.production.ts
-        run: cat ./src/environments/environment.production.ts
+      # - name: log environment.production.ts
+      #   run: cat ./src/environments/environment.production.ts
 
       - name: Run build project
         run: npm run build:production
