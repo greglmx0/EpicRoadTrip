@@ -11,9 +11,6 @@ on:
 
 jobs:
   build:
-    env:
-      MAPBOX_ACCES_TOKEN: ${{ secrets.MAPBOX_ACCES_TOKEN }}
-
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -60,6 +57,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    env:
+      MAPBOX_ACCES_TOKEN: ${{ secrets.MAPBOX_ACCES_TOKEN }}
+      API_URL: ${{ secrets.API_URL }}
+
     steps:
       - name: Deploy Frontend with docker
         uses: appleboy/ssh-action@master
