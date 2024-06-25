@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - frontend/**
+    paths:
+      - frontend/**
 
 jobs:
   build:
@@ -50,31 +50,24 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "./frontend/dist/*"
+          source: "./frontend/dist/*, ./frontend/Dockerfile.prod, ./frontend/nginx.default.conf.template"
           target: "/var/www/html"
           strip_components: 1
           overwrite: true
-          # rm: true
+          rm: true
 
-      # - name: 📤 Deploy to VPS
-      #   uses: easingthemes/ssh-deploy@main
-      #   with:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     ARGS: "-azrut --delete"
-      #     SOURCE: "dist/"
-      #     REMOTE_HOST: ${{ secrets.VPS_HOST }}
-      #     REMOTE_USER: ${{ secrets.VPS_USERNAME }}
-      #     REMOTE_PORT: ${{ secrets.VPS_PORT }}
-      #     TARGET: "/var/www/html"
-      #     SCRIPT_BEFORE: |
-      #       if ! command -v rsync &> /dev/null
-      #       then
-      #         echo "rsync could not be found, installing..."
-      #         sudo apt-get update
-      #         sudo apt-get install -y rsync
-      #       else
-      #         echo "rsync is already installed."
-      #       fi
-      #       echo "Starting deployment..."
-      #     SCRIPT_AFTER: |
-      #       echo "Vue.js app deployed successfully!"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Frontend with docker
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            cd /var/www/html
+            docker-compose down
+            docker-compose up --build -d frontend
