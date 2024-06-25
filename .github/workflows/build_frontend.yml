@@ -70,5 +70,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             cd /var/www/html
+            mv frontend/* .
+            rm -rf frontend
             docker-compose down
             docker-compose up --build -d frontend
