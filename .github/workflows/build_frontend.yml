@@ -60,7 +60,7 @@ jobs:
           target: "/var/www/html"
           strip_components: 1
           overwrite: true
-          rm: true
+          # rm: true
 
       # - name: 📤 Deploy to VPS
       #   uses: easingthemes/ssh-deploy@main
