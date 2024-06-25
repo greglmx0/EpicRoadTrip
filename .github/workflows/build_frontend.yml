@@ -9,16 +9,15 @@ on:
       - frontend/**
       - .github/workflows/build_frontend.yml
 
-env:
-  MAPBOX_ACCES_TOKEN: ${{ secrets.MAPBOX_ACCES_TOKEN }}
-  API_URL: ${{ secrets.API_URL }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./frontend
+    env:
+      MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+      API_URL: ${{ secrets.API_URL }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -36,9 +35,7 @@ jobs:
       - name: Build environment variables
         run: npm run build:production:env
 
-      - name: tree withouth node_modules
-        run: tree -I 'node_modules'
-
+        # TODO: remove this line
       - name: log environment.production.ts
         run: cat ./src/environments/environment.production.ts
 
