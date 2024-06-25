@@ -35,14 +35,14 @@ jobs:
       - name: Build environment variables
         run: npm run build:production:env
 
-      - name: log tree if is installed
-        run: tree -L 3
-
       # - name: log environment.production.ts
       #   run: cat ./src/environments/environment.production.ts
 
       - name: Run build project
         run: npm run build:production
+
+      - name: tree withouth node_modules
+        run: tree -I 'node_modules'
 
       - name: deploy angular app
         uses: appleboy/scp-action@master
