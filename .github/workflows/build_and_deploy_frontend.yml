@@ -1,0 +1,43 @@
+name: Build and Deploy Frontend
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - frontend/**
+      - .github/workflows/build_and_deploy_frontend.yml
+
+jobs:
+  build:
+    env:
+      MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+      API_URL: ${{ secrets.API_URL }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      VPS_PORT: ${{ secrets.VPS_PORT }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: recover guthub workflow
+        uses: actions/checkout@v4
+
+      - name: Build frontend
+        uses: ./.github/workflows/build_frontend.yml
+        # with:
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      VPS_PORT: ${{ secrets.VPS_PORT }}
+    steps:
+      - name: recover guthub workflow
+        uses: actions/checkout@v4
+
+      - name: Deploy frontend
+        uses: ./.github/workflows/deploy_frontend.yml

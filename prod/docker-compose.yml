@@ -2,6 +2,71 @@ version: "3.9"
 services:
   frontend:
     build:
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.frontend.prod
     ports:
       - "4200:4200"
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 2s
+      retries: 20
+      start_period: 10s
+
+  backend:
+    build:
+      dockerfile: ../backend/Dockerfile.backend.prod
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - PREDICTHQ_ACCESS_TOKEN=${PREDICTHQ_ACCESS_TOKEN}
+      - PREDICTHQ_API_URL=${PREDICTHQ_API_URL}
+      - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}
+      - MPABOX_API_URL=${MPABOX_API_URL}
+      - MAPBOX_SESSION_TOKEN=${MAPBOX_SESSION_TOKEN}
+      - TICKETMASTER_API_URL=${TICKETMASTER_API_URL}
+      - TICKETMASTER_ACCESS_TOKEN=${TICKETMASTER_ACCESS_TOKEN}
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      db:
+        condition: service_healthy
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  dbdata:
