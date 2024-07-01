@@ -1,6 +1,4 @@
-# this github workflow is called in the main workflow file to build and deploy the frontend application
-
-name: Deploy All CI
+name: Build frontend
 
 on:
   workflow_dispatch:

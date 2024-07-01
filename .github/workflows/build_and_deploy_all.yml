@@ -1,8 +1,8 @@
-name: Deploy All CI
+name: Build and Deploy All
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-    build-frontend:
-        uses: ./.github/workflows/build_and_deploy_frontend.yml
+  build-frontend:
+    uses: ./.github/workflows/build_and_deploy_frontend.yml
