@@ -1,13 +1,9 @@
-name: Frontend CI
+# this github workflow is called in the main workflow file to build and deploy the frontend application
+
+name: Deploy All CI
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - frontend/**
-      - .github/workflows/build_frontend.yml
 
 jobs:
   build:
@@ -35,10 +31,6 @@ jobs:
       - name: Build environment variables
         run: npm run build:production:env
 
-        # TODO: remove this line
-      - name: log environment.production.ts
-        run: cat ./src/environments/environment.production.ts
-
       - name: Run build project
         run: npm run build:production
 
@@ -49,28 +41,8 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "./frontend/dist/*, ./frontend/Dockerfile.prod, ./frontend/nginx.default.conf.template, ./prod/docker-compose.yml"
+          source: "./frontend/dist/*, ./frontend/Dockerfile.frontend.prod, ./frontend/nginx.default.conf.template, ./prod/docker-compose.yml"
           target: "/var/www/html"
           strip_components: 1
           overwrite: true
           # rm: true
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy Frontend with docker
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.VPS_PORT }}
-          script: |
-            cd /var/www/html
-            mv frontend/* .
-            mv prod/* .
-            rm -rf frontend prod
-            docker compose down
-            docker compose up --build -d frontend
