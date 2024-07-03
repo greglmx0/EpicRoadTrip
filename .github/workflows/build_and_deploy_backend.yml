@@ -31,7 +31,7 @@ jobs:
           MAPBOX_SESSION_TOKEN: ${{ secrets.MAPBOX_SESSION_TOKEN }}
           TICKETMASTER_API_URL: ${{ secrets.TICKETMASTER_API_URL }}
           TICKETMASTER_ACCESS_TOKEN: ${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
-        run: docker compose build
+        run: cd prod && docker compose build
 
       - name: copy backend flask app
         uses: appleboy/scp-action@master
