@@ -1,26 +1,33 @@
 version: "3.9"
 services:
   frontend:
+    restart: always
     build:
       dockerfile: Dockerfile.frontend.prod
     ports:
       - "4200:4200"
 
   db:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: $${{MYSQL_ROOT_PASSWORD}}
-      MYSQL_DATABASE: $${{MYSQL_DATABASE}}
-      MYSQL_USER: $${{MYSQL_USER}}
-      MYSQL_PASSWORD: $${{MYSQL_PASSWORD}}
+      MYSQL_ROOT_PASSWORD: /run/secrets/mysql_root_password
+      MYSQL_DATABASE: /run/secrets/mysql_database
+      MYSQL_USER: /run/secrets/mysql_user
+      MYSQL_PASSWORD: /run/secrets/mysql_password
+    secrets:
+      - secret_key
+      - mysql_database
+      - mysql_user
+      - mysql_password
     ports:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
     networks:
       - backend
+      - mysql-phpmyadmin
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 2s
@@ -28,6 +35,7 @@ services:
       start_period: 10s
 
   backend:
+    restart: always
     build:
       dockerfile: Dockerfile.backend.prod
     ports:
@@ -56,16 +64,19 @@ services:
       - db
     environment:
       PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: /run/secrets/mysql_root_password
+    secrets:
+      - mysql_root_password
     restart: always
     ports:
       - 8080:80
     networks:
-      - backend
+      - mysql-phpmyadmin
 
 networks:
   backend:
+    driver: bridge
+  mysql-phpmyadmin:
     driver: bridge
 
 volumes:

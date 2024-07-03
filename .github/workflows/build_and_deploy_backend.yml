@@ -19,6 +19,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Build Docker Compose service images
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          MPABOX_API_URL: ${{ secrets.MPABOX_API_URL }}
+          MAPBOX_SESSION_TOKEN: ${{ secrets.MAPBOX_SESSION_TOKEN }}
+          TICKETMASTER_API_URL: ${{ secrets.TICKETMASTER_API_URL }}
+          TICKETMASTER_ACCESS_TOKEN: ${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
+        run: docker compose build
+
       - name: copy backend flask app
         uses: appleboy/scp-action@master
         with:
@@ -55,7 +69,5 @@ jobs:
 
             # Relancer les conteneurs avec Docker Compose
             echo "Starting backend deployment..."
-            docker compose down backend db phpmyadmin
-            docker compose up --build -d backend db phpmyadmin
-
+            docker compose restart backend
             echo "Backend deployment completed."
