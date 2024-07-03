@@ -19,18 +19,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: copy backend flask app
+        uses: appleboy/scp-action@master
         with:
-          node-version: 18.17.0
-          cache: "npm"
-          cache-dependency-path: "./backend/package-lock.json"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run build project
-        run: npm run build
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          source: "./backend/*, ./frontend/Dockerfile.backend.prod, ./prod/docker-compose.yml"
+          target: "/var/www/html"
+          strip_components: 1
+          overwrite: true
+          # rm: true
 
       - name: Deploy Backend with docker
         uses: appleboy/ssh-action@master
@@ -40,8 +40,23 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            docker stop backend
-            docker rm backend
-            docker rmi backend
-            docker build -t backend .
-            docker run -d -p 3000:3000 --name backend backend
+            # Définir les variables
+            APP_DIR="/backend"
+
+            # Déplacer les fichiers nécessaires
+            cd /var/www/html
+            mv backend/* .
+            mv prod/* .
+            rm -rf backend prod
+
+            # Vérifier si le conteneur de la base de données est prêt
+            echo "Waiting for database container to be ready..."
+            while ! docker-compose -f $DOCKER_COMPOSE_FILE exec -T db mysqladmin ping --silent; do
+                sleep 1
+            done
+
+            # Relancer les conteneurs avec Docker Compose
+            docker-compose down backend
+            docker-compose up --build -d backend
+
+            echo "Backend deployment completed."

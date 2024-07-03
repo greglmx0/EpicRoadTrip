@@ -29,6 +29,7 @@ services:
 
   backend:
     build:
+      # context: ../backend    # This is the path to the backend folder in local machine
       dockerfile: ../backend/Dockerfile.backend.prod
     ports:
       - "5000:5000"
@@ -48,6 +49,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - backend
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
