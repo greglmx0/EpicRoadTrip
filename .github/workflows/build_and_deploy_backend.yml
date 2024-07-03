@@ -52,6 +52,8 @@ jobs:
             TICKETMASTER_ACCESS_TOKEN=${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
           script: |
 
+            export MYSQL_ROOT_PASSWORD MYSQL_DATABASE MYSQL_USER MYSQL_PASSWORD SECRET_KEY MAPBOX_ACCESS_TOKEN MPABOX_API_URL MAPBOX_SESSION_TOKEN TICKETMASTER_API_URL TICKETMASTER_ACCESS_TOKEN
+
             # Déplacer les fichiers nécessaires
             cd /var/www/html
             mv backend/prod/* . # docker-compose.yml

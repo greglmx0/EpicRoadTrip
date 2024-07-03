@@ -12,15 +12,10 @@ services:
     container_name: db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: /run/secrets/mysql_root_password
-      MYSQL_DATABASE: /run/secrets/mysql_database
-      MYSQL_USER: /run/secrets/mysql_user
-      MYSQL_PASSWORD: /run/secrets/mysql_password
-    secrets:
-      - mysql_root_password
-      - mysql_database
-      - mysql_user
-      - mysql_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -41,16 +36,15 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - SECRET_KEY=$${{SECRET_KEY}}
-      - MYSQL_DATABASE=$${{MYSQL_DATABASE}}
-      - MYSQL_USER=$${{MYSQL_USER}}
-      - MYSQL_PASSWORD=$${{MYSQL_PASSWORD}}
-      - MAPBOX_ACCESS_TOKEN=$${{MAPBOX_ACCESS_TOKEN}}
-      - MPABOX_API_URL=$${{MPABOX_API_URL}}
-      - MAPBOX_SESSION_TOKEN=$${{MAPBOX_SESSION_TOKEN}}
-      - TICKETMASTER_API_URL=$${{TICKETMASTER_API_URL}}
-      - TICKETMASTER_ACCESS_TOKEN=$${{TICKETMASTER_ACCESS_TOKEN}}
-      - PYTHONUNBUFFERED=1
+      - SECRET_KEY=${SECRET_KEY}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}
+      - MPABOX_API_URL=${MPABOX_API_URL}
+      - MAPBOX_SESSION_TOKEN=${MAPBOX_SESSION_TOKEN}
+      - TICKETMASTER_API_URL=${TICKETMASTER_API_URL}
+      - TICKETMASTER_ACCESS_TOKEN=${TICKETMASTER_ACCESS_TOKEN}
     depends_on:
       db:
         condition: service_healthy
@@ -64,9 +58,7 @@ services:
       - db
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: /run/secrets/mysql_root_password
-    secrets:
-      - mysql_root_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     restart: always
     ports:
       - 8080:80
