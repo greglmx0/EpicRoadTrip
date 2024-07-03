@@ -52,18 +52,16 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           envs: MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, SECRET_KEY, MAPBOX_ACCESS_TOKEN, MPABOX_API_URL, MAPBOX_SESSION_TOKEN, TICKETMASTER_API_URL, TICKETMASTER_ACCESS_TOKEN
           script: |
-            export MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
-            export MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
-            export MYSQL_USER=${{ secrets.MYSQL_USER }}
-            export MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-            export SECRET_KEY=${{ secrets.SECRET_KEY }}
-            export MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}
-            export MPABOX_API_URL=${{ secrets.MPABOX_API_URL }}
-            export MAPBOX_SESSION_TOKEN=${{ secrets.MAPBOX_SESSION_TOKEN }}
-            export TICKETMASTER_API_URL=${{ secrets.TICKETMASTER_API_URL }}
-            export TICKETMASTER_ACCESS_TOKEN=${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
-
-            echo "$MYSQL_ROOT_PASSWORD" > /run/secrets/mysql_root_password
+            export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+            export MYSQL_DATABASE=$MYSQL_DATABASE
+            export MYSQL_USER=$MYSQL_USER
+            export MYSQL_PASSWORD=$MYSQL_PASSWORD
+            export SECRET_KEY=$SECRET_KEY
+            export MAPBOX_ACCESS_TOKEN=$MAPBOX_ACCESS_TOKEN
+            export MPABOX_API_URL=$MPABOX_API_URL
+            export MAPBOX_SESSION_TOKEN=$MAPBOX_SESSION_TOKEN
+            export TICKETMASTER_API_URL=$TICKETMASTER_API_URL
+            export TICKETMASTER_ACCESS
 
             # Déplacer les fichiers nécessaires
             cd /var/www/html
