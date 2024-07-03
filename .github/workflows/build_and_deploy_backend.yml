@@ -69,13 +69,7 @@ jobs:
             mv backend/backend/* . # Dockerfile.backend.prod
             rm -rf backend/prod backend/backend
 
-            # Vérifier si le conteneur de la base de données est prêt
-            # echo "Waiting for database container to be ready..."
-            # while ! docker compose exec -T db mysqladmin ping --silent; do
-            #     sleep 1
-            # done
-
             # Relancer les conteneurs avec Docker Compose
             echo "Starting backend deployment..."
-            docker compose restart backend
+            docker compose up -d --build
             echo "Backend deployment completed."
