@@ -26,7 +26,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "./backend/*, ./backend/Dockerfile.backend.prod, ./prod/docker-compose.yml, !./backend/Dockerfile, !./backend/static/*"
+          source: "./backend/*, ./backend/Dockerfile.backend.prod, ./prod/docker-compose.yml, !./backend/Dockerfile"
           target: "/var/www/html/backend"
           strip_components: 1
           overwrite: true
