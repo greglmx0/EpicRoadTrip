@@ -43,8 +43,9 @@ jobs:
 
             # Déplacer les fichiers nécessaires
             cd /var/www/html
-            mv prod/* .
-            rm -rf prod
+            mv backend/prod/* . # docker-compose.yml
+            mv backend/backend/* . # Dockerfile.backend.prod
+            rm -rf backend/prod backend/backend
 
             # Vérifier si le conteneur de la base de données est prêt
             # echo "Waiting for database container to be ready..."
