@@ -33,23 +33,24 @@ jobs:
           # rm: true
 
       - name: Deploy Backend with docker
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          MPABOX_API_URL: ${{ secrets.MPABOX_API_URL }}
+          MAPBOX_SESSION_TOKEN: ${{ secrets.MAPBOX_SESSION_TOKEN }}
+          TICKETMASTER_API_URL: ${{ secrets.TICKETMASTER_API_URL }}
+          TICKETMASTER_ACCESS_TOKEN: ${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          envs: |
-            MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
-            MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
-            MYSQL_USER=${{ secrets.MYSQL_USER }}
-            MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-            SECRET_KEY=${{ secrets.SECRET_KEY }}
-            MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}
-            MPABOX_API_URL=${{ secrets.MPABOX_API_URL }}
-            MAPBOX_SESSION_TOKEN=${{ secrets.MAPBOX_SESSION_TOKEN }}
-            TICKETMASTER_API_URL=${{ secrets.TICKETMASTER_API_URL }}
-            TICKETMASTER_ACCESS_TOKEN=${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
+
           script: |
 
             export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
@@ -61,7 +62,7 @@ jobs:
             export MPABOX_API_URL=$MPABOX_API_URL
             export MAPBOX_SESSION_TOKEN=$MAPBOX_SESSION_TOKEN
             export TICKETMASTER_API_URL=$TICKETMASTER_API_URL
-            export TICKETMASTER_ACCESS=${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
+            export TICKETMASTER_ACCESS_TOKEN=${{ secrets.TICKETMASTER_ACCESS_TOKEN }}
 
             # Déplacer les fichiers nécessaires
             cd /var/www/html
