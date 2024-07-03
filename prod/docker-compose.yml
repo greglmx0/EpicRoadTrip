@@ -17,7 +17,7 @@ services:
       MYSQL_USER: /run/secrets/mysql_user
       MYSQL_PASSWORD: /run/secrets/mysql_password
     secrets:
-      - secret_key
+      - mysql_root_password
       - mysql_database
       - mysql_user
       - mysql_password
