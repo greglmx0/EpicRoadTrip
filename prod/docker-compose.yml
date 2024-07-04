@@ -45,9 +45,9 @@ services:
       - MAPBOX_SESSION_TOKEN=${MAPBOX_SESSION_TOKEN}
       - TICKETMASTER_API_URL=${TICKETMASTER_API_URL}
       - TICKETMASTER_ACCESS_TOKEN=${TICKETMASTER_ACCESS_TOKEN}
-    depends_on:
-      db:
-        # condition: service_healthy
+    # depends_on:
+    #   db:
+    # condition: service_healthy
     networks:
       - backend
 
