@@ -14,11 +14,11 @@ services:
     restart: always
     networks:
       - backend
-    # healthcheck:
-    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-    #   timeout: 2s
-    #   retries: 20
-    #   start_period: 10s
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 2s
+      retries: 20
+      start_period: 10s
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -42,9 +42,9 @@ services:
       - "5000:5000"
     volumes:
       - ./backend:/app
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       - FLASK_DEBUG=development
       - SECRET_KEY=${SECRET_KEY}

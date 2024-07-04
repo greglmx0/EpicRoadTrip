@@ -23,11 +23,11 @@ services:
     networks:
       - backend
       - mysql-phpmyadmin
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 2s
-      retries: 20
-      start_period: 10s
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    #   timeout: 2s
+    #   retries: 20
+    #   start_period: 10s
 
   backend:
     restart: always
@@ -47,7 +47,7 @@ services:
       - TICKETMASTER_ACCESS_TOKEN=${TICKETMASTER_ACCESS_TOKEN}
     depends_on:
       db:
-        condition: service_healthy
+        # condition: service_healthy
     networks:
       - backend
 
