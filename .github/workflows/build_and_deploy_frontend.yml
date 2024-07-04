@@ -1,4 +1,4 @@
-name: Frontend CI
+name: Build and deploy Frontend
 
 on:
   workflow_dispatch:
@@ -68,5 +68,5 @@ jobs:
             mv frontend/* .
             mv prod/* .
             rm -rf frontend prod
-            docker compose down
+            docker compose down frontend
             docker compose up --build -d frontend
