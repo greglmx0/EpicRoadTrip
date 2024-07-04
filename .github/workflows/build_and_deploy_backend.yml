@@ -71,5 +71,6 @@ jobs:
 
             # Relancer les conteneurs avec Docker Compose
             echo "Starting backend deployment..."
+            docker compose down
             docker compose up -d --build
             echo "Backend deployment completed."

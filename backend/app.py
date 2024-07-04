@@ -10,7 +10,11 @@ MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE') or 'no credentials found'
 MYSQL_USER = os.environ.get('MYSQL_USER') or 'no credentials found'
 MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD') or 'no credentials found'
 
-print()
+print(f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@db:3306/{MYSQL_DATABASE}')
+print(f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@db:3306/{MYSQL_DATABASE}')
+print(f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@db:3306/{MYSQL_DATABASE}')
+print(f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@db:3306/{MYSQL_DATABASE}')
+print(f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@db:3306/{MYSQL_DATABASE}')
 # for mysql : mysql://username:password@host:port/database_name
 
 app = Flask(__name__)
