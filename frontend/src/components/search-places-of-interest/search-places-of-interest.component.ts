@@ -20,44 +20,42 @@ export class SearchPlacesOfInterestComponent {
   subject: Subject<any> = new Subject();
   selectedLocation: any = null;
   private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
-  pointofinterest: any = [
+  typePointOfInterest: any[] = [
     {
       name: 'enjoy',
-      checked: true,
     },
     {
       name: 'sleep',
-      checked: true,
     },
     {
       name: 'travel',
-      checked: false,
     },
     {
       name: 'eat',
-      checked: false,
     },
     {
       name: 'drink',
-      checked: false,
     },
   ];
   failure: string = '';
+  selectedType: string = '';
 
   constructor() {}
 
   ngOnInit() {
-    this.subject
-      .pipe(debounceTime(this.debounceTimeMs))
-      .subscribe((searchValue) => {
-        this.performSearch(searchValue);
-      });
+    this.subject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
+      this.performSearch(searchValue);
+    });
   }
 
   async performSearch(searchValue: string) {
+    console.log('lenght', searchValue.length);
+
     if (searchValue.length < 3) {
-      this.searchResults = [];
-      this.failure = 'Veuillez saisir au moins 3 caractères';
+      this.failure = 'Preciser votre recherche';
+      this.searchResults = [{ name: 'Veuillez préciser votre recherche' }];
+
+      return;
     } else {
       this.failure = '';
     }
@@ -85,14 +83,45 @@ export class SearchPlacesOfInterestComponent {
 
   // retrieve = recuperer (la location subgerer)
   async serachRetrieve() {
+    console.log('selectedType', this.selectedType);
+
     if (!this.selectedLocation) {
-      this.failure = 'Recherchez une location';
+      this.failure = 'Rentrer une adresse valide';
+      return;
+    }
+    if (!this.selectedType) {
+      this.failure = "Choisir un type d'activité";
+      return;
     }
 
+    this.failure = '';
+
+    switch (this.selectedType) {
+      case 'enjoy':
+        await this.getEnjoyRetrieve();
+        break;
+      case 'sleep':
+        //  await this.getSleepRetrieve();
+        throw new Error('Not implemented');
+        break;
+      case 'travel':
+        // await this.getTravelRetrieve();
+        throw new Error('Not implemented');
+        break;
+      case 'eat':
+        // await this.getEatRetrieve();
+        throw new Error('Not implemented');
+        break;
+      case 'drink':
+        // await this.getDrinkRetrieve();
+        throw new Error('Not implemented');
+        break;
+    }
+  }
+
+  async getEnjoyRetrieve() {
     try {
-      const response = (await ApiMapbox.getRetrieve(
-        this.selectedLocation.mapbox_id,
-      )) as any;
+      const response = (await ApiMapbox.getRetrieve(this.selectedLocation.mapbox_id)) as any;
 
       if (response.status === 200) {
         this.selectedLocation = response.data;
@@ -117,5 +146,9 @@ export class SearchPlacesOfInterestComponent {
     );
 
     this.sendLocation.emit(enjoy);
+  }
+
+  selectType(type: any) {
+    this.selectedType = type;
   }
 }

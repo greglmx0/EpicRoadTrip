@@ -9,45 +9,44 @@
       (input)="searchSuggestions(searchInputValue)"
       [(ngModel)]="searchInputValue"
     />
-    <ul
-      *ngIf="searchInputValue.length > 3"
-      tabindex="0"
-      class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full"
-    >
-      <li
-        *ngFor="let result of searchResults"
-        class="shadow bg-base-100 w-full p-2 rounded-box"
-      >
-        <div
-          class="flex flex-col gap-2 justify-left"
-          (click)="selectSuggestions(result)"
-        >
-          <div class="text-xl font-medium">{{ result.name }}</div>
-          <p>{{ result.place_formatted }}</p>
+    <ul tabindex="0" class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full">
+      <li *ngFor="let result of searchResults" class="shadow bg-base-100 w-full p-2 rounded-box">
+        <div>
+          <!-- if user type less than 3 characters, display "veillez préciser votre recherche" -->
+          <div>
+            <div *ngIf="searchInputValue.length < 3" class="flex flex-col gap-2 justify-left">
+              <div class="text-xl font-medium">{{ result.name }}</div>
+            </div>
+          </div>
+          <!--  if user type more than 3 characters, display the address -->
+          <div
+            *ngIf="searchInputValue.length > 3"
+            class="flex flex-col gap-2 justify-left"
+            (click)="selectSuggestions(result)"
+          >
+            <div class="text-xl font-medium">{{ result.name }}</div>
+            <p>{{ result.place_formatted }}</p>
+          </div>
         </div>
       </li>
     </ul>
   </div>
+  <p class="text-red-500">
+    {{ failure }}
+  </p>
 
   <div class="flex flex-row gap-2">
-    <div class="m-2" *ngFor="let point of pointofinterest">
-      <input
-        type="checkbox"
-        [id]="point.name"
-        class="peer hidden"
-        [(ngModel)]="point.checked"
-      />
+    <div class="m-2" *ngFor="let type of typePointOfInterest">
+      <input type="radio" name="radio" [id]="type.name" class="radio peer hidden" (change)="selectType(type.name)" />
       <label
-        [for]="point.name"
+        [for]="type.name"
         class="select-none cursor-pointer rounded-lg border-2 border-gray-200 py-3 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200"
       >
-        {{ point.name }}
+        {{ type.name }}
       </label>
     </div>
   </div>
   <div class="flex">
-    <button class="btn btn-primary" (click)="serachRetrieve()">
-      Rechercher
-    </button>
+    <button class="btn btn-primary" (click)="serachRetrieve()">Rechercher</button>
   </div>
 </div>
