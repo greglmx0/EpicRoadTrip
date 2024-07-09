@@ -1,16 +1,30 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { debounceTime, Subject } from 'rxjs';
-import { FormsModule } from '@angular/forms';
 import ApiMapbox from '../../api/mapbox';
 import ApiEnjoy from 'src/api/enjoy';
 
 @Component({
   selector: 'app-search-places-of-interest',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    JsonPipe,
+  ],
   templateUrl: './search-places-of-interest.component.html',
   styleUrl: './search-places-of-interest.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchPlacesOfInterestComponent {
   @Output() sendLocation = new EventEmitter();
@@ -96,43 +110,40 @@ export class SearchPlacesOfInterestComponent {
 
     this.failure = '';
 
-    switch (this.selectedType) {
-      case 'enjoy':
-        await this.getEnjoyRetrieve();
-        break;
-      case 'sleep':
-        //  await this.getSleepRetrieve();
-        throw new Error('Not implemented');
-        break;
-      case 'travel':
-        // await this.getTravelRetrieve();
-        throw new Error('Not implemented');
-        break;
-      case 'eat':
-        // await this.getEatRetrieve();
-        throw new Error('Not implemented');
-        break;
-      case 'drink':
-        // await this.getDrinkRetrieve();
-        throw new Error('Not implemented');
-        break;
-    }
-  }
-
-  async getEnjoyRetrieve() {
     try {
       const response = (await ApiMapbox.getRetrieve(this.selectedLocation.mapbox_id)) as any;
 
       if (response.status === 200) {
         this.selectedLocation = response.data;
-        await this.sendMapCenterToParent();
+
+        switch (this.selectedType) {
+          case 'enjoy':
+            await this.getEnjoyRetrieve();
+            break;
+          case 'sleep':
+            //  await this.getSleepRetrieve();
+            throw new Error('Not implemented');
+            break;
+          case 'travel':
+            // await this.getTravelRetrieve();
+            throw new Error('Not implemented');
+            break;
+          case 'eat':
+            // await this.getEatRetrieve();
+            throw new Error('Not implemented');
+            break;
+          case 'drink':
+            // await this.getDrinkRetrieve();
+            throw new Error('Not implemented');
+            break;
+        }
       }
     } catch (error) {
       console.error('Error: ', error);
     }
   }
 
-  async sendMapCenterToParent() {
+  async getEnjoyRetrieve() {
     await this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
