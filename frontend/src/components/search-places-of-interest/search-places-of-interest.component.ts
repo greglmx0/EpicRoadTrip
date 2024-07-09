@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JsonPipe } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { debounceTime, Subject } from 'rxjs';
 import ApiMapbox from '../../api/mapbox';
 import ApiEnjoy from 'src/api/enjoy';
@@ -13,15 +11,7 @@ import ApiEnjoy from 'src/api/enjoy';
   selector: 'app-search-places-of-interest',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    FormsModule,
-    ReactiveFormsModule,
-    JsonPipe,
-  ],
+  imports: [CommonModule, FormsModule, AppDateRangePicker],
   templateUrl: './search-places-of-interest.component.html',
   styleUrl: './search-places-of-interest.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,6 +43,10 @@ export class SearchPlacesOfInterestComponent {
   ];
   failure: string = '';
   selectedType: string = '';
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   constructor() {}
 
@@ -149,14 +143,31 @@ export class SearchPlacesOfInterestComponent {
       lng: this.selectedLocation[0].geometry.coordinates[0],
     });
 
+    if (!this.range.value.start || !this.range.value.end) {
+      this.failure = 'Veuillez choisir une date de début et de fin';
+      return;
+    }
+
+    console.log(this.range);
+    console.log(this.range.value.start.toISOString().split('T')[0].replace(/,/g, ''));
+
     const enjoy = await ApiEnjoy.getEnjoy(
       this.selectedLocation[0].geometry.coordinates[1],
       this.selectedLocation[0].geometry.coordinates[0],
-      '2024-06-01',
-      '2024-12-31',
+      this.range.value.start.toISOString().split('T')[0].replace(/,/g, ''),
+      this.range.value.end.toISOString().split('T')[0].replace(/,/g, ''),
+      // '2024-06-01',
+      // '2024-12-31',
     );
 
     this.sendLocation.emit(enjoy);
+  }
+
+  dateRange(event: any) {
+    console.log('dateRange');
+    console.log('event', event);
+
+    this.range = event;
   }
 
   selectType(type: any) {
