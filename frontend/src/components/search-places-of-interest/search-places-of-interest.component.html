@@ -45,7 +45,9 @@
         {{ type.name }}
       </label>
     </div>
+    <date-range-picker (dateRange)="dateRange($event)"></date-range-picker>
   </div>
+
   <div class="flex">
     <button class="btn btn-primary" (click)="serachRetrieve()">Rechercher</button>
   </div>
