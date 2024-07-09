@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '../view/login/login.component';
 import { RegisterComponent } from '../view/register/register.component';
 import { HomeComponent } from '../view/home/home.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,7 +17,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), BrowserModule, BrowserAnimationsModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
