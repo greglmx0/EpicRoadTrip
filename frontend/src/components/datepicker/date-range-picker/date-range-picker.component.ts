@@ -14,17 +14,20 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   imports: [MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, JsonPipe],
 })
 export class AppDateRangePicker {
-  @Output() dateRange = new EventEmitter<{ start: Date | null | undefined; end: Date | null | undefined }>();
+  @Output() dateRange = new EventEmitter<{ start: Date; end: Date }>();
   range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
+    start: new FormControl<Date>(new Date()),
+    end: new FormControl<Date>(new Date()),
   });
 
   // if range is changed, emit the new range
   validateRange() {
+    const start = this.range.value.start || new Date();
+    const end = this.range.value.end || new Date();
+
     this.dateRange.emit({
-      start: this.range.value.start,
-      end: this.range.value.end,
+      start,
+      end,
     });
   }
 }

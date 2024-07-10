@@ -1,3 +1,4 @@
+import { Venue, Start } from './../../api/dto/enjoy.dto';
 import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
@@ -43,10 +44,7 @@ export class SearchPlacesOfInterestComponent {
   ];
   failure: string = '';
   selectedType: string = '';
-  range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
+  range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
 
   constructor() {}
 
@@ -143,30 +141,17 @@ export class SearchPlacesOfInterestComponent {
       lng: this.selectedLocation[0].geometry.coordinates[0],
     });
 
-    if (!this.range.value.start || !this.range.value.end) {
-      this.failure = 'Veuillez choisir une date de début et de fin';
-      return;
-    }
-
-    console.log(this.range);
-    console.log(this.range.value.start.toISOString().split('T')[0].replace(/,/g, ''));
-
     const enjoy = await ApiEnjoy.getEnjoy(
       this.selectedLocation[0].geometry.coordinates[1],
       this.selectedLocation[0].geometry.coordinates[0],
-      this.range.value.start.toISOString().split('T')[0].replace(/,/g, ''),
-      this.range.value.end.toISOString().split('T')[0].replace(/,/g, ''),
-      // '2024-06-01',
-      // '2024-12-31',
+      this.range.start.toISOString().split('T')[0].replace(/,/g, ''),
+      this.range.end.toISOString().split('T')[0].replace(/,/g, ''),
     );
 
     this.sendLocation.emit(enjoy);
   }
 
-  dateRange(event: any) {
-    console.log('dateRange');
-    console.log('event', event);
-
+  dateRange(event: { start: Date; end: Date }) {
     this.range = event;
   }
 
