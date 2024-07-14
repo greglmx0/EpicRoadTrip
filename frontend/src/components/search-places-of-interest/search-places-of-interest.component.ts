@@ -1,4 +1,3 @@
-import { Venue, Start } from './../../api/dto/enjoy.dto';
 import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
@@ -24,6 +23,7 @@ export class SearchPlacesOfInterestComponent {
   searchResults: any[] = [];
   subject: Subject<any> = new Subject();
   selectedLocation: any = null;
+  selectedLocationText: string = '';
   private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
   typePointOfInterest: any[] = [
     {
@@ -55,8 +55,6 @@ export class SearchPlacesOfInterestComponent {
   }
 
   async performSearch(searchValue: string) {
-    console.log('lenght', searchValue.length);
-
     if (searchValue.length < 3) {
       this.failure = 'Preciser votre recherche';
       this.searchResults = [{ name: 'Veuillez préciser votre recherche' }];
@@ -89,8 +87,6 @@ export class SearchPlacesOfInterestComponent {
 
   // retrieve = recuperer (la location subgerer)
   async serachRetrieve() {
-    console.log('selectedType', this.selectedType);
-
     if (!this.selectedLocation) {
       this.failure = 'Rentrer une adresse valide';
       return;
@@ -136,6 +132,9 @@ export class SearchPlacesOfInterestComponent {
   }
 
   async getEnjoyRetrieve() {
+    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
+    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
+
     await this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
@@ -144,9 +143,11 @@ export class SearchPlacesOfInterestComponent {
     const enjoy = await ApiEnjoy.getEnjoy(
       this.selectedLocation[0].geometry.coordinates[1],
       this.selectedLocation[0].geometry.coordinates[0],
-      this.range.start.toISOString().split('T')[0].replace(/,/g, ''),
-      this.range.end.toISOString().split('T')[0].replace(/,/g, ''),
+      start,
+      end,
     );
+
+    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
 
     this.sendLocation.emit(enjoy);
   }
@@ -157,5 +158,13 @@ export class SearchPlacesOfInterestComponent {
 
   selectType(type: any) {
     this.selectedType = type;
+  }
+
+  clearSelectedLocation() {
+    this.selectedLocation = null;
+    this.searchInputValue = '';
+    this.selectedLocationText = '';
+    this.sendLocation.emit([]);
+    this.sendMapCenter.emit({ lat: 0, lng: 0 });
   }
 }
