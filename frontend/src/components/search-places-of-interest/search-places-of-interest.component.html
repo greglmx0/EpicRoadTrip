@@ -12,17 +12,9 @@
     <ul tabindex="0" class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full">
       <li *ngFor="let result of searchResults" class="shadow bg-base-100 w-full p-2 rounded-box">
         <div>
-          <!-- if user type less than 3 characters, display "veillez préciser votre recherche" -->
-          <div>
-            <div *ngIf="searchInputValue.length < 3" class="flex flex-col gap-2 justify-left">
-              <div class="text-xl font-medium">{{ result.name }}</div>
-            </div>
-          </div>
-          <!--  if user type more than 3 characters, display the address -->
           <div
-            *ngIf="searchInputValue.length >= 3"
             class="flex flex-col gap-2 justify-left"
-            (click)="selectSuggestions(result)"
+            (click)="searchInputValue.length >= 3 && selectSuggestions(result)"
           >
             <div class="text-xl font-medium">{{ result.name }}</div>
             <p>{{ result.place_formatted }}</p>
