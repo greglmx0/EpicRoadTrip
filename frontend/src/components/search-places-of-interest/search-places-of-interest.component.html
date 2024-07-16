@@ -32,7 +32,7 @@
         [(ngModel)]="searchInputValue"
       />
       <ul tabindex="0" class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full">
-        <li *ngFor="let result of searchedResults" class="shadow bg-base-100 w-full p-2 rounded-box">
+        <li *ngFor="let result of searchResults" class="shadow bg-base-100 w-full p-2 rounded-box">
           <div
             class="flex flex-col gap-2 justify-left"
             (click)="searchInputValue.length >= 3 && selectSuggestions(result)"
