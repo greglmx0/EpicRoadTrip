@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { debounceTime, Subject } from 'rxjs';
@@ -135,7 +135,7 @@ export class SearchPlacesOfInterestComponent {
     const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
     const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
 
-    await this.sendMapCenter.emit({
+    this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
     });
