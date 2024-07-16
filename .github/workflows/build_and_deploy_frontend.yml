@@ -45,7 +45,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "./frontend/dist/*, ./frontend/Dockerfile.frontend.prod, ./frontend/nginx.default.conf.template, ./prod/docker-compose.yml"
+          source: "./frontend/dist/*, ./frontend/Dockerfile.frontend.prod, ./frontend/nginx.frontend.conf, ./prod/docker-compose.yml"
           target: "/var/www/html"
           strip_components: 1
           overwrite: true

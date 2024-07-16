@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: Dockerfile.frontend.prod
     ports:
-      - "4200:4200"
+      - "80:4200"
 
   db:
     image: mysql:5.7
