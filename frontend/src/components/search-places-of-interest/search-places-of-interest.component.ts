@@ -6,6 +6,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { debounceTime, Subject } from 'rxjs';
 import ApiMapbox from '../../api/mapbox';
 import ApiEnjoy from 'src/api/enjoy';
+import ApiEat from 'src/api/ApiEat';
+import ApiDrink from 'src/api/ApiDrink';
 
 @Component({
   selector: 'app-search-places-of-interest',
@@ -117,12 +119,10 @@ export class SearchPlacesOfInterestComponent {
             throw new Error('Not implemented');
             break;
           case 'eat':
-            // await this.getEatRetrieve();
-            throw new Error('Not implemented');
+            await this.getEatRetrieve();
             break;
           case 'drink':
-            // await this.getDrinkRetrieve();
-            throw new Error('Not implemented');
+            await this.getDrinkRetrieve();
             break;
         }
       }
@@ -150,6 +150,48 @@ export class SearchPlacesOfInterestComponent {
     this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
 
     this.sendLocation.emit(enjoy);
+  }
+
+  async getEatRetrieve() {
+    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
+    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
+
+    this.sendMapCenter.emit({
+      lat: this.selectedLocation[0].geometry.coordinates[1],
+      lng: this.selectedLocation[0].geometry.coordinates[0],
+    });
+
+    const eat = await ApiEat.getEat(
+      this.selectedLocation[0].geometry.coordinates[1],
+      this.selectedLocation[0].geometry.coordinates[0],
+      start,
+      end,
+    );
+
+    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
+
+    this.sendLocation.emit(eat);
+  }
+
+  async getDrinkRetrieve() {
+    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
+    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
+
+    this.sendMapCenter.emit({
+      lat: this.selectedLocation[0].geometry.coordinates[1],
+      lng: this.selectedLocation[0].geometry.coordinates[0],
+    });
+
+    const drink = await ApiDrink.getDrink(
+      this.selectedLocation[0].geometry.coordinates[1],
+      this.selectedLocation[0].geometry.coordinates[0],
+      start,
+      end,
+    );
+
+    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
+
+    this.sendLocation.emit(drink);
   }
 
   dateRange(event: { start: Date; end: Date }) {
