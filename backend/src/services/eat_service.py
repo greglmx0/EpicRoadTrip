@@ -10,8 +10,8 @@ class eat_service:
         try:
             print("eat_service.get_eat")
             print("latitute: ", latitute, "longitude: ", longitude, "start_date: ", start_date, "end_date: ", end_date)
-            # 13003 is the category id for Dining and Drinking > Restaurant
-            url = f"{FOURSQUARE_API_URL}/places/search?categories=13003"
+            # 13065 is the category id for Dining and Drinking > Restaurant
+            url = f"{FOURSQUARE_API_URL}/places/search?categories=13065&ll={latitute},{longitude}&start_date={start_date}&end_date={end_date}"
             print("url: ", url)
             payload={}
             headers = {
