@@ -9,7 +9,7 @@ import ApiEnjoy from 'src/api/enjoy';
 import ApiEat from 'src/api/ApiEat';
 import ApiDrink from 'src/api/ApiDrink';
 import ApiSleep from 'src/api/ApiSleep';
-
+import ApiTravel from 'src/api/apiTravel';
 @Component({
   selector: 'app-search-places-of-interest',
   standalone: true,
@@ -115,8 +115,7 @@ export class SearchPlacesOfInterestComponent {
             await this.getSleepRetrieve();
             break;
           case 'travel':
-            // await this.getTravelRetrieve();
-            throw new Error('Not implemented');
+            await this.getTravelRetrieve();
             break;
           case 'eat':
             await this.getEatRetrieve();
@@ -213,6 +212,27 @@ export class SearchPlacesOfInterestComponent {
     this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
 
     this.sendLocation.emit(sleep);
+  }
+
+  async getTravelRetrieve() {
+    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
+    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
+
+    this.sendMapCenter.emit({
+      lat: this.selectedLocation[0].geometry.coordinates[1],
+      lng: this.selectedLocation[0].geometry.coordinates[0],
+    });
+
+    const travel = await ApiTravel.getTravel(
+      this.selectedLocation[0].geometry.coordinates[1],
+      this.selectedLocation[0].geometry.coordinates[0],
+      start,
+      end,
+    );
+
+    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
+
+    this.sendLocation.emit(travel);
   }
 
   dateRange(event: { start: Date; end: Date }) {
