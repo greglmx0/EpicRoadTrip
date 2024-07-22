@@ -10,5 +10,5 @@
 # Ansible
 FROM nginx:1.25.4-alpine
 COPY nginx.frontend.conf /etc/nginx/templates/default.conf.template
-EXPOSE 80
+EXPOSE 4200
 COPY dist/frontend/browser /usr/share/nginx/html/frontend
