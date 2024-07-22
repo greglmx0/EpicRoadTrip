@@ -11,22 +11,21 @@
       (click)="showMore = !showMore"
       *ngIf="event.description && event.description.length > 100"
     >
-      {{ showMore ? "Moins de détails" : "Plus de détails" }}
+      {{ showMore ? 'Moins de détails' : 'Plus de détails' }}
     </button>
     <img
+      *ngIf="event.picture"
       [src]="event.picture"
       alt="Picture of {{ event.name }}"
       class="w-full h-48 object-cover mt-4"
     />
-    <div class="mt-4">
-      <p class="text-withe-600">
-        Le {{ date }}, {{ time }} à {{ event.location }}
-      </p>
+    <div class="mt-4" *ngIf="event.location">
+      <p class="text-withe-600">Le {{ date }}, {{ time }} à {{ event.location }}</p>
     </div>
     <div class="mt-4" *ngIf="event.genre">
       <p class="text-withe-600">Genre: {{ event.genre }}</p>
     </div>
-    <div class="flex flex-row justify-between mt-4">
+    <div class="flex flex-row justify-between mt-4" *ngIf="event.priceRangeMin || event.priceRangeMax">
       <div *ngIf="event.priceRangeMin !== undefined">
         <p class="text-withe-600">A partir de {{ event.priceRangeMin }}€</p>
       </div>
