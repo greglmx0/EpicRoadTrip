@@ -3,19 +3,25 @@ import type { Event } from './dto/travel.dto';
 import TravelDto from './dto/travel.dto';
 
 class ApiTravel {
-  static async getTravel(latitute: number, longitude: number, start_date: string, end_date: string) {
+  static async getTravel(
+    latitute: number,
+    longitude: number,
+    start_date: string,
+    end_date: string,
+  ): Promise<TravelDto[]> {
     try {
       const responce = await axiosInstance.get(
         `/travel?latitute=${latitute}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`,
       );
-      const travel = ApiTravel.convertTravelDto(responce.data._embedded.events);
-      return travel;
+
+      if (responce.status === 200) {
+        const travel = ApiTravel.convertTravelDto(responce.data._embedded.events);
+        return travel;
+      }
     } catch (error: any) {
-      return {
-        status: error.response.status,
-        data: { message: error.response.data.message },
-      };
+      console.error('Error: ', error);
     }
+    return [];
   }
 
   private static convertTravelDto(data: Event[]) {

@@ -1,4 +1,3 @@
-import { Start } from './../../api/dto/enjoy.dto';
 import { Component, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,11 +5,16 @@ import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-p
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { debounceTime, Subject } from 'rxjs';
 import ApiMapbox from '../../api/mapbox';
-import ApiEnjoy from 'src/api/enjoy';
-import ApiEat from 'src/api/ApiEat';
-import ApiDrink from 'src/api/ApiDrink';
-import ApiSleep from 'src/api/ApiSleep';
+import ApiEnjoy from 'src/api/apiEnjoy';
+import ApiEat from 'src/api/apiEat';
+import ApiDrink from 'src/api/apiDrink';
+import ApiSleep from 'src/api/apiSleep';
 import ApiTravel from 'src/api/apiTravel';
+import type EnjoyDto from './../../api/dto/enjoy.dto';
+import type TravelDto from 'src/api/dto/travel.dto';
+import type SleepDto from 'src/api/dto/sleep.dto';
+import type DrinkDto from 'src/api/dto/drink.dto';
+import type EatDto from 'src/api/dto/eat.dto';
 @Component({
   selector: 'app-search-places-of-interest',
   standalone: true,
@@ -114,35 +118,45 @@ export class SearchPlacesOfInterestComponent {
       if (response.status === 200) {
         this.selectedLocation = response.data;
 
+        const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
+        const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
+        let retrieve: any;
+
         switch (this.selectedType) {
           case 'enjoy':
-            await this.getEnjoyRetrieve();
+            retrieve = await this.getEnjoyRetrieve(start, end);
             break;
           case 'sleep':
-            await this.getSleepRetrieve();
+            retrieve = await this.getSleepRetrieve(start, end);
             break;
           case 'travel':
-            await this.getTravelRetrieve();
+            retrieve = await this.getTravelRetrieve(start, end);
             break;
           case 'eat':
-            await this.getEatRetrieve();
+            retrieve = await this.getEatRetrieve(start, end);
             break;
           case 'drink':
-            await this.getDrinkRetrieve();
+            retrieve = await this.getDrinkRetrieve(start, end);
             break;
+        }
+
+        if (retrieve) {
+          this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
+          this.sendLocation.emit(retrieve);
+        } else {
+          this.selectedLocationText = '';
+          this.failure = 'Aucun résultat trouvé';
         }
       }
     } catch (error) {
       console.error('Error: ', error);
     } finally {
       this.loading = false;
+      this.cdr.detectChanges();
     }
   }
 
-  async getEnjoyRetrieve() {
-    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
-    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
-
+  async getEnjoyRetrieve(start: string, end: string): Promise<EnjoyDto[]> {
     this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
@@ -155,15 +169,10 @@ export class SearchPlacesOfInterestComponent {
       end,
     );
 
-    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
-
-    this.sendLocation.emit(enjoy);
+    return enjoy;
   }
 
-  async getEatRetrieve() {
-    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
-    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
-
+  async getEatRetrieve(start: string, end: string): Promise<EatDto[]> {
     this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
@@ -175,16 +184,10 @@ export class SearchPlacesOfInterestComponent {
       start,
       end,
     );
-
-    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
-
-    this.sendLocation.emit(eat);
+    return eat;
   }
 
-  async getDrinkRetrieve() {
-    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
-    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
-
+  async getDrinkRetrieve(start: string, end: string): Promise<DrinkDto[]> {
     this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
@@ -196,16 +199,10 @@ export class SearchPlacesOfInterestComponent {
       start,
       end,
     );
-
-    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
-
-    this.sendLocation.emit(drink);
+    return drink;
   }
 
-  async getSleepRetrieve() {
-    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
-    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
-
+  async getSleepRetrieve(start: string, end: string): Promise<SleepDto[]> {
     this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
@@ -217,16 +214,10 @@ export class SearchPlacesOfInterestComponent {
       start,
       end,
     );
-
-    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
-
-    this.sendLocation.emit(sleep);
+    return sleep;
   }
 
-  async getTravelRetrieve() {
-    const start = this.range.start.toISOString().split('T')[0].replace(/,/g, '');
-    const end = this.range.end.toISOString().split('T')[0].replace(/,/g, '');
-
+  async getTravelRetrieve(start: string, end: string): Promise<TravelDto[]> {
     this.sendMapCenter.emit({
       lat: this.selectedLocation[0].geometry.coordinates[1],
       lng: this.selectedLocation[0].geometry.coordinates[0],
@@ -239,9 +230,7 @@ export class SearchPlacesOfInterestComponent {
       end,
     );
 
-    this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
-
-    this.sendLocation.emit(travel);
+    return travel;
   }
 
   dateRange(event: { start: Date; end: Date }) {

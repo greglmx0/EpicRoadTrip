@@ -3,7 +3,12 @@ import type { Event } from './dto/sleep.dto';
 import SleepDto from './dto/sleep.dto';
 
 class ApiSleep {
-  static async getSleep(latitute: number, longitude: number, start_date: string, end_date: string) {
+  static async getSleep(
+    latitute: number,
+    longitude: number,
+    start_date: string,
+    end_date: string,
+  ): Promise<SleepDto[]> {
     try {
       const responce = (await axiosInstance.get(
         `/sleep?latitute=${latitute}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`,
@@ -13,11 +18,9 @@ class ApiSleep {
 
       return sleep;
     } catch (error: any) {
-      return {
-        status: error.response.status,
-        data: { message: error.response.data.message },
-      };
+      console.error('Error: ', error);
     }
+    return [];
   }
 
   private static convertSleepDto(data: Event[]) {

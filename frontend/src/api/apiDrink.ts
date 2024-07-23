@@ -3,7 +3,12 @@ import type { Event } from './dto/drink.dto';
 import DrinkDto from './dto/drink.dto';
 
 class ApiDrink {
-  static async getDrink(latitute: number, longitude: number, start_date: string, end_date: string) {
+  static async getDrink(
+    latitute: number,
+    longitude: number,
+    start_date: string,
+    end_date: string,
+  ): Promise<DrinkDto[]> {
     try {
       const responce = (await axiosInstance.get(
         `/drink?latitute=${latitute}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`,
@@ -13,11 +18,9 @@ class ApiDrink {
 
       return drink;
     } catch (error: any) {
-      return {
-        status: error.response.status,
-        data: { message: error.response.data.message },
-      };
+      console.error('Error: ', error);
     }
+    return [];
   }
 
   private static convertDrinkDto(data: Event[]) {

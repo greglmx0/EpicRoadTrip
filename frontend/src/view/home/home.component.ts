@@ -11,13 +11,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    NavbarHomeComponent,
-    TabHomeComponent,
-    PointsOfInterestContainerComponent,
-  ],
+  imports: [FormsModule, CommonModule, NavbarHomeComponent, TabHomeComponent, PointsOfInterestContainerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -29,13 +23,14 @@ export class HomeComponent {
   constructor() {}
 
   createMarker(point: any) {
+    console.log('point', point);
+    if (!point) {
+      throw new Error('No point to create marker');
+    }
     point.forEach((element: any) => {
       // check if the element already exists in the array (lat, lng)
       const exists = this.points.some((el: any) => {
-        return (
-          el.coordinates[0] === element.longitude &&
-          el.coordinates[1] === element.latitude
-        );
+        return el.coordinates[0] === element.longitude && el.coordinates[1] === element.latitude;
       });
 
       if (exists) {
