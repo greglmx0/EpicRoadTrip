@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { debounceTime, Subject } from 'rxjs';
-import ApiMapbox from '../../api/mapbox';
+import ApiMapbox from 'src/api/mapbox';
 import ApiEnjoy from 'src/api/apiEnjoy';
 import ApiEat from 'src/api/apiEat';
 import ApiDrink from 'src/api/apiDrink';
 import ApiSleep from 'src/api/apiSleep';
 import ApiTravel from 'src/api/apiTravel';
-import type EnjoyDto from './../../api/dto/enjoy.dto';
+import type EnjoyDto from 'src/api/dto/enjoy.dto';
 import type TravelDto from 'src/api/dto/travel.dto';
 import type SleepDto from 'src/api/dto/sleep.dto';
 import type DrinkDto from 'src/api/dto/drink.dto';
@@ -140,7 +140,7 @@ export class SearchPlacesOfInterestComponent {
             break;
         }
 
-        if (retrieve) {
+        if (retrieve && retrieve.length > 0) {
           this.selectedLocationText = `${this.selectedLocation[0].properties.full_address} du ${start} au ${end}`;
           this.sendLocation.emit(retrieve);
         } else {
