@@ -48,6 +48,7 @@ export class SearchPlacesOfInterestComponent {
   failure: string = '';
   selectedType: string = '';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
+  loading: boolean = false;
 
   constructor() {}
 
@@ -90,20 +91,20 @@ export class SearchPlacesOfInterestComponent {
 
   // retrieve = recuperer (la location subgerer)
   async serachRetrieve() {
-    if (!this.selectedLocation) {
-      this.failure = 'Rentrer une adresse valide';
-      return;
-    }
-    if (!this.selectedType) {
-      this.failure = "Choisir un type d'activité";
-      return;
-    }
-
-    this.failure = '';
-
     try {
-      const response = (await ApiMapbox.getRetrieve(this.selectedLocation.mapbox_id)) as any;
 
+      this.loading = true;
+      if (!this.selectedLocation) {
+        this.failure = 'Rentrer une adresse valide';
+        return;
+      }
+      if (!this.selectedType) {
+        this.failure = "Choisir un type d'activité";
+        return;
+      }
+      this.failure = '';
+
+      const response = (await ApiMapbox.getRetrieve(this.selectedLocation.mapbox_id)) as any;
       if (response.status === 200) {
         this.selectedLocation = response.data;
 
@@ -127,6 +128,8 @@ export class SearchPlacesOfInterestComponent {
       }
     } catch (error) {
       console.error('Error: ', error);
+    } finally {
+      this.loading = false;
     }
   }
 

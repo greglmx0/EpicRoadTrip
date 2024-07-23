@@ -20,7 +20,11 @@
     </div>
   </div>
 
-  <div class="flex flex-col gap-4" *ngIf="selectedLocationText === ''">
+  <div class="flex justify-center" *ngIf="loading">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+
+  <div class="flex flex-col gap-4" *ngIf="selectedLocationText === '' && !loading">
     <div class="dropdown">
       <input
         tabindex="0"
