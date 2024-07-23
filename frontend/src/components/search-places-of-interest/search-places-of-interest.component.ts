@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Start } from './../../api/dto/enjoy.dto';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
@@ -46,23 +47,31 @@ export class SearchPlacesOfInterestComponent {
     },
   ];
   failure: string = '';
-  selectedType: string = '';
+  selectedType: string = 'travel';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
   loading: boolean = false;
 
-  constructor() {}
+  constructor(
+    private cdr: ChangeDetectorRef, // ChangeDetectorRef is a service that comes with Angular that helps us to manually trigger the change detection process
+  ) {}
 
-  ngOnInit() {
-    this.subject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
-      this.performSearch(searchValue);
+  async ngOnInit() {
+    this.subject.pipe(debounceTime(this.debounceTimeMs)).subscribe(async (searchValue) => {
+      await this.performSearch(searchValue);
     });
   }
 
+  async searchSuggestions(searchInput: string) {
+    this.subject.next(searchInput);
+  }
+
   async performSearch(searchValue: string) {
+    console.log('searchValue: ', searchValue);
+
     if (searchValue.length < 3) {
       this.failure = 'Preciser votre recherche';
       this.searchResults = [{ name: 'Veuillez préciser votre recherche' }];
-
+      this.cdr.detectChanges();
       return;
     } else {
       this.failure = '';
@@ -76,11 +85,9 @@ export class SearchPlacesOfInterestComponent {
       }
     } catch (error) {
       console.error('Error: ', error);
+    } finally {
+      this.cdr.detectChanges();
     }
-  }
-
-  async searchSuggestions(searchInput: string) {
-    this.subject.next(searchInput);
   }
 
   async selectSuggestions(location: any) {
@@ -92,7 +99,6 @@ export class SearchPlacesOfInterestComponent {
   // retrieve = recuperer (la location subgerer)
   async serachRetrieve() {
     try {
-
       this.loading = true;
       if (!this.selectedLocation) {
         this.failure = 'Rentrer une adresse valide';

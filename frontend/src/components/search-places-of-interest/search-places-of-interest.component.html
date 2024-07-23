@@ -60,6 +60,7 @@
             [id]="type.name"
             class="radio peer hidden"
             (change)="selectType(type.name)"
+            [checked]="selectedType === type.name"
           />
           <label
             [for]="type.name"
