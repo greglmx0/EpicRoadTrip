@@ -18,8 +18,10 @@ class drink_service:
                 'Authorization': FOURSQUARE_API_KEY
             }
             response = requests.get(url, headers=headers, data=payload)
-            # print(response.text)
-            return response.text
+            if response.status_code == 200:
+                return response.text
+            else:
+                return {'message': 'An error occurred'}, response.status_code
 
         except Exception as e:
             return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
