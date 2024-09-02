@@ -18,11 +18,23 @@ export class PointsOfInterestContainerComponent {
 
   get getPoints() {
     const points = [...this.locations];
-    return points.map((element: any) => {
-      return {
-        name: element.name,
-        coordinates: [element.longitude, element.latitude],
-      };
-    });
+
+    // TODO: filter points by latitude and longitude with function filter and not with a for loop
+
+    // filter points by latitude and longitude to avoid duplicates
+    const filterPoints = [];
+    for (const point of points) {
+      const lat = Number(point.latitude);
+      const long = Number(point.longitude);
+
+      if (!filterPoints[lat + long]) {
+        filterPoints[lat + long] = {
+          name: point?.venue || point.name,
+          coordinates: [long, lat],
+        };
+      }
+    }
+
+    return Object.values(filterPoints);
   }
 }
