@@ -2,6 +2,7 @@ class EnjoyDto {
   id: string;
   category: string;
   name: string;
+  venue?: string;
   location: string;
   description?: string;
   genre?: string;
@@ -18,6 +19,7 @@ class EnjoyDto {
     this.id = data.id;
     this.category = 'enjoy';
     this.name = data?.name;
+    this.venue = data?._embedded?.venues?.[0]?.name;
     this.location = data?._embedded?.venues?.[0]?.city?.name;
     this.description = data.description;
     this.genre = data.classifications?.[0]?.genre?.name;
@@ -201,6 +203,7 @@ export interface Embedded2 {
 }
 
 export interface Venue2 {
+  name?: string;
   type: string;
   id: string;
   test: boolean;
