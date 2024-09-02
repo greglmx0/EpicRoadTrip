@@ -2,6 +2,7 @@ class EatDto {
   id: string;
   category: string;
   name: string;
+  venue?: string;
   location: string;
   description?: string;
   genre?: string;
@@ -18,6 +19,7 @@ class EatDto {
     this.id = data.fsq_id;
     this.category = 'eat';
     this.name = data?.name;
+    this.venue = data?.name;
     this.location = data?.location?.locality;
     this.description = data?.description;
     this.genre = data?.categories?.[0]?.name; // TODO: convert to array of strings
