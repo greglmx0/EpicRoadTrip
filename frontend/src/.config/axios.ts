@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { environment } from '../environments/environment';
 
-console.log('environment.apiUrl', environment.apiUrl);
-
 const axiosInstance = axios.create({
   baseURL: environment.apiUrl,
   withCredentials: true,

@@ -14,7 +14,6 @@ class ApiDrink {
         `/drink?latitute=${latitute}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`,
       )) as any;
       const drink = ApiDrink.convertDrinkDto(responce.data?.results as any);
-      console.log('drink', drink);
 
       return drink;
     } catch (error: any) {
