@@ -30,7 +30,7 @@
         tabindex="0"
         type="text"
         id="searchInput"
-        placeholder="Ville, adresse ou code postal"
+        [placeholder]="placeholder"
         class="input input-bordered w-full"
         (input)="searchSuggestions(searchInputValue)"
         [(ngModel)]="searchInputValue"

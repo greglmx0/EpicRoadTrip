@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, Subject } from 'rxjs';
@@ -14,6 +14,8 @@ import ApiMapbox from 'src/api/mapbox';
 })
 export class InputAddressSuggestionComponent {
   @Output() sendAddress = new EventEmitter();
+  @Output() clearAddress = new EventEmitter();
+  @Input() placeholder: string = 'Ville, adresse ou code postal';
   searchInputValue: string = '';
   searchResults: any[] = [];
   subject: Subject<any> = new Subject();
@@ -56,18 +58,15 @@ export class InputAddressSuggestionComponent {
   }
 
   async selectSuggestions(location: any) {
-    console.log('selectSuggestions location: ', location);
-
     this.selectedLocation = location;
     this.searchResults = []; // clear search results
     this.selectedLocationText = `${this.selectedLocation.name} ${this.selectedLocation.place_formatted}`;
     this.searchInputValue = `${this.selectedLocation.name} ${this.selectedLocation.place_formatted}`;
-    console.log(location);
 
     const latLng = await this.getLatLng(location);
-    console.log('selectSuggestions latLng: ', latLng);
-
-    return latLng;
+    if (latLng) {
+      this.sendAddress.emit(latLng);
+    }
   }
 
   async getLatLng(location: any) {
@@ -91,5 +90,6 @@ export class InputAddressSuggestionComponent {
   clearSelectedLocation() {
     this.selectedLocation = null;
     this.selectedLocationText = '';
+    this.clearAddress.emit();
   }
 }
