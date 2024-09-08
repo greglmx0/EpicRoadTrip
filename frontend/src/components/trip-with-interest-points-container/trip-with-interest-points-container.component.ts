@@ -1,23 +1,54 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { InputAddressSuggestionComponent } from '../input/input-address-suggestion/input-address-suggestion.component';
 import { MapTripComponent } from '../map/map-trip/map-trip.component';
+import ApiMapbox from 'src/api/mapbox';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-trip-with-interest-points-container',
   standalone: true,
   templateUrl: './trip-with-interest-points-container.component.html',
   styleUrl: './trip-with-interest-points-container.component.scss',
-  imports: [InputAddressSuggestionComponent, MapTripComponent],
+  imports: [InputAddressSuggestionComponent, MapTripComponent, CommonModule],
 })
 export class TripWithInterestPointsContainerComponent {
-  mapboxIdDeparture: string = '';
-  mapboxIdDestination: string = '';
+  depart: [lat: number, lon: number] | null = null;
+  arrive: [lat: number, lon: number] | null = null;
+  trip: any = null;
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
   selectedDeparture(event: any) {
-    console.log('selectedDeparture event: ', event);
-    this.mapboxIdDeparture = event as string;
+    this.depart = event as [lat: number, lon: number];
+    this.searchTrip();
   }
   selectedDestination(event: any) {
-    console.log('selectedDestination event: ', event);
-    this.mapboxIdDestination = event as string;
+    this.arrive = event as [lat: number, lon: number];
+    this.searchTrip();
+  }
+  clearDeparture() {
+    this.depart = null;
+    this.trip = null;
+  }
+  clearDestination() {
+    this.arrive = null;
+    this.trip = null;
+  }
+
+  async searchTrip() {
+    if (this.depart && this.arrive) {
+      try {
+        this.trip = await ApiMapbox.getTrip(this.depart, this.arrive);
+        this.cdr.detectChanges();
+      } catch (error: any) {
+        console.error('Error: ', error);
+      }
+    }
+  }
+
+  logAll() {
+    console.log('depart: ', this.depart);
+    console.log('arrive: ', this.arrive);
+    console.log('trip: ', this.trip);
   }
 }

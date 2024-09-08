@@ -1,6 +1,19 @@
 <div class="m-4">
-  <app-input-address-suggestion (sendAddress)="selectedDeparture($event)"></app-input-address-suggestion>
-  <app-input-address-suggestion (sendAddress)="selectedDestination($event)"></app-input-address-suggestion>
+  <app-input-address-suggestion
+    (sendAddress)="selectedDeparture($event)"
+    (clearAddress)="clearDeparture()"
+    placeholder="Ville, adresse de départ"
+  ></app-input-address-suggestion>
+  <app-input-address-suggestion
+    (sendAddress)="selectedDestination($event)"
+    (clearAddress)="clearDestination()"
+    placeholder="Ville, adresse d'arrivé"
+  ></app-input-address-suggestion>
 </div>
+<!--  TODO: delete this button -->
+<button class="btn btn-primary" (click)="logAll()">Log</button>
 
-<app-map-trip></app-map-trip>
+<div *ngIf="trip">
+  <app-map-trip [routes]="trip?.routes" [waypoints]="trip?.waypoints"></app-map-trip>
+</div>
+<!-- <app-map-trip></app-map-trip> -->
