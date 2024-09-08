@@ -6,12 +6,12 @@ FOURSQUARE_API_URL = os.getenv('FOURSQUARE_API_URL')
 FOURSQUARE_API_KEY = os.getenv('FOURSQUARE_API_KEY')
 
 class eat_service:
-    def get_eat(latitute, longitude, start_date, end_date):
+    def get_eat(latitute, longitude, start_date, end_date, radius=22000):
         try:
             print("eat_service.get_eat")
-            print("latitute: ", latitute, "longitude: ", longitude, "start_date: ", start_date, "end_date: ", end_date)
+            print("latitute: ", latitute, "longitude: ", longitude, "start_date: ", start_date, "end_date: ", end_date, "radius: ", radius)
             # 13065 is the category id for Dining and Drinking > Restaurant
-            url = f"{FOURSQUARE_API_URL}/places/search?categories=13065&ll={latitute},{longitude}&start_date={start_date}&end_date={end_date}"
+            url = f"{FOURSQUARE_API_URL}/places/search?categories=13065&ll={latitute},{longitude}&start_date={start_date}&end_date={end_date}&radius={radius}"
             print("url: ", url)
             payload={}
             headers = {

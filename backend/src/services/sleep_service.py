@@ -6,13 +6,13 @@ FOURSQUARE_API_URL = os.getenv('FOURSQUARE_API_URL')
 FOURSQUARE_API_KEY = os.getenv('FOURSQUARE_API_KEY')
 
 class sleep_service:
-    def get_sleep(latitute, longitude, start_date, end_date):
+    def get_sleep(latitute, longitude, start_date, end_date, radius=22000):
         try:
             print("sleep_service.get_sleep")
-            print("latitute: ", latitute, "longitude: ", longitude, "start_date: ", start_date, "end_date: ", end_date)
+            print("latitute: ", latitute, "longitude: ", longitude, "start_date: ", start_date, "end_date: ", end_date, "radius: ", radius)
             #  13003 is the category id for Dining and Drinking > Bar
             category_id = 19009 # Travel and Transportation > Lodging
-            url = f"{FOURSQUARE_API_URL}/places/search?categories={category_id}&ll={latitute},{longitude}&start_date={start_date}&end_date={end_date}"
+            url = f"{FOURSQUARE_API_URL}/places/search?categories={category_id}&ll={latitute},{longitude}&start_date={start_date}&end_date={end_date}&radius={radius}"
             print("url: ", url)
             payload={}
             headers = {

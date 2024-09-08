@@ -14,6 +14,10 @@
 <button class="btn btn-primary" (click)="logAll()">Log</button>
 
 <div *ngIf="trip">
-  <app-map-trip [routes]="trip?.routes" [waypoints]="trip?.waypoints"></app-map-trip>
+  <app-map-trip
+    [routes]="trip?.routes"
+    [waypoints]="trip?.waypoints"
+    (centerChange)="updateCenter($event)"
+  ></app-map-trip>
 </div>
 <!-- <app-map-trip></app-map-trip> -->

@@ -15,6 +15,8 @@ export class TripWithInterestPointsContainerComponent {
   depart: [lat: number, lon: number] | null = null;
   arrive: [lat: number, lon: number] | null = null;
   trip: any = null;
+  center: { lat: number; lon: number } = { lat: 0, lon: 0 };
+  distance: number = 0;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -50,5 +52,11 @@ export class TripWithInterestPointsContainerComponent {
     console.log('depart: ', this.depart);
     console.log('arrive: ', this.arrive);
     console.log('trip: ', this.trip);
+  }
+
+  updateCenter(event: any) {
+    console.log('event: ', event);
+    this.center = event.center;
+    this.distance = event.distance;
   }
 }
