@@ -28,7 +28,6 @@ export class InputAddressSuggestionComponent {
   ngOnInit() {
     this.subject.pipe(debounceTime(this.debounceTimeMs)).subscribe(async (value) => {
       if (value.length > 0) {
-        this.loading = true;
         this.searchResults = (await this.searchLocation(value)) as any;
         this.loading = false;
         this.cdr.detectChanges();
@@ -43,11 +42,9 @@ export class InputAddressSuggestionComponent {
   async searchLocation(searchValue: string) {
     try {
       const response = await ApiMapbox.getSuggestions(searchValue);
-      console.log('response: ', response);
 
       if (response.status === 200) {
-        this.searchResults = response.data;
-        console.log('searchResults: ', this.searchResults);
+        return response.data;
       } else {
         this.failure = response.data.message || 'An error occurred';
       }
@@ -55,13 +52,44 @@ export class InputAddressSuggestionComponent {
       this.failure = error.message || 'An error occurred';
     } finally {
       this.loading = false;
-      this.cdr.detectChanges();
     }
   }
 
-  selectLocation(location: any) {
+  async selectSuggestions(location: any) {
+    console.log('selectSuggestions location: ', location);
+
     this.selectedLocation = location;
-    this.selectedLocationText = location.description;
-    this.sendAddress.emit(location);
+    this.searchResults = []; // clear search results
+    this.selectedLocationText = `${this.selectedLocation.name} ${this.selectedLocation.place_formatted}`;
+    this.searchInputValue = `${this.selectedLocation.name} ${this.selectedLocation.place_formatted}`;
+    console.log(location);
+
+    const latLng = await this.getLatLng(location);
+    console.log('selectSuggestions latLng: ', latLng);
+
+    return latLng;
+  }
+
+  async getLatLng(location: any) {
+    try {
+      const response = await ApiMapbox.getRetrieve(location.mapbox_id);
+
+      if (response.status === 200) {
+        console.log('getLatLng response: ', response);
+
+        return response.data[0]?.geometry?.coordinates;
+      } else {
+        this.failure = response.data.message || 'An error occurred';
+      }
+    } catch (error: any) {
+      this.failure = error.message || 'An error occurred';
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  clearSelectedLocation() {
+    this.selectedLocation = null;
+    this.selectedLocationText = '';
   }
 }

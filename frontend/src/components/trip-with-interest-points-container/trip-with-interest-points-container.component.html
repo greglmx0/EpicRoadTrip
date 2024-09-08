@@ -1,4 +1,6 @@
 <div class="m-4">
-  <app-input-address-suggestion (selectedLocation)="selectedLocation($event)"></app-input-address-suggestion>
-  <app-input-address-suggestion (selectedLocation)="selectedLocation($event)"></app-input-address-suggestion>
+  <app-input-address-suggestion (sendAddress)="selectedDeparture($event)"></app-input-address-suggestion>
+  <app-input-address-suggestion (sendAddress)="selectedDestination($event)"></app-input-address-suggestion>
 </div>
+
+<app-map-trip></app-map-trip>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { ApplicationRef, Component, Input, OnInit } from '@angular/core';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -70,7 +70,7 @@ export class MapComponent implements OnInit {
 
       this.map?.on('mouseenter', 'Rennes Points', (e: any) => {
         if (!this.map) {
-          console.log('map is not here');
+          console.error('map is not here');
         }
         this.map!.getCanvas().style.cursor = 'pointer';
         const coordinates = e.features[0].geometry.coordinates.slice();

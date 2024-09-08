@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MapComponent } from '../map/map.component';
+import { MapComponent } from '../map/map-point-interrest/map.component';
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
 import EnjoyDto from 'src/api/dto/enjoy.dto';
 

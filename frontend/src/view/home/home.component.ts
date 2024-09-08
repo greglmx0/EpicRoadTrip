@@ -1,7 +1,7 @@
 import type EnjoyDto from './../../api/dto/enjoy.dto';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavbarHomeComponent } from 'src/components/navbar-home/navbar-home.component';
-import { MapComponent } from 'src/components/map/map.component';
+import { MapComponent } from 'src/components/map/map-point-interrest/map.component';
 import { TabHomeComponent } from 'src/components/tab-home/tab-home.component';
 import { CardPointInterrestComponent } from 'src/components/card-point-interrest/card-point-interrest.component';
 import { PointsOfInterestContainerComponent } from 'src/components/points-of-interest-container/points-of-interest-container.component';
