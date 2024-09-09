@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
-import { ApplicationRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -13,15 +13,15 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 })
 export class MapTripComponent implements OnInit {
   map: mapboxgl.Map | undefined;
-  // @Input() points: Array<{ name: string; coordinates: number[]; description?: string }> = [];
   style = 'mapbox://styles/mapbox/streets-v12';
 
   @Input() routes: any;
   @Input() waypoints: any;
+  @Input() points: Array<{ name: string; coordinates: number[]; description?: string }> = [];
 
   @Output() centerChange = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.map = new mapboxgl.Map({
@@ -59,22 +59,22 @@ export class MapTripComponent implements OnInit {
         closeOnClick: false,
       });
 
-      this.map?.on('mouseenter', 'Rennes Points', (e: any) => {
-        // if (!this.map) {
-        //   console.log('map is not here');
-        // }
-        // this.map!.getCanvas().style.cursor = 'pointer';
-        // const coordinates = e.features[0].geometry.coordinates.slice();
-        // const description = e.features[0].properties.description;
-        // while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        //   coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        // }
-        // popup.setLngLat(coordinates).setHTML(description).addTo(this.map!);
+      this.map?.on('mouseenter', 'Points', (e: any) => {
+        if (!this.map) {
+          console.log('map is not here');
+        }
+        this.map!.getCanvas().style.cursor = 'pointer';
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const description = e.features[0].properties.description;
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        popup.setLngLat(coordinates).setHTML(description).addTo(this.map!);
       });
 
-      this.map?.on('mouseleave', 'Rennes Points', () => {
-        // this.map!.getCanvas().style.cursor = '';
-        // popup.remove();
+      this.map?.on('mouseleave', 'Points', () => {
+        this.map!.getCanvas().style.cursor = '';
+        popup.remove();
       });
 
       // calculate the radius of the map for at the beginning
@@ -116,5 +116,55 @@ export class MapTripComponent implements OnInit {
 
   deg2rad(deg: number) {
     return deg * (Math.PI / 180);
+  }
+
+  // if this.points is updated, we need to update the map
+  ngOnChanges() {
+    console.log('ngOnChanges', this.points);
+
+    // remove the previous layer if it exists
+    if (this.map?.getLayer('Points')) {
+      this.map?.removeLayer('Points');
+    }
+
+    // remove the previous source if it exists
+    if (this.map?.getSource('Points')) {
+      this.map?.removeSource('Points');
+    }
+
+    this.map?.addSource('Points', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: this.points.map((point) => {
+          return {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: point.coordinates,
+            },
+            properties: {
+              title: point.name,
+              description: point.name,
+            },
+          };
+        }) as any,
+      },
+    });
+
+    this.map?.addLayer({
+      id: 'Points',
+      type: 'circle',
+      source: 'Points',
+      layout: {},
+      paint: {
+        'circle-color': 'blue',
+        'circle-radius': 6,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': 'white',
+      },
+    });
+
+    // this.cdr.detectChanges();
   }
 }

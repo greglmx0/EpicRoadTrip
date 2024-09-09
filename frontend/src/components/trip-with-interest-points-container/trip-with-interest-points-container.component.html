@@ -12,11 +12,13 @@
 </div>
 <!--  TODO: delete this button -->
 <button class="btn btn-primary" (click)="logAll()">Log</button>
+<button class="btn btn-primary" (click)="searchDrink()">Get Trip</button>
 
 <div *ngIf="trip">
   <app-map-trip
     [routes]="trip?.routes"
     [waypoints]="trip?.waypoints"
+    [points]="points"
     (centerChange)="updateCenter($event)"
   ></app-map-trip>
 </div>
