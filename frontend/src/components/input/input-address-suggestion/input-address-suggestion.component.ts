@@ -74,7 +74,7 @@ export class InputAddressSuggestionComponent {
       const response = await ApiMapbox.getRetrieve(location.mapbox_id);
 
       if (response.status === 200) {
-        console.log('getLatLng response: ', response);
+        // console.log('getLatLng response: ', response);
 
         return response.data[0]?.geometry?.coordinates;
       } else {
