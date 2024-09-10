@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
-import { ApplicationRef, Component, Input, OnInit } from '@angular/core';
+import { ApplicationRef, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -18,7 +18,10 @@ export class MapComponent implements OnInit {
   @Input() lng: number = -1.6774;
   style = 'mapbox://styles/mapbox/streets-v12';
 
-  constructor() {}
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) {
+  }
 
   ngOnInit() {
     this.map = new mapboxgl.Map({
@@ -62,6 +65,7 @@ export class MapComponent implements OnInit {
           'circle-stroke-color': 'white',
         },
       });
+
 
       const popup = new mapboxgl.Popup({
         closeButton: false,

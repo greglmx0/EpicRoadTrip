@@ -120,7 +120,7 @@ export class MapTripComponent implements OnInit {
 
   // if this.points is updated, we need to update the map
   ngOnChanges() {
-    console.log('ngOnChanges', this.points);
+    // console.log('ngOnChanges', this.points);
 
     // remove the previous layer if it exists
     if (this.map?.getLayer('Points')) {

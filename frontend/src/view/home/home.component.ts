@@ -23,7 +23,6 @@ export class HomeComponent {
   constructor() {}
 
   createMarker(point: any) {
-    console.log('point', point);
     if (!point) {
       throw new Error('No point to create marker');
     }

@@ -15,6 +15,7 @@
       [selectedType]="activityType"
       [selectedLocationLatLng]="selectedLocationLatLng"
       [selectedDateRange]="range"
+      (sendLocation)="sendLocation.emit($event)"
     ></app-search-activity-button>
   </div>
 </div>
