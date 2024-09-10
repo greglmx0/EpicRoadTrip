@@ -18,10 +18,7 @@ export class MapComponent implements OnInit {
   @Input() lng: number = -1.6774;
   style = 'mapbox://styles/mapbox/streets-v12';
 
-  constructor(
-    private cdr: ChangeDetectorRef
-  ) {
-  }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.map = new mapboxgl.Map({
@@ -65,7 +62,6 @@ export class MapComponent implements OnInit {
           'circle-stroke-color': 'white',
         },
       });
-
 
       const popup = new mapboxgl.Popup({
         closeButton: false,

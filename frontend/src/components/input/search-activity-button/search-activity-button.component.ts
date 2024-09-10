@@ -24,7 +24,6 @@ export class SearchActivityButtonComponent {
   @Input() selectedType: ActivityType | null = null;
   @Input() selectedDateRange: { start: Date; end: Date } | null = null;
   @Input() selectedLocationLatLng: { lat: number; lng: number } | null = null;
-  
 
   apiMapping = {
     enjoy: ApiEnjoy.getEnjoy,
@@ -33,7 +32,6 @@ export class SearchActivityButtonComponent {
     eat: ApiEat.getEat,
     drink: ApiDrink.getDrink,
   };
-
 
   // retrieve = recuperer (la location subgerer)
   async searchRetrieve() {
@@ -84,13 +82,7 @@ export class SearchActivityButtonComponent {
       //   lat: this.selectedLocationLatLng.lat,
       //   lng: this.selectedLocationLatLng.lng,
       // });
-
-      const result = await apiFunc(
-        this.selectedLocationLatLng.lat,
-        this.selectedLocationLatLng.lng,
-        start,
-        end,
-      );
+      const result = await apiFunc(this.selectedLocationLatLng.lat, this.selectedLocationLatLng.lng, start, end);
       return result;
     }
     return [];
