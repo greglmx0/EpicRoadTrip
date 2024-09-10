@@ -8,10 +8,9 @@ describe('ActivityCheckboxSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActivityCheckboxSelectorComponent]
-    })
-    .compileComponents();
-    
+      imports: [ActivityCheckboxSelectorComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ActivityCheckboxSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
