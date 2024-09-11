@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MapComponent } from '../map/map.component';
+import { MapComponent } from '../map/map-point-interrest/map.component';
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
 import EnjoyDto from 'src/api/dto/enjoy.dto';
 
@@ -25,12 +25,12 @@ export class PointsOfInterestContainerComponent {
     const filterPoints = [];
     for (const point of points) {
       const lat = Number(point.latitude);
-      const long = Number(point.longitude);
+      const lng = Number(point.longitude);
 
-      if (!filterPoints[lat + long]) {
-        filterPoints[lat + long] = {
+      if (!filterPoints[lng + lng]) {
+        filterPoints[lng + lat] = {
           name: point?.venue || point.name,
-          coordinates: [long, lat],
+          coordinates: [lng, lat],
         };
       }
     }

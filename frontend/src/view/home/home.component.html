@@ -1,15 +1,6 @@
 <header>
   <app-navbar-home></app-navbar-home>
 </header>
-<app-tab-home
-  (sendLocation)="onSendLocation($event)"
-  (sendMapCenter)="onSendMapCenter($event)"
-></app-tab-home>
 <main>
-  <app-points-of-interest-container
-    [locations]="locations"
-    [lat]="lat"
-    [lng]="lng"
-    *ngIf="points.length > 0"
-  ></app-points-of-interest-container>
+  <app-tab-home></app-tab-home>
 </main>

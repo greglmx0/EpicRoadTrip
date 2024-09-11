@@ -14,3 +14,7 @@ def suggest():
 @mapbox_controller.route('/mapbox/retrieve', methods=['GET'])
 def retrieve():
     return mapbox_service.get_retrieve(request.args.get('mapbox_id'))
+
+@mapbox_controller.route('/mapbox/trip', methods=['GET'])
+def trip():
+    return mapbox_service.get_trip(request.args.get('depart_lat'), request.args.get('depart_lon'), request.args.get('arrive_lat'), request.args.get('arrive_lon'))

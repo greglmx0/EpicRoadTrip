@@ -1,1 +1,36 @@
-<div class="m-4">wow</div>
+<div class="m-4">
+  <app-input-address-suggestion
+    (sendAddress)="selectedDeparture($event)"
+    (clearAddress)="clearDeparture()"
+    placeholder="Ville, adresse de départ"
+  ></app-input-address-suggestion>
+  <app-input-address-suggestion
+    (sendAddress)="selectedDestination($event)"
+    (clearAddress)="clearDestination()"
+    placeholder="Ville, adresse d'arrivé"
+  ></app-input-address-suggestion>
+</div>
+
+<div class="flex flex-row gap-2 justify-between">
+  <app-activity-checkbox-selector radioName="radio-trip" (sendType)="setType($event)"></app-activity-checkbox-selector>
+  <date-range-picker (dateRange)="setRange($event)"> </date-range-picker>
+</div>
+
+<div class="flex">
+  <app-search-activity-button
+    [selectedType]="activityType"
+    [selectedLocationLatLng]="center"
+    [selectedDateRange]="range"
+    (sendLocation)="setPoints($event)"
+  ></app-search-activity-button>
+</div>
+
+<div *ngIf="trip" class="m-4">
+  <app-map-trip
+    [routes]="trip?.routes"
+    [waypoints]="trip?.waypoints"
+    [points]="points"
+    (centerChange)="updateCenter($event)"
+  ></app-map-trip>
+</div>
+<!-- <app-map-trip></app-map-trip> -->

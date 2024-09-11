@@ -9,11 +9,6 @@
     </div>
   </div>
   <div class="w-2/3">
-    <app-map
-      [points]="getPoints"
-      [lat]="lat"
-      [lng]="lng"
-      *ngIf="getPoints.length > 0"
-    ></app-map>
+    <app-map [points]="getPoints" [lat]="lat" [lng]="lng"></app-map>
   </div>
 </div>

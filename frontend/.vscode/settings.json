@@ -1,0 +1,28 @@
+{
+  // config for eslint prettier code formatter
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "eslint.workingDirectories": ["./frontend"],
+  "files.autoSave": "onFocusChange",
+  // "files.exclude": {
+  //   "**/.git": true,
+  //   "**/.DS_Store": true,
+  //   "**/.vscode": true,
+  //   "**/node_modules": true,
+  //   "**/build": true,
+  //   "**/dist": true
+  // },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/build/**": true,
+    "**/dist/**": true
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.configPath": "./frontend/.prettierrc"
+}

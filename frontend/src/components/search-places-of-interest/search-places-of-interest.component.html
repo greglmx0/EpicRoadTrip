@@ -1,80 +1,30 @@
 <div class="flex flex-col gap-4">
-  <!-- selectedLocation -->
-  <div class="flex w-full flex-col border-opacity-50" *ngIf="selectedLocationText !== ''">
-    <div class="card bg-base-300 rounded-box flex-row h-14 justify-between items-center">
-      <div class="text-xl font-medium ml-4">
-        {{ selectedLocationText }}
-      </div>
-      <button class="btn btn-circle mr-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          (click)="clearSelectedLocation()"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
+  <app-input-address-suggestion
+    (sendAddress)="selectLocation($event)"
+    (clearAddress)="clearSelectedLocation()"
+  ></app-input-address-suggestion>
+
+  <div class="flex flex-row gap-2 justify-between">
+    <app-activity-checkbox-selector
+      radioName="radio-places-of-interest"
+      (sendType)="setType($event)"
+    ></app-activity-checkbox-selector>
+    <date-range-picker (dateRange)="dateRange($event)"> </date-range-picker>
   </div>
 
-  <div class="flex justify-center" *ngIf="loading">
-    <span class="loading loading-spinner loading-lg"></span>
+  <div class="flex">
+    <app-search-activity-button
+      [selectedType]="activityType"
+      [selectedLocationLatLng]="selectedLocationLatLng"
+      [selectedDateRange]="range"
+      (sendLocation)="setPoints($event)"
+    ></app-search-activity-button>
   </div>
 
-  <div class="flex flex-col gap-4" *ngIf="selectedLocationText === '' && !loading">
-    <div class="dropdown">
-      <input
-        tabindex="0"
-        type="text"
-        id="searchInput"
-        placeholder="Ville, adresse ou code postal"
-        class="input input-bordered w-full"
-        (input)="searchSuggestions(searchInputValue)"
-        [(ngModel)]="searchInputValue"
-      />
-      <ul tabindex="0" class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full">
-        <li *ngFor="let result of searchResults" class="shadow bg-base-100 w-full p-2 rounded-box">
-          <div
-            class="flex flex-col gap-2 justify-left"
-            (click)="searchInputValue.length >= 3 && selectSuggestions(result)"
-          >
-            <div class="text-xl font-medium">{{ result.name }}</div>
-            <p>{{ result.place_formatted }}</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <p class="text-red-500">
-      {{ failure }}
-    </p>
-
-    <div class="flex flex-row gap-2 justify-between">
-      <div class="flex flex-row gap-2">
-        <div class="m-2" *ngFor="let type of typePointOfInterest">
-          <input
-            type="radio"
-            name="radio"
-            [id]="type.name"
-            class="radio peer hidden"
-            (change)="selectType(type.name)"
-            [checked]="selectedType === type.name"
-          />
-          <label
-            [for]="type.name"
-            class="select-none cursor-pointer rounded-lg border-2 border-gray-200 py-3 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200"
-          >
-            {{ type.name }}
-          </label>
-        </div>
-      </div>
-      <date-range-picker (dateRange)="dateRange($event)"> </date-range-picker>
-    </div>
-
-    <div class="flex">
-      <button class="btn btn-primary" (click)="serachRetrieve()">Rechercher</button>
-    </div>
-  </div>
+  <app-points-of-interest-container
+    [locations]="locations"
+    [lat]="lat"
+    [lng]="lng"
+    *ngIf="lat && lng"
+  ></app-points-of-interest-container>
 </div>

@@ -14,9 +14,11 @@
             "description": "hello world"
           }
         }
-      },
+      }
+    },
       "/register": {
         "post": {
+          "tags": ["User"],
           "description": "Register a new user",
           "produces": ["application/json"],
           "parameters": [
@@ -57,6 +59,7 @@
       },
       "/login": {
         "post": {
+        "tags": ["User"],
           "description": "Login a user",
           "produces": ["application/json"],
           "parameters": [
@@ -87,7 +90,99 @@
             }
           }
         }
+      },
+      "/mapbox/suggest": {
+        "get": {
+        "tags": ["MapBox"],
+          "description": "Get suggestions for a location",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "query",
+              "in": "query",
+              "description": "Query string for location",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Location suggestions"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/mapbox/retrieve": {
+        "get": {
+        "tags": ["MapBox"],
+          "description": "Retrieve location details",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "mapbox_id",
+              "in": "query",
+              "description": "Place MapBox ID of the location",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Location details"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/mapbox/trip": {
+        "get": {
+        "tags": ["MapBox"],
+          "description": "Get trip itinerary",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "depart_lat",
+              "in": "query",
+              "description": "Departure latitude",
+              "required": true,
+              "type": "number"
+            },
+            {
+              "name": "depart_lon",
+              "in": "query",
+              "description": "Departure longitude",
+              "required": true,
+              "type": "number"
+            },
+            {
+              "name": "arrive_lat",
+              "in": "query",
+              "description": "Arrival latitude",
+              "required": true,
+              "type": "number"
+            },
+            {
+              "name": "arrive_lon",
+              "in": "query",
+              "description": "Arrival longitude",
+              "required": true,
+              "type": "number"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Trip itinerary"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
       }
-    }
   }
 }

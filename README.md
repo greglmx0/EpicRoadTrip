@@ -2,8 +2,24 @@
 
 ## stack technique utilisée :
 
-- flask (flask, pathlib, python-dotenv, PyJWT, pillow, Flask-SQLAlchemy, Flask-Migrate, flask-bcrypt, pymysql, cryptography)
-- angular
+- flask
+  - flask # (le framework)
+  - pathlib # (pour la gestion des chemins)
+  - python-dotenv # (pour les variables d'environnement)
+  - PyJWT # (pour les tokens JWT)
+  - pillow # (pour le traitement des images)
+  - Flask-SQLAlchemy # (pour la base de données)
+  - Flask-Migrate # (pour les migrations de la base de données)
+  - pymysql #( pour la connexion à la base de données)
+  - flask-bcrypt # (pour le hachage des mots de passe)
+  - cryptography #( pour le chiffrement des mots de passe)
+  - flask-cors # (pour les requêtes cross-origin )
+  - flask_swagger_ui # (pour la documentation swagger)
+  - requests # (pour les requêtes HTTP)
+  - flask-validate-json # (pour la validation des données)
+  - Flask-Parameter-Validation # (pour la validation des paramètres)
+  - gunicorn # (pour le déploiement)
+- angular 17.3.0
 
 ## Installation
 
@@ -15,16 +31,53 @@ cp .env.example .env
 
 Ne pas oublier de modifier les valeurs des variables d'environnement dans le fichier .env
 
+### Create environment file for angular (frontend)
+
+```
+cp frontend/src/environments/environment.ts frontend/src/environments/environment.development.ts
+```
+
+Ne pas oublier de modifier les valeurs des variables d'environnement dans le fichier environment.development.ts
+
 ### Run docker compose
 
 ```
-docker-composeup
+docker-compose up
 ```
 
-or run in background
+Pour les lance en arrrière plan :
+
 ```
 docker-compose up -d
 ```
 
+Pour rebuild les images docker (si des dependances ont été ajoutées ou modifiées) :
+
+```
+docker-compose up --build
+```
+
 frontend : http://localhost:4200 \
-backend : http://localhost:5000
+backend : http://localhost:5000 \
+swagger : http://localhost:5000/swagger \
+phpmyadmin : http://localhost:8080
+
+## Documentation
+
+latitudes - longitudes
+
+La latitude de la ville de Rennes est 48.0833 et la longitude de la ville de Rennes est -1.6833.
+
+## TODO :
+
+- [ ] Ajouter les tests unitaires
+- [ ] Verifier latitudes - longitudes
+- [ ] Sauvegarder les trajets
+- [ ] Points d'intérêts dans la base de données
+- [ ] Style de l'application
+- [ ] Responsive design
+- [ ] Ajouter loading dans les requêtes HTTP
+- [ ] Ajouter des messages d'erreurs
+- [ ] Ajouter des messages de succès
+- [ ] Ajouter des messages de confirmation
+- [ ] Exporter les trajets en PDF
