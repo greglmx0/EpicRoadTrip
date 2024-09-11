@@ -61,3 +61,23 @@ frontend : http://localhost:4200 \
 backend : http://localhost:5000 \
 swagger : http://localhost:5000/swagger \
 phpmyadmin : http://localhost:8080
+
+## Documentation
+
+latitudes - longitudes
+
+La latitude de la ville de Rennes est 48.0833 et la longitude de la ville de Rennes est -1.6833.
+
+## TODO :
+
+- [ ] Ajouter les tests unitaires
+- [ ] Verifier latitudes - longitudes
+- [ ] Sauvegarder les trajets
+- [ ] Points d'intérêts dans la base de données
+- [ ] Style de l'application
+- [ ] Responsive design
+- [ ] Ajouter loading dans les requêtes HTTP
+- [ ] Ajouter des messages d'erreurs
+- [ ] Ajouter des messages de succès
+- [ ] Ajouter des messages de confirmation
+- [ ] Exporter les trajets en PDF
