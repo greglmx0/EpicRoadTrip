@@ -25,12 +25,12 @@ export class PointsOfInterestContainerComponent {
     const filterPoints = [];
     for (const point of points) {
       const lat = Number(point.latitude);
-      const long = Number(point.longitude);
+      const lng = Number(point.longitude);
 
-      if (!filterPoints[lat + long]) {
-        filterPoints[lat + long] = {
+      if (!filterPoints[lng + lng]) {
+        filterPoints[lng + lat] = {
           name: point?.venue || point.name,
-          coordinates: [long, lat],
+          coordinates: [lng, lat],
         };
       }
     }
