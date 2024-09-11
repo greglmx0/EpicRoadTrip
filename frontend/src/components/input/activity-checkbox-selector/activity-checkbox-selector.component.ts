@@ -1,41 +1,49 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
-type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-activity-checkbox-selector',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './activity-checkbox-selector.component.html',
   styleUrl: './activity-checkbox-selector.component.scss',
 })
 export class ActivityCheckboxSelectorComponent {
-  @Output() sendType = new EventEmitter();
+  @Input({ required: true })
+  radioName!: string;
+  @Output() sendType = new EventEmitter<string>();
+
+  selectedType: string = 'enjoy';
   typePointOfInterest: any[] = [
     {
-      name: 'enjoy',
+      id: 1,
+      value: 'enjoy',
+      label: 'Enjoy',
     },
     {
-      name: 'sleep',
+      id: 2,
+      value: 'sleep',
+      label: 'Sleep',
     },
     {
-      name: 'travel',
+      id: 3,
+      value: 'travel',
+      label: 'Travel',
     },
     {
-      name: 'eat',
+      id: 4,
+      value: 'eat',
+      label: 'Eat',
     },
     {
-      name: 'drink',
+      id: 5,
+      value: 'drink',
+      label: 'Drink',
     },
   ];
-  selectedType: string = 'enjoy';
 
-  ngOnInit() {
+  selectType() {
     this.sendType.emit(this.selectedType);
-  }
-
-  selectType(type: any) {
-    this.selectedType = type;
-    this.sendType.emit(type);
   }
 }
