@@ -5,17 +5,26 @@
   ></app-input-address-suggestion>
 
   <div class="flex flex-row gap-2 justify-between">
-    <app-activity-checkbox-selector (sendType)="selectedType($event)"></app-activity-checkbox-selector>
+    <app-activity-checkbox-selector
+      radioName="radio-places-of-interest"
+      (sendType)="setType($event)"
+    ></app-activity-checkbox-selector>
     <date-range-picker (dateRange)="dateRange($event)"> </date-range-picker>
   </div>
 
   <div class="flex">
-    <!-- TODO: btn recherche d'activité -->
     <app-search-activity-button
       [selectedType]="activityType"
       [selectedLocationLatLng]="selectedLocationLatLng"
       [selectedDateRange]="range"
-      (sendLocation)="sendLocation.emit($event)"
+      (sendLocation)="setPoints($event)"
     ></app-search-activity-button>
   </div>
+
+  <app-points-of-interest-container
+    [locations]="locations"
+    [lat]="lat"
+    [lng]="lng"
+    *ngIf="lat && lng"
+  ></app-points-of-interest-container>
 </div>
