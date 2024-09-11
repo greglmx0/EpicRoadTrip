@@ -21,7 +21,7 @@ export class SearchActivityButtonComponent {
   selectedLocation: any = null;
   // selectedLocationText: string = '';
   @Output() sendLocation = new EventEmitter();
-  @Input() selectedType: ActivityType | null = null;
+  @Input() selectedType: ActivityType | null = 'enjoy';
   @Input() selectedDateRange: { start: Date; end: Date } | null = null;
   @Input() selectedLocationLatLng: { lat: number; lng: number } | null = null;
 
