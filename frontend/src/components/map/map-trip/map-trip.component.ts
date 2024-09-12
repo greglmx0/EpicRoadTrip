@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { ApplicationRef, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import mapboxgl, { LngLatLike } from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 @Component({

@@ -16,6 +16,8 @@
   <date-range-picker (dateRange)="setRange($event)"> </date-range-picker>
 </div>
 
+<button (click)="logAll()">Log all</button>
+
 <div class="flex">
   <app-search-activity-button
     [selectedType]="activityType"
@@ -25,8 +27,18 @@
   ></app-search-activity-button>
 </div>
 
-<div *ngIf="trip" class="m-4">
+<div class="flex flex-row gap-2 justify-between w-full">
+  <!-- <div *ngIf="trip" style="width: 500px; height: 500px"> -->
+  <div *ngIf="activityTest" class="overflow-y-auto" style="height: 700px">
+    <app-card-point-interrest
+      *ngFor="let point of activityTest"
+      [event]="point"
+      class="flex-none"
+    ></app-card-point-interrest>
+  </div>
+  <!-- </div> -->
   <app-map-trip
+    class="w-full"
     [routes]="trip?.routes"
     [waypoints]="trip?.waypoints"
     [points]="points"
