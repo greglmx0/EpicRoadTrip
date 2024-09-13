@@ -81,3 +81,8 @@ La latitude de la ville de Rennes est 48.0833 et la longitude de la ville de Ren
 - [ ] Ajouter des messages de succès
 - [ ] Ajouter des messages de confirmation
 - [ ] Exporter les trajets en PDF
+- [ ] Exporter les trajets lein
+- [ ] Moyen de transport (voiture, vélo, piéton)
+- [ ] Budget
+- [ ] out2 (google)
+- [ ] tu 75% backend
