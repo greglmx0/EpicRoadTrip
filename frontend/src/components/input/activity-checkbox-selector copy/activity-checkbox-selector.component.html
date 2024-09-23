@@ -1,0 +1,19 @@
+<div class="flex flex-row gap-2">
+  <div *ngFor="let key of typePointOfInterest" class="m-2">
+    <input
+      type="radio"
+      [name]="radioName"
+      [value]="key.value"
+      [(ngModel)]="selectedType"
+      (ngModelChange)="selectType()"
+      id="{{ radioName + '-' + key.id }}"
+      class="hidden peer"
+    />
+    <label
+      for="{{ radioName + '-' + key.id }}"
+      class="select-none cursor-pointer rounded-lg border-2 border-blue-200 py-3 px-6 font-bold text-blue-200 transition-colors duration-200 ease-in-out peer-checked:bg-blue-200 peer-checked:text-blue-900 peer-checked:border-blue-200"
+    >
+      {{ key.label }}
+    </label>
+  </div>
+</div>

@@ -7,7 +7,6 @@ import { MapTripComponent } from '../map/map-trip/map-trip.component';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
 import ApiMapbox from 'src/api/mapbox';
-import ApiDrink from 'src/api/apiDrink';
 import DrinkDto from 'src/api/dto/drink.dto';
 type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
 @Component({

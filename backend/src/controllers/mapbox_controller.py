@@ -17,4 +17,10 @@ def retrieve():
 
 @mapbox_controller.route('/mapbox/trip', methods=['GET'])
 def trip():
-    return mapbox_service.get_trip(request.args.get('depart_lat'), request.args.get('depart_lon'), request.args.get('arrive_lat'), request.args.get('arrive_lon'))
+    depart_lat = request.args.get('depart_lat')
+    depart_lon = request.args.get('depart_lon')
+    arrive_lat = request.args.get('arrive_lat')
+    arrive_lon = request.args.get('arrive_lon')
+    routing = request.args.get('routing')
+    # print(f'mapbox_controller.trip  depart: {depart_lat}, {depart_lon} arrive: {arrive_lat}, {arrive_lon} type {routing}')
+    return mapbox_service.get_trip(depart_lat, depart_lon, arrive_lat, arrive_lon, routing)
