@@ -25,5 +25,9 @@
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   // prettier config path
-  "prettier.configPath": "./frontend/.prettierrc"
+  "prettier.configPath": "./frontend/.prettierrc",
+
+  // python dependencies
+  "python.analysis.extraPaths": ["./backend"],
+  "python.defaultInterpreterPath": "/backend/.venv/bin/python"
 }
