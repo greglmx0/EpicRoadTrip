@@ -27,6 +27,13 @@
       </label>
     </div>
     <p ngIf="failure" class="text-red-500">{{ failure }}</p>
-    <button class="btn btn-outline" (click)="register(username.value, password.value, email.value)">S'inscrire</button>
+    <div class="flex gap-4">
+      <button class="btn btn-outline" (click)="register(username.value, password.value, email.value)">
+        S'inscrire
+        <button class="btn btn-outline" (click)="loginWithGoogle()">Se connecter avec Google</button>
+      </button>
+    </div>
+    <!--  do you have an account? -->
+    <a href="/login" class="text-[#f0f0f0]">Vous avez déjà un compte?</a>
   </div>
 </div>

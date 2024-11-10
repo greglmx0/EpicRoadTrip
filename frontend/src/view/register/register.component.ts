@@ -33,4 +33,21 @@ export class RegisterComponent {
       console.error('Error: ', error);
     }
   }
+
+  async loginWithGoogle() {
+    try {
+      const response = (await auth.loginWithGoogle()) as any;
+      // console.log('Response: ', response);
+
+      if (response.status === 200) {
+        console.log('Logged in successfully');
+        window.location.href = '/';
+      } else {
+        console.log('Failed to login');
+        this.failure = response?.data?.message;
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  }
 }
