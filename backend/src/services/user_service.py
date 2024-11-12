@@ -5,10 +5,12 @@ from src.models.user_model import User
 from src.config.database import db
 import os
 import bcrypt
+import requests
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 GOOGLE_CLIENT_SECRET = os.environ.get(
     'GOOGLE_CLIENT_SECRET') or 'this is a secret'
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID') or 'this is a secret'
 
 
 class user_service:
@@ -21,12 +23,9 @@ class user_service:
             email = payload.get('email')
 
             username_db = User.query.filter_by(username=username).first()
-            if username_db:
-                return jsonify({'message': 'Username already exists'}), 409
-
             email_db = User.query.filter_by(email=email).first()
-            if email_db:
-                return jsonify({'message': 'Email already exists'}), 409
+            if username_db or email_db:
+                return jsonify({'message': 'Email or username already exists'}), 400
 
             user = User(username=username, email=email, password=password)
             db.session.add(user)
@@ -38,7 +37,6 @@ class user_service:
 
     def login_user():
         try:
-
             print("user_service.login_user", request.json)
             payload = request.json
             username = payload.get('username')
@@ -53,25 +51,9 @@ class user_service:
                 return jsonify({'message': 'Could not verify', 'authenticated': False}), 401
 
             if user:
-                json_user = {
-                    "id": user.id,
-                    "username": user.username,
-                    "email": user.email
-                }
-                print("user json: ", json_user)
-                expires_at = datetime.now() + timedelta(hours=24)
-                payload = {
-                    "user_id": user.id,
-                    # "exp": expires_at
-                }
-                token = jwt.encode(
-                    payload,
-                    SECRET_KEY,
-                    algorithm="HS256"
-                )
                 return {
-                    "message": "Successfully fetched auth token",
-                    "token": token,
+                    "message": "Successfully logged in",
+                    "token": user_service.create_token(user),
                 }
             return jsonify({'message': 'User logged in successfully'}), 200
 
@@ -80,6 +62,25 @@ class user_service:
                 "error": "Something went wrong",
                 "message": str(e)
             }, 500
+
+    def create_token(user):
+        # expires_at = datetime.now() + timedelta(hours=24)
+        # json_user = {
+        #     "id": user.id,
+        #     "username": user.username,
+        #     "email": user.email
+        # }
+        payload = {
+            "user_id": user.id,
+            # "user": json_user,
+            # "exp": expires_at
+        }
+        token = jwt.encode(
+            payload,
+            SECRET_KEY,
+            algorithm="HS256"
+        )
+        return token
 
     def verify_password(password_hash, password):
         return bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
@@ -98,10 +99,62 @@ class user_service:
 
     def aouth2_google():
         if not request.json:
-            return jsonify({'message': 'Missing code'}), 400
+            return jsonify({'message': 'Access denied'}), 403
         code = request.json.get('code')
         if not code:
-            return jsonify({'message': 'Missing code'}), 400
+            return jsonify({'message': 'Access denied'}), 403
 
-        print("code", code)
-        return jsonify({'message': 'Google auth'}), 200
+        access_token = user_service.google_access_tokens(code)
+        user_info = user_service.google_user_info(access_token)
+        user_db = User.query.filter_by(google_id=user_info.get('id')).first()
+
+        if user_db:
+            return {
+                'message': 'User logged in successfully',
+                'token': user_service.create_token(user_db)
+            }
+
+        created_user = user_service.create_user_with_google(
+            user_info.get('email'),
+            user_info.get('name'),
+            user_info.get('id'),
+            'google')
+
+        if created_user:
+            return {
+                'message': 'Successfully logged in with google',
+                'token': user_service.create_token(created_user)
+            }
+        return jsonify({'message': 'Access denied'}), 403
+
+    def google_access_tokens(code):
+        url = "https://oauth2.googleapis.com/token"
+        redirect_uri = "http://localhost:4200/auth/google"
+        payload = f'code={code}' + \
+            f'&client_id={GOOGLE_CLIENT_ID}' +\
+            f'&client_secret={GOOGLE_CLIENT_SECRET}' +\
+            f'&redirect_uri={redirect_uri}' +\
+            f'&grant_type=authorization_code'
+
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+        return response.json().get('access_token')
+
+    def google_user_info(access_token):
+        url = "https://www.googleapis.com/oauth2/v1/userinfo"
+        headers = {
+            'Authorization': f'Bearer {access_token}'
+        }
+        response = requests.request("GET", url, headers=headers)
+        return response.json()
+
+    def create_user_with_google(email, username, google_id, auth_provider):
+        user = User(email=email, username=username,
+                    google_id=google_id, auth_provider=auth_provider)
+        db.session.add(user)
+        db.session.commit()
+        created_user = User.query.filter_by(google_id=google_id).first()
+        return created_user

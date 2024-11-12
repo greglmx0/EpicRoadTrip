@@ -25,7 +25,9 @@ def create_user():
 @validate_json(login_user_schema, resp_func=lambda e: return_error(e, 400))
 def login_user():
     print("user_controller.login_user")
-    return user_service.login_user()
+    return_json = user_service.login_user()
+    print("return_json", return_json)
+    return return_json
 
 
 @user_controller.route("/users", methods=["GET"])
@@ -36,6 +38,8 @@ def get_users(current_user):
 
 
 @user_controller.route("/auth/google", methods=["POST"])
-def aouth2_google_callback():
-    print("user_controller.aouth2_google")
-    return user_service.aouth2_google()
+def aouth2_google():
+    print("user_controller aouth2_google")
+    return_json = user_service.aouth2_google()
+    print("return_json", return_json)
+    return return_json
