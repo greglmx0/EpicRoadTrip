@@ -19,6 +19,9 @@ class auth {
     try {
       const request = await axiosInstance.post('/login', JSON.stringify({ username, password }));
       const token = request?.data?.token;
+      if (!token) {
+        throw new Error('Token not found');
+      }
       localStorage.setItem('token', token);
       return request;
     } catch (error: any) {
@@ -34,7 +37,7 @@ class auth {
     try {
       // redirect to google login page
       const uri = 'https://accounts.google.com/o/oauth2/v2/auth';
-      const scope = 'email';
+      const scope = 'email openid profile';
       const response_type = 'code';
       const redirect_uri = 'http://localhost:4200/auth/google';
       const client_id = environment.GOOGLE_CLIENT_ID;
@@ -54,7 +57,16 @@ class auth {
 
   static async loginWithGoogleCallback(code: string) {
     try {
-      return await axiosInstance.post('/auth/google', JSON.stringify({ code }));
+      const request = await axiosInstance.post('/auth/google', JSON.stringify({ code }));
+      console.log('Google Request: ', request);
+      console.log('Token: ', request?.data?.token);
+
+      const token = request?.data?.token;
+      if (!token) {
+        throw new Error('Token not found');
+      }
+      localStorage.setItem('token', token);
+      return request;
     } catch (error: any) {
       /// throw new Error(error.response.data.message);
       return {

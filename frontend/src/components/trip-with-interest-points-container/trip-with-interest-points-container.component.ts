@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, NgModule } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { InputAddressSuggestionComponent } from '../input/input-address-suggestion/input-address-suggestion.component';
 import { SearchActivityButtonComponent } from '../input/search-activity-button/search-activity-button.component';
 import { ActivityCheckboxSelectorComponent } from '../input/activity-checkbox-selector/activity-checkbox-selector.component';
