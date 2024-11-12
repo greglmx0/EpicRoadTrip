@@ -7,6 +7,9 @@ import os
 import bcrypt
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
+GOOGLE_CLIENT_SECRET = os.environ.get(
+    'GOOGLE_CLIENT_SECRET') or 'this is a secret'
+
 
 class user_service:
     def create_user():
@@ -43,7 +46,7 @@ class user_service:
 
             user = User.query.filter_by(username=username).first()
 
-            if not user :
+            if not user:
                 return jsonify({'message': 'User not found'}), 404
 
             if not user_service.verify_password(user.password_hash, password):
@@ -78,14 +81,13 @@ class user_service:
                 "message": str(e)
             }, 500
 
-
     def verify_password(password_hash, password):
         return bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
 
     def get_users():
         users = User.query.all()
         return jsonify([user.serialize() for user in users])
-    
+
     def get_user_by_id(self, id):
         user = User.get_by_id(id)
         if not user:
@@ -93,3 +95,13 @@ class user_service:
         if user.id == id:
             return User.serialize(user)
         return None
+
+    def aouth2_google():
+        if not request.json:
+            return jsonify({'message': 'Missing code'}), 400
+        code = request.json.get('code')
+        if not code:
+            return jsonify({'message': 'Missing code'}), 400
+
+        print("code", code)
+        return jsonify({'message': 'Google auth'}), 200

@@ -7,10 +7,12 @@ from flask import jsonify
 
 user_controller = Blueprint("user", __name__)
 
+
 def return_error(e, status_code):
     e = str(e).split("\n")
     e = e[0]
     return jsonify({"message": e}), status_code
+
 
 @user_controller.route("/register", methods=["POST"])
 @validate_json(create_user_schema, resp_func=lambda e: return_error(e, 400))
@@ -18,11 +20,13 @@ def create_user():
     print("user_controller.create_user")
     return user_service.create_user()
 
+
 @user_controller.route("/login", methods=["POST"])
 @validate_json(login_user_schema, resp_func=lambda e: return_error(e, 400))
 def login_user():
     print("user_controller.login_user")
     return user_service.login_user()
+
 
 @user_controller.route("/users", methods=["GET"])
 @token_required
@@ -30,3 +34,8 @@ def get_users(current_user):
     print("user_controller.get_users")
     return user_service.get_users()
 
+
+@user_controller.route("/auth/google", methods=["POST"])
+def aouth2_google_callback():
+    print("user_controller.aouth2_google")
+    return user_service.aouth2_google()
