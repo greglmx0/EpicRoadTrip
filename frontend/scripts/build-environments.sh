@@ -11,6 +11,7 @@ echo "export const environment = {
     accessToken:
       '"$MAPBOX_ACCESS_TOKEN"',
   },
+  GOOGLE_CLIENT_ID: '"$GOOGLE_CLIENT_ID"',
   };" > environment.production.ts
 
 echo 'Finished setting up environment'

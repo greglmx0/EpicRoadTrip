@@ -5,4 +5,5 @@ export const environment = {
   mapbox: {
     accessToken: 'your_mapbox_access_token',
   },
+  GOOGLE_CLIENT_ID: 'your_google_client_id',
 };

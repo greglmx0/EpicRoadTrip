@@ -1,4 +1,6 @@
+import { resourceUsage } from 'process';
 import axiosInstance from '../.config/axios';
+import { environment } from '../environments/environment';
 
 class auth {
   static async register(username: string, email: string, password: string) {
@@ -30,12 +32,31 @@ class auth {
 
   static async loginWithGoogle() {
     try {
-      const request = await axiosInstance.get('/auth/google');
-      const token = request?.data?.token;
-      localStorage.setItem('token', token);
-      return request;
+      // redirect to google login page
+      const uri = 'https://accounts.google.com/o/oauth2/v2/auth';
+      const scope = 'email';
+      const response_type = 'code';
+      const redirect_uri = 'http://localhost:4200/auth/google';
+      const client_id = environment.GOOGLE_CLIENT_ID;
+      const url = `${uri}?scope=${scope}&response_type=${response_type}&redirect_uri=${redirect_uri}&client_id=${client_id}`;
+      console.log('Redirecting to Google login page');
+
+      window.location.href = url;
+      return url;
     } catch (error: any) {
       // throw new Error(error.response.data.message);
+      return {
+        status: error.response.status,
+        data: { message: error.response.data.message },
+      };
+    }
+  }
+
+  static async loginWithGoogleCallback(code: string) {
+    try {
+      return await axiosInstance.post('/auth/google', JSON.stringify({ code }));
+    } catch (error: any) {
+      /// throw new Error(error.response.data.message);
       return {
         status: error.response.status,
         data: { message: error.response.data.message },

@@ -21,6 +21,10 @@
       </label>
     </div>
     <p ngIf="failure" class="text-red-500">{{ failure }}</p>
-    <button class="btn btn-outline" (click)="login(username.value, password.value)">Se connecter</button>
+    <div class="flex gap-4">
+      <button class="btn btn-outline" (click)="login(username.value, password.value)">Se connecter</button>
+      <button class="btn btn-outline" (click)="loginWithGoogle()">Se connecter avec Google</button>
+    </div>
+    <a href="/registr" class="text-[#f0f0f0]">Vous n'avez pas de compte?</a>
   </div>
 </div>

@@ -35,9 +35,10 @@ export class RegisterComponent {
   }
 
   async loginWithGoogle() {
+    console.log('Login with Google');
     try {
       const response = (await auth.loginWithGoogle()) as any;
-      // console.log('Response: ', response);
+      console.log('Response: ', response);
 
       if (response.status === 200) {
         console.log('Logged in successfully');
