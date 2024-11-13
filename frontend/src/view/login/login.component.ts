@@ -18,8 +18,6 @@ export class LoginComponent {
   async login(email: string, password: string) {
     try {
       this.loading = true;
-      // await 5 seconds
-      await new Promise((resolve) => setTimeout(resolve, 5000));
       const response = (await auth.login(email, password)) as any;
       if (response.status === 200) {
         window.location.href = '/';

@@ -19,8 +19,6 @@ export class GoogleComponent implements OnInit {
     this.code = urlParams.get('code');
 
     try {
-      // await 5 seconds
-      await new Promise((resolve) => setTimeout(resolve, 5000));
       if (!this.code) {
         throw new Error('Code not found');
       }
