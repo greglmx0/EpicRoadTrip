@@ -75,6 +75,23 @@ class auth {
       };
     }
   }
+
+  static async logout() {
+    const request = await axiosInstance.post('/logout');
+    localStorage.removeItem('token');
+    return request;
+  }
+
+  static async getUserInfo() {
+    try {
+      return await axiosInstance.get('/user/info');
+    } catch (error: any) {
+      return {
+        status: error.response.status,
+        data: { message: error.response.data.message },
+      };
+    }
+  }
 }
 
 export default auth;

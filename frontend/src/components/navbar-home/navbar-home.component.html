@@ -11,10 +11,12 @@
       </svg>
     </button>
   </div>
-  <div class="flex-none">
+  <div class="flex-none" *ngIf="!isAuthenticated">
     <a class="btn btn-ghost text-l m-2" href="/register">S'inscrire</a>
-  </div>
-  <div>
     <a class="btn btn-neutral text-xl btn-outline m-2" href="/login">Se connecter</a>
+  </div>
+  <div *ngIf="isAuthenticated" class="flex-none">
+    <span class="text-lg m-2">Bonjour, {{ username }}</span>
+    <button (click)="logout()" class="btn btn-outline text-l m-2">Déconnexion</button>
   </div>
 </div>
