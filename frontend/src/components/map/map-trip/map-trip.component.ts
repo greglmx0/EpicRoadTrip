@@ -41,7 +41,7 @@ export class MapTripComponent implements OnInit {
           data: {
             type: 'Feature',
             properties: {},
-            geometry: this.routes[0].geometry,
+            geometry: this.routes[0]?.geometry ? this.routes[0].geometry : [],
           },
         },
         layout: {

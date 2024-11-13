@@ -1,3 +1,4 @@
+import { routes } from './../app/app.routes';
 import axiosInstance from '../.config/axios';
 
 class ApiMapbox {
@@ -27,10 +28,10 @@ class ApiMapbox {
     }
   }
 
-  static async getTrip(depart: [lat: number, lon: number], arrive: [lat: number, lon: number]) {
+  static async getTrip(depart: [lat: number, lon: number], arrive: [lat: number, lon: number], routing: string) {
     try {
       const responce = await axiosInstance.get(
-        `/mapbox/trip?depart_lat=${depart[0]}&depart_lon=${depart[1]}&arrive_lat=${arrive[0]}&arrive_lon=${arrive[1]}`,
+        `/mapbox/trip?depart_lat=${depart[0]}&depart_lon=${depart[1]}&arrive_lat=${arrive[0]}&arrive_lon=${arrive[1]}&routing=${routing}`,
       );
       if (responce.status === 200) {
         return responce.data;

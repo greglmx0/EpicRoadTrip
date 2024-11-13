@@ -27,7 +27,10 @@ type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
 export class TripWithInterestPointsContainerComponent {
   depart: [lat: number, lon: number] | null = null;
   arrive: [lat: number, lon: number] | null = null;
-  trip: any | null = null;
+  trip: any | null = {
+    routes: [],
+    waypoints: [{ location: [-1.681558, 48.113247] }, { location: [2.348424, 48.853484] }],
+  };
   center: { lat: number; lng: number } = { lat: 0, lng: 0 };
   distance: number = 0;
   points: Array<{ name: string; coordinates: number[]; description?: string }> = [];
@@ -48,13 +51,13 @@ export class TripWithInterestPointsContainerComponent {
   }
   clearDeparture() {
     this.depart = null;
-    this.trip = null;
+    this.trip.routes = [];
     this.points = [];
     this.activity = null;
   }
   clearDestination() {
     this.arrive = null;
-    this.trip = null;
+    this.trip.routes = [];
     this.points = [];
     this.activity = null;
   }
@@ -63,9 +66,14 @@ export class TripWithInterestPointsContainerComponent {
     console.log('searchTrip');
     if (this.depart && this.arrive) {
       try {
-        this.trip = await ApiMapbox.getTrip(this.depart, this.arrive);
-        console.log('trip: ', this.trip);
-        this.cdr.detectChanges();
+        const newTrip = await ApiMapbox.getTrip(this.depart, this.arrive, 'driving');
+        if (newTrip) {
+          this.trip = null;
+          this.cdr.detectChanges();
+          this.trip = newTrip;
+        }
+        // driving | walking | cycling
+        // console.log('trip: ', this.trip);
       } catch (error: any) {
         console.error('Error: ', error);
       }
@@ -85,41 +93,10 @@ export class TripWithInterestPointsContainerComponent {
     this.points = points;
   }
 
-  // logAll() {
-  //   this.toggleDrawer = !this.toggleDrawer;
-  // }
-
   updateCenter(event: any) {
     this.center = event.center;
     this.distance = event.distance;
   }
-
-  // async getDrinkRetrieve() {
-  //   try {
-  //     const data = await ApiDrink.getDrink(
-  //       this.center.lat,
-  //       this.center.lng,
-  //       new Date().toISOString().split('T')[0].replace(/,/g, ''),
-  //       new Date().toISOString().split('T')[0].replace(/,/g, ''),
-  //       this.distance,
-  //     );
-  //     console.log('data: ', data);
-  //     const points = data.map((feature: DrinkDto) => {
-  //       return {
-  //         name: feature.name,
-  //         coordinates: [feature.longitude, feature.latitude],
-  //         description: feature.description,
-  //       };
-  //     });
-  //     this.points = points;
-  //   } catch (error: any) {
-  //     console.error('Error: ', error);
-  //   }
-  // }
-
-  // searchDrink() {
-  //   this.getDrinkRetrieve();
-  // }
 
   setRange(event: any) {
     this.range = event;

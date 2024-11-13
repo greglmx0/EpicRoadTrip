@@ -1,11 +1,11 @@
 <div class="flex flex-col gap-4 m-2">
   <!-- selectedLocation -->
   <div class="flex w-full flex-col border-opacity-50" *ngIf="selectedLocationText !== ''">
-    <div class="card bg-base-300 rounded-box flex-row h-14 justify-between items-center">
-      <div class="text-xl font-medium ml-4">
+    <div class="card bg-light-main dark:bg-dark-main rounded-lg flex-row h-14 justify-between items-center">
+      <div class="text-xl font-medium ml-4 text-light-paragraph dark:text-dark-paragraph">
         {{ selectedLocationText }}
       </div>
-      <button class="btn btn-circle mr-4">
+      <button class="btn btn-circle mr-4 text-light-button-text dark:text-dark-button-text">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -21,30 +21,33 @@
   </div>
 
   <div class="flex justify-center" *ngIf="loading">
-    <span class="loading loading-spinner loading-lg"></span>
+    <span class="loading loading-spinner loading-lg text-light-highlight dark:text-dark-highlight"></span>
   </div>
 
   <div class="flex flex-col gap-4" *ngIf="selectedLocationText === '' && !loading">
-    <div class="dropdown">
+    <div class="dropdown p-0 m-0">
       <input
         tabindex="0"
         type="text"
         id="searchInput"
         [placeholder]="placeholder"
-        class="input input-bordered w-full"
+        class="input input-bordered w-full bg-light-bg dark:bg-dark-bg text-light-paragraph dark:text-dark-paragraph border-light-stroke dark:border-dark-stroke"
         (input)="searchSuggestions(searchInputValue)"
         [(ngModel)]="searchInputValue"
       />
-      <ul tabindex="0" class="dropdown-content z-[1] card menu p-2 shadow bg-base-100 rounded-box w-full">
-        <li *ngFor="let result of searchResults" class="shadow bg-base-100 w-full p-2 rounded-box">
+      <ul
+        tabindex="0"
+        class="dropdown-content z-[1] card menu p-0 shadow bg-light-bg dark:bg-dark-bg rounded-lg w-full"
+      >
+        <li *ngFor="let result of searchResults" class="shadow bg-light-main dark:bg-dark-main w-full p-2">
           <div class="flex flex-col gap-2 justify-left" (click)="selectSuggestions(result)">
-            <div class="text-xl font-medium">{{ result.name }}</div>
-            <p>{{ result.place_formatted }}</p>
+            <div class="text-xl font-medium text-light-paragraph dark:text-dark-paragraph">{{ result.name }}</div>
+            <p class="text-light-paragraph dark:text-dark-paragraph">{{ result.place_formatted }}</p>
           </div>
         </li>
       </ul>
     </div>
-    <p class="text-red-500">
+    <p class="text-light-error dark:text-dark-error">
       {{ failure }}
     </p>
   </div>
