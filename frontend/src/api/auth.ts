@@ -39,7 +39,7 @@ class auth {
       const uri = 'https://accounts.google.com/o/oauth2/v2/auth';
       const scope = 'email openid profile';
       const response_type = 'code';
-      const redirect_uri = 'http://localhost:4200/auth/google';
+      const redirect_uri = environment.GOOGLE_REDIRECT_URI;
       const client_id = environment.GOOGLE_CLIENT_ID;
       const url = `${uri}?scope=${scope}&response_type=${response_type}&redirect_uri=${redirect_uri}&client_id=${client_id}`;
       console.log('Redirecting to Google login page');
