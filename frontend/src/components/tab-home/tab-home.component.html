@@ -1,22 +1,30 @@
-<!-- <p>tab-home works!</p> -->
-<div role="tablist" class="tabs tabs-boxed tabs-lg m-8">
-  <input type="radio" name="my_tabs" role="tab" class="tab" aria-label="Recherche des activités à proximité" checked />
-  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
-    <app-search-places-of-interest
-      (sendLocation)="onSendLocation($event)"
-      (sendMapCenter)="onSendMapCenter($event)"
-    ></app-search-places-of-interest>
-  </div>
+<div class="bg-light-bg dark:bg-dark-bg min-h-screen text-light-paragraph dark:text-dark-paragraph p-8">
+  <div role="tablist" class="tabs tabs-boxed tabs-lg m-8">
+    <input
+      type="radio"
+      name="my_tabs"
+      role="tab"
+      class="tab"
+      aria-label="Recherche des activités à proximité"
+      checked
+    />
+    <div role="tabpanel" class="tab-content border-base-300 rounded-box p-6 bg-light-bg dark:bg-dark-bg">
+      <app-search-places-of-interest
+        (sendLocation)="onSendLocation($event)"
+        (sendMapCenter)="onSendMapCenter($event)"
+      ></app-search-places-of-interest>
+    </div>
 
-  <input
-    type="radio"
-    name="my_tabs"
-    role="tab"
-    class="tab"
-    aria-label="Recherche un itinéraire avec des points d'intérêt"
-  />
-  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
-    Rechercher un itinéraire
-    <app-trip-with-interest-points-container></app-trip-with-interest-points-container>
+    <input
+      type="radio"
+      name="my_tabs"
+      role="tab"
+      class="tab bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
+      aria-label="Recherche un itinéraire avec des points d'intérêt"
+    />
+    <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+      Rechercher un itinéraire
+      <app-trip-with-interest-points-container></app-trip-with-interest-points-container>
+    </div>
   </div>
 </div>
