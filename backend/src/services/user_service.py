@@ -155,7 +155,7 @@ class user_service:
                             httponly=True,  secure=True, samesite='Strict')
         return response
 
-    def logout():
+    def logout_user():
         response = make_response(
             jsonify({'message': 'User logged out successfully'}))
         response.set_cookie('auth_token', '', expires=0)
