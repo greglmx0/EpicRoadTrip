@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, NgModule } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { InputAddressSuggestionComponent } from '../input/input-address-suggestion/input-address-suggestion.component';
 import { SearchActivityButtonComponent } from '../input/search-activity-button/search-activity-button.component';
 import { ActivityCheckboxSelectorComponent } from '../input/activity-checkbox-selector/activity-checkbox-selector.component';
@@ -7,7 +7,6 @@ import { MapTripComponent } from '../map/map-trip/map-trip.component';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
 import ApiMapbox from 'src/api/mapbox';
-import ApiDrink from 'src/api/apiDrink';
 import DrinkDto from 'src/api/dto/drink.dto';
 type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
 @Component({

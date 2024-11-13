@@ -8,14 +8,14 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - dbdata:/var/lib/mysql
     restart: always
     networks:
       - backend
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       timeout: 2s
       retries: 20
       start_period: 10s
@@ -39,7 +39,7 @@ services:
     build: ./backend
     container_name: backend
     ports:
-      - "5000:5000"
+      - '5000:5000'
     volumes:
       - ./backend:/app
     depends_on:
@@ -61,6 +61,8 @@ services:
       - FOURSQUARE_API_URL=${FOURSQUARE_API_URL}
       - FOURSQUARE_API_KEY=${FOURSQUARE_API_KEY}
       - PYTHONUNBUFFERED=1
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
     networks:
       - backend
     restart: always
@@ -69,7 +71,7 @@ services:
     build: ./frontend
     container_name: frontend
     ports:
-      - "4200:4200"
+      - '4200:4200'
     volumes:
       - ./frontend:/app
       - /app/node_modules

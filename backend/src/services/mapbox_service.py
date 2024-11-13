@@ -34,11 +34,11 @@ class mapbox_service:
         except Exception as e:
             return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
 
-    def get_trip(depart_lat, depart_lon, arrive_lat, arrive_lon):
+    def get_trip(depart_lat, depart_lon, arrive_lat, arrive_lon, routing):
         try:
-            print(f'mapbox_service.get_trip  depart: {depart_lat}, {depart_lon} arrive: {arrive_lat}, {arrive_lon}')
+            print(f'mapbox_service.get_trip  depart: {depart_lat}, {depart_lon} arrive: {arrive_lat}, {arrive_lon} type {routing}')
             # https://api.mapbox.com/directions/v5/mapbox/driving/-1.681558,48.113247;2.348392,48.853495?alternatives=true&geometries=geojson&language=fr&overview=full&steps=true&access_token=
-            url = f"{MPABOX_API_URL}/directions/v5/mapbox/driving/{depart_lat},{depart_lon};{arrive_lat},{arrive_lon}?alternatives=true&geometries=geojson&language=fr&overview=full&steps=true&access_token={MAPBOX_ACCESS_TOKEN}"
+            url = f"{MPABOX_API_URL}/directions/v5/mapbox/{routing}/{depart_lat},{depart_lon};{arrive_lat},{arrive_lon}?alternatives=true&geometries=geojson&language=fr&overview=full&steps=true&access_token={MAPBOX_ACCESS_TOKEN}&unit=km"
             # print("url: ", url)
             payload={}
             headers = {}
