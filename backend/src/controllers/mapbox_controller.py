@@ -22,5 +22,5 @@ def trip():
     arrive_lat = request.args.get('arrive_lat')
     arrive_lon = request.args.get('arrive_lon')
     routing = request.args.get('routing')
-    # print(f'mapbox_controller.trip  depart: {depart_lat}, {depart_lon} arrive: {arrive_lat}, {arrive_lon} type {routing}')
+    print(f'mapbox_controller.trip  depart: {depart_lat}, {depart_lon} arrive: {arrive_lat}, {arrive_lon} type {routing}')
     return mapbox_service.get_trip(depart_lat, depart_lon, arrive_lat, arrive_lon, routing)

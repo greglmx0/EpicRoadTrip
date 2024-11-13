@@ -24,7 +24,3 @@ def get_enjoy():
 
     except Exception as e:
         return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
-
-
-
-

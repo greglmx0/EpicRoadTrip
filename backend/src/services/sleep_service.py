@@ -20,7 +20,7 @@ class sleep_service:
             }
             response = requests.get(url, headers=headers, data=payload)
             if response.status_code == 200:
-                return response.text
+                return response.json()
             else:
                 return {'message': 'An error occurred'}, response.status_code
 
