@@ -30,7 +30,7 @@ export class TripWithInterestPointsContainerComponent {
   trip: any | null = null;
   center: { lat: number; lng: number } = { lat: 0, lng: 0 };
   distance: number = 0;
-  points: any[] | null = null;
+  points: Array<{ name: string; coordinates: number[]; description?: string }> = [];
   activity: any[] | null = null;
   activityType: ActivityType = 'enjoy';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
@@ -49,13 +49,13 @@ export class TripWithInterestPointsContainerComponent {
   clearDeparture() {
     this.depart = null;
     this.trip = null;
-    this.points = null;
+    this.points = [];
     this.activity = null;
   }
   clearDestination() {
     this.arrive = null;
     this.trip = null;
-    this.points = null;
+    this.points = [];
     this.activity = null;
   }
 
