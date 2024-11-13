@@ -102,6 +102,8 @@ class user_service:
             return jsonify({'message': 'Access denied'}), 403
 
         access_token = user_service.google_access_tokens(code)
+        if not access_token:
+            return jsonify({'message': 'Credentials are invalid'}), 403
         user_info = user_service.google_user_info(access_token)
         user_db = User.query.filter_by(google_id=user_info.get('id')).first()
 
