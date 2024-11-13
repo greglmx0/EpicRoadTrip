@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import auth from './../../api/auth';
 
 @Component({
@@ -8,7 +8,7 @@ import auth from './../../api/auth';
   templateUrl: './navbar-home.component.html',
   styleUrls: ['./navbar-home.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class NavbarHomeComponent implements OnInit {
   isAuthenticated: boolean = false;
