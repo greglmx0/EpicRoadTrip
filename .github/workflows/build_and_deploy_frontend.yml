@@ -18,6 +18,9 @@ jobs:
     env:
       MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       API_URL: ${{ secrets.API_URL }}
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -26,8 +29,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.17.0
-          cache: "npm"
-          cache-dependency-path: "./frontend/package-lock.json"
+          cache: 'npm'
+          cache-dependency-path: './frontend/package-lock.json'
 
       - name: Install dependencies
         run: npm install
@@ -45,8 +48,8 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "./frontend/dist/*, ./frontend/Dockerfile.frontend.prod, ./frontend/nginx.frontend.conf, ./prod/docker-compose.yml"
-          target: "/var/www/html"
+          source: './frontend/dist/*, ./frontend/Dockerfile.frontend.prod, ./frontend/nginx.frontend.conf, ./prod/docker-compose.yml'
+          target: '/var/www/html'
           strip_components: 1
           overwrite: true
           # rm: true

@@ -52,6 +52,7 @@ services:
       - FOURSQUARE_API_KEY=${FOURSQUARE_API_KEY}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
     depends_on:
       db:
         condition: service_healthy

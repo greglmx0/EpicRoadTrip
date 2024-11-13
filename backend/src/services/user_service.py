@@ -11,6 +11,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or 'this is a secret'
 GOOGLE_CLIENT_SECRET = os.environ.get(
     'GOOGLE_CLIENT_SECRET') or 'this is a secret'
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID') or 'this is a secret'
+GOOGLE_REDIRECT_URI = os.environ.get('GOOGLE_REDIRECT_URI') or 'this is a secret'
 
 
 class user_service:
@@ -119,11 +120,10 @@ class user_service:
 
     def google_access_tokens(code):
         url = "https://oauth2.googleapis.com/token"
-        redirect_uri = "http://localhost:4200/auth/google"
         payload = f'code={code}' + \
             f'&client_id={GOOGLE_CLIENT_ID}' +\
             f'&client_secret={GOOGLE_CLIENT_SECRET}' +\
-            f'&redirect_uri={redirect_uri}' +\
+            f'&redirect_uri={GOOGLE_REDIRECT_URI}' +\
             f'&grant_type=authorization_code'
 
         headers = {
