@@ -1,0 +1,22 @@
+import pytest
+import os
+from app import create_app
+
+
+
+
+@pytest.fixture
+def client():
+    # set TESTING to true
+    os.environ['TESTING'] = 'True'
+    app =  create_app()
+    with app.test_client() as client:
+        yield client
+
+def test_home(client):
+    """
+    Test the home route
+    """
+    response = client.get('/')
+    assert response.status_code == 200
+    assert response.json == {"hello": "world"}

@@ -14,3 +14,4 @@ flask_swagger_ui
 requests
 Flask-Parameter-Validation
 gunicorn
+pytest
