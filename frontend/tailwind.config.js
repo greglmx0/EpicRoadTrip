@@ -30,32 +30,17 @@ module.exports = {
       'light-tertiary': '#f582ae',
       'light-error': '#ff0000',
 
-      // Dark theme colors
-
-      //       Elements
-      // Background #16161a
-      // Headline #fffffe
-      // Paragraph #94a1b2
-      // Button #7f5af0
-      // Button text #fffffe
-      // Illustration
-      // Stroke #010101
-      // Main #fffffe
-      // Highlight #7f5af0
-      // Secondary #72757e
-      // Tertiary #2cb67d
-
-      'dark-bg': '#16161a',
-      'dark-headline': '#fffffe',
-      'dark-paragraph': '#94a1b2',
-      'dark-button': '#7f5af0',
-      'dark-button-text': '#fffffe',
-      'dark-stroke': '#010101',
-      'dark-main': '#fffffe',
-      'dark-highlight': '#7f5af0',
-      'dark-secondary': '#72757e',
-      'dark-tertiary': '#2cb67d',
-      'dark-error': '#ff0000',
+      'dark-bg': '#1b1b1e', // Fond sombre
+      'dark-headline': '#e3e3e5', // Texte principal
+      'dark-paragraph': '#a0a5b1', // Texte secondaire
+      'dark-button': '#9a7ff0', // Bouton d'action
+      'dark-button-text': '#e3e3e5', // Texte du bouton
+      'dark-stroke': '#2d2d31', // Ligne de séparation ou bordure
+      'dark-main': '#2b2a33', // Fond principal de carte ou d’élément
+      'dark-highlight': '#3a3a46', // Fond de notification ou accent
+      'dark-secondary': '#4bbfcc', // Accent secondaire
+      'dark-tertiary': '#c266a3', // Accent tertiaire
+      'dark-error': '#ff4d4d', // Erreur
     },
     extend: {},
   },
