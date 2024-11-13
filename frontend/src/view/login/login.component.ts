@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import auth from '../../api/auth';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import auth from '../../api/auth';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,14 @@ export class LoginComponent {
   failure: any;
   loading: boolean = false;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   async login(email: string, password: string) {
     try {
       this.loading = true;
       const response = (await auth.login(email, password)) as any;
       if (response.status === 200) {
-        window.location.href = '/';
+        this.router.navigate(['/']);
       } else {
         this.failure = response?.data?.message;
       }
@@ -36,7 +37,7 @@ export class LoginComponent {
       this.loading = true;
       const response = (await auth.loginWithGoogle()) as any;
       if (response.status === 200) {
-        window.location.href = '/';
+        this.router.navigate(['/']);
       } else {
         this.failure = response?.data?.message;
       }

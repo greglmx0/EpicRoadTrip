@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import auth from '../../../api/auth';
-
 @Component({
   selector: 'app-google',
   standalone: true,
@@ -11,26 +12,30 @@ import auth from '../../../api/auth';
 })
 export class GoogleComponent implements OnInit {
   code: string | null = null;
-  constructor() {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   async ngOnInit() {
-    // get qury params from url "code"
-    const urlParams = new URLSearchParams(window.location.search);
-    this.code = urlParams.get('code');
+    this.route.queryParams.subscribe(async (params) => {
+      const code = params['code'];
+      if (!code) {
+        this.router.navigate(['/login']);
+        return;
+      }
 
-    try {
-      if (!this.code) {
-        throw new Error('Code not found');
+      try {
+        const requestSendCode = await auth.loginWithGoogleCallback(code);
+        if (requestSendCode.status === 200) {
+          this.router.navigate(['/']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      } catch (error) {
+        console.error('Error: ', error);
+        this.router.navigate(['/login']);
       }
-      const requestSendCode = await auth.loginWithGoogleCallback(this.code);
-      if (requestSendCode.status !== 200) {
-        window.location.href = '/login';
-        throw new Error('Failed to login');
-      }
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error: ', error);
-      window.location.href = '/login';
-    }
+    });
   }
 }
