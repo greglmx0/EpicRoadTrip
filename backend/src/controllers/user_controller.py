@@ -43,3 +43,16 @@ def aouth2_google():
     return_json = user_service.aouth2_google()
     print("return_json", return_json)
     return return_json
+
+
+@user_controller.route("/logout", methods=["POST"])
+def logout_user():
+    print("user_controller.logout_user")
+    return user_service.logout_user()
+
+
+@user_controller.route("/user/info", methods=["GET"])
+@token_required
+def get_user_info(current_user):
+    print("user_controller.get_users")
+    return user_service.get_user_info(current_user)

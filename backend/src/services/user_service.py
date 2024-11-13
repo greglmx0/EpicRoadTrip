@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from flask import jsonify, request
+from flask import jsonify, request, make_response
 import jwt
 from src.models.user_model import User
 from src.config.database import db
@@ -51,11 +51,7 @@ class user_service:
                 return jsonify({'message': 'Could not verify', 'authenticated': False}), 401
 
             if user:
-                return {
-                    "message": "Successfully logged in",
-                    "token": user_service.create_token(user),
-                }
-            return jsonify({'message': 'User logged in successfully'}), 200
+                return user_service.make_response_with_cookie('User logged in successfully', user_service.create_token(user))
 
         except Exception as e:
             return {
@@ -109,10 +105,7 @@ class user_service:
         user_db = User.query.filter_by(google_id=user_info.get('id')).first()
 
         if user_db:
-            return {
-                'message': 'User logged in successfully',
-                'token': user_service.create_token(user_db)
-            }
+            return user_service.make_response_with_cookie('User logged in successfully', user_service.create_token(user_db))
 
         created_user = user_service.create_user_with_google(
             user_info.get('email'),
@@ -121,10 +114,7 @@ class user_service:
             'google')
 
         if created_user:
-            return {
-                'message': 'Successfully logged in with google',
-                'token': user_service.create_token(created_user)
-            }
+            return user_service.make_response_with_cookie('User created successfully', user_service.create_token(created_user))
         return jsonify({'message': 'Access denied'}), 403
 
     def google_access_tokens(code):
@@ -158,3 +148,19 @@ class user_service:
         db.session.commit()
         created_user = User.query.filter_by(google_id=google_id).first()
         return created_user
+
+    def make_response_with_cookie(message, token):
+        response = make_response(jsonify({'message': message, 'token': token}))
+        response.set_cookie('auth_token', token,
+                            httponly=True,  secure=True, samesite='Strict')
+        return response
+
+    def logout():
+        response = make_response(
+            jsonify({'message': 'User logged out successfully'}))
+        response.set_cookie('auth_token', '', expires=0)
+        return response
+
+    def get_user_info(current_user):
+        print("user_service.get_user_info", current_user)
+        return jsonify(current_user)
