@@ -19,18 +19,20 @@ module.exports = {
 
       // Light theme colors
       'light-bg': '#fef6e4',
+      'light-border': '#001858',
       'light-headline': '#001858',
       'light-paragraph': '#172c66',
-      'light-button': '#f582ae',
-      'light-button-text': '#001858',
+      'light-button': '#8D2C51',
+      'light-button-text': '#EFF0FA',
       'light-stroke': '#001858',
       'light-main': '#f3d2c1',
       'light-highlight': '#fef6e4',
       'light-secondary': '#8bd3dd',
-      'light-tertiary': '#f582ae',
+      'light-tertiary': '#8D2C51',
       'light-error': '#ff0000',
 
       'dark-bg': '#1b1b1e', // Fond sombre
+      'dark-border': '#e3e3e5', // Bordure ou ligne de séparation
       'dark-headline': '#e3e3e5', // Texte principal
       'dark-paragraph': '#a0a5b1', // Texte secondaire
       'dark-button': '#9a7ff0', // Bouton d'action
