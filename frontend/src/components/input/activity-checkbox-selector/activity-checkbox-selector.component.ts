@@ -26,11 +26,11 @@ export class ActivityCheckboxSelectorComponent {
       value: 'sleep',
       label: 'Sleep',
     },
-    {
-      id: 3,
-      value: 'travel',
-      label: 'Travel',
-    },
+    // {
+    //   id: 3,
+    //   value: 'travel',
+    //   label: 'Travel',
+    // },
     {
       id: 4,
       value: 'eat',

@@ -3,43 +3,33 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-activity-checkbox-selector',
+  selector: 'app-routing-checkbox-selector',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './activity-checkbox-selector.component.html',
-  styleUrl: './activity-checkbox-selector.component.scss',
+  templateUrl: './routing-checkbox-selector.component.html',
+  styleUrl: './routing-checkbox-selector.component.scss',
 })
-export class ActivityCheckboxSelectorComponent {
+export class RoutingCheckboxSelectorComponent {
   @Input({ required: true })
   radioName!: string;
   @Output() sendType = new EventEmitter<string>();
 
-  selectedType: string = 'enjoy';
+  selectedType: string = 'driving';
   typePointOfInterest: any[] = [
     {
       id: 1,
-      value: 'enjoy',
-      label: 'Enjoy',
+      value: 'driving',
+      label: 'Driving',
     },
     {
       id: 2,
-      value: 'sleep',
-      label: 'Sleep',
+      value: 'walking',
+      label: 'Walking',
     },
     {
       id: 3,
-      value: 'travel',
-      label: 'Travel',
-    },
-    {
-      id: 4,
-      value: 'eat',
-      label: 'Eat',
-    },
-    {
-      id: 5,
-      value: 'drink',
-      label: 'Drink',
+      value: 'cycling',
+      label: 'Cycling',
     },
   ];
 

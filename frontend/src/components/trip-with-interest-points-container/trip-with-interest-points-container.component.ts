@@ -3,12 +3,14 @@ import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { InputAddressSuggestionComponent } from '../input/input-address-suggestion/input-address-suggestion.component';
 import { SearchActivityButtonComponent } from '../input/search-activity-button/search-activity-button.component';
 import { ActivityCheckboxSelectorComponent } from '../input/activity-checkbox-selector/activity-checkbox-selector.component';
+import { RoutingCheckboxSelectorComponent } from '../input/routing-checkbox-selector/routing-checkbox-selector.component';
 import { MapTripComponent } from '../map/map-trip/map-trip.component';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
 import ApiMapbox from 'src/api/mapbox';
 import DrinkDto from 'src/api/dto/drink.dto';
 type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
+type RoutingType = 'driving' | 'walking' | 'cycling';
 @Component({
   selector: 'app-trip-with-interest-points-container',
   standalone: true,
@@ -22,6 +24,7 @@ type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
     AppDateRangePicker,
     ActivityCheckboxSelectorComponent,
     CardPointInterrestComponent,
+    RoutingCheckboxSelectorComponent,
   ],
 })
 export class TripWithInterestPointsContainerComponent {
@@ -36,6 +39,7 @@ export class TripWithInterestPointsContainerComponent {
   points: Array<{ name: string; coordinates: number[]; description?: string }> = [];
   activity: any[] | null = null;
   activityType: ActivityType = 'enjoy';
+  routingType: string = 'driving';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
   // toggleDrawer = false;
 
@@ -66,7 +70,7 @@ export class TripWithInterestPointsContainerComponent {
     console.log('searchTrip');
     if (this.depart && this.arrive) {
       try {
-        const newTrip = await ApiMapbox.getTrip(this.depart, this.arrive, 'driving');
+        const newTrip = await ApiMapbox.getTrip(this.depart, this.arrive, this.routingType);
         if (newTrip) {
           this.trip = null;
           this.cdr.detectChanges();
@@ -102,8 +106,12 @@ export class TripWithInterestPointsContainerComponent {
     this.range = event;
   }
 
-  setType(event: string) {
-    console.log('event: ', event);
+  setActivityType(event: string) {
     this.activityType = event as ActivityType;
+  }
+
+  setRoutingType(event: string) {
+    this.routingType = event as RoutingType;
+    this.searchTrip();
   }
 }
