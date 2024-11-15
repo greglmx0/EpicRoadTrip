@@ -1,79 +1,65 @@
-<div class="bg-light-bg dark:bg-dark-bg text-light-paragraph dark:text-dark-paragraph p-4">
-  <div
-    class="navbar shadow-lg rounded-lg bg-light-main dark:bg-dark-main text-light-paragraph dark:text-dark-paragraph flex items-center justify-between"
-  >
-    <div class="flex-1">
-      <!-- <button class="btn btn-square btn-ghost text-light-button-text dark:text-dark-button-text">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-5 h-5 stroke-current"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button> -->
-
-      <div class="drawer">
-        <input id="my-drawer" type="checkbox" class="drawer-toggle p-8 cursor-pointer" />
-        <div class="drawer-content">
-          <label for="my-drawer" class="btn btn-square btn-ghost text-light-button-text dark:text-dark-button-text">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              class="inline-block w-5 h-5 stroke-current"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </label>
-        </div>
-        <div class="drawer-side z-50">
-          <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-          <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-            <!-- Sidebar content here -->
-            <li><a>Sidebar Item 1</a></li>
-            <li><a>Sidebar Item 2</a></li>
-            <li>
-              <a routerLink="/points-of-interest" class="btn btn-ghost text-l m-2 hover:text-primary"
-                >Points d'intérêt</a
+<div class="bg-light-bg dark:bg-dark-bg text-light-paragraph dark:text-dark-paragraph p-4 w-screen min-h-full">
+  <div class="flex flex-col">
+    <div
+      class="navbar shadow-lg rounded-lg bg-light-main dark:bg-dark-main text-light-paragraph dark:text-dark-paragraph flex items-center justify-between"
+    >
+      <div class="flex-1">
+        <div class="drawer width-64">
+          <input id="my-drawer" type="checkbox" class="drawer-toggle p-8 cursor-pointer" />
+          <div class="drawer-content">
+            <label for="my-drawer" class="btn btn-square btn-ghost text-light-button-text dark:text-dark-button-text">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                class="inline-block w-5 h-5 stroke-current fill-light-button dark:fill-dark-button"
               >
-            </li>
-            <li>
-              <a routerLink="/route-with-points-of-interest" class="btn btn-ghost text-l m-2 hover:text-primary"
-                >Trajet avec points d'intérêt</a
-              >
-            </li>
-            <li>
-              <a
-                routerLink="/login"
-                class="btn btn-neutral text-xl btn-outline m-2 border-light-stroke dark:border-dark-stroke bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
-                >Se connecter</a
-              >
-            </li>
-            <li><a routerLink="/register" class="btn btn-ghost text-l m-2 hover:text-primary">S'inscrire</a></li>
-          </ul>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                  class="text-light-button-text dark:text-dark-button-text"
+                ></path>
+              </svg>
+            </label>
+          </div>
+          <div class="drawer-side z-50">
+            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+              <li>
+                <a routerLink="/points-of-interest" class="btn btn-ghost text-l m-2 hover:text-primary"
+                  >Recherche des activités à proximité</a
+                >
+              </li>
+              <li>
+                <a routerLink="/trip" class="btn btn-ghost text-l m-2 hover:text-primary"
+                  >Rechercher un itinéraire avec des points d'intérêt</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+      <div class="flex-1 justify-center">
+        <h1 class="text-light-headline dark:text-dark-headline text-4xl font-bold">EpicRoadTrip</h1>
+      </div>
 
-    <div class="flex-1 justify-center">
-      <h1 class="text-light-headline dark:text-dark-headline text-4xl font-bold">Bienvenue sur l'EpicRoadTrip</h1>
+      <div class="flex-1 justify-end" *ngIf="!isAuthenticated">
+        <a class="btn btn-ghost text-l m-2 hover:text-primary" routerLink="/register">S'inscrire</a>
+        <a
+          class="btn btn-neutral text-xl btn-outline m-2 border-light-stroke dark:border-dark-stroke bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
+          routerLink="/login"
+          >Se connecter</a
+        >
+      </div>
+      <div class="flex-1 justify-end" *ngIf="isAuthenticated">
+        <span class="text-lg m-2 text-primary">Bonjour, {{ username }}</span>
+        <button (click)="logout()" class="btn btn-outline text-l m-2 hover:bg-danger hover:text-white">
+          Déconnexion
+        </button>
+      </div>
     </div>
-
-    <div class="flex-1 justify-end" *ngIf="!isAuthenticated">
-      <a class="btn btn-ghost text-l m-2 hover:text-primary" routerLink="/register">S'inscrire</a>
-      <a
-        class="btn btn-neutral text-xl btn-outline m-2 border-light-stroke dark:border-dark-stroke bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
-        routerLink="/login"
-        >Se connecter</a
-      >
-    </div>
-    <div class="flex-1 justify-end" *ngIf="isAuthenticated">
-      <span class="text-lg m-2 text-primary">Bonjour, {{ username }}</span>
-      <button (click)="logout()" class="btn btn-outline text-l m-2 hover:bg-danger hover:text-white">
-        Déconnexion
-      </button>
-    </div>
+    <router-outlet></router-outlet>
   </div>
 </div>

@@ -37,11 +37,11 @@ export class TripWithInterestPointsContainerComponent {
   center: { lat: number; lng: number } = { lat: 0, lng: 0 };
   distance: number = 0;
   points: Array<{ name: string; coordinates: number[]; description?: string }> = [];
-  activity: any[] | null = null;
+  activities: any[] | null = null;
   activityType: ActivityType = 'enjoy';
   routingType: string = 'driving';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
-  // toggleDrawer = false;
+  listInterestActivities: any[] = [];
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -57,13 +57,13 @@ export class TripWithInterestPointsContainerComponent {
     this.depart = null;
     this.trip.routes = [];
     this.points = [];
-    this.activity = null;
+    this.activities = null;
   }
   clearDestination() {
     this.arrive = null;
     this.trip.routes = [];
     this.points = [];
-    this.activity = null;
+    this.activities = null;
   }
 
   async searchTrip() {
@@ -84,10 +84,10 @@ export class TripWithInterestPointsContainerComponent {
     }
   }
 
-  setPoints(event: any) {
+  setPoints(events: any) {
     // this.center = event;
-    this.activity = event;
-    const points = event.map((feature: DrinkDto) => {
+    this.activities = events;
+    const points = events.map((feature: DrinkDto) => {
       return {
         name: feature.name,
         coordinates: [feature.longitude, feature.latitude],
@@ -113,5 +113,36 @@ export class TripWithInterestPointsContainerComponent {
   setRoutingType(event: string) {
     this.routingType = event as RoutingType;
     this.searchTrip();
+  }
+
+  get activitiesNotInListInterestActivities() {
+    return this.activities?.filter((activity) => !this.listInterestActivities.includes(activity));
+  }
+
+  addInterestActivity(event: any) {
+    // check if already in list
+    if (this.listInterestActivities.includes(event)) {
+      return;
+    }
+    this.listInterestActivities.push(event);
+  }
+  removeInterestActivity(event: any) {
+    this.listInterestActivities = this.listInterestActivities.filter((activity) => activity !== event);
+  }
+
+  createTrip() {
+    console.log('createTrip');
+    // console.log('range: ', this.range);
+    // console.log('depart: ', this.depart);
+    // console.log('arrive: ', this.arrive);
+    // console.log('routingType: ', this.routingType);
+    // console.log('listInterestActivities: ', this.listInterestActivities);
+    console.log({
+      range: this.range,
+      depart: this.depart,
+      arrive: this.arrive,
+      routingType: this.routingType,
+      listInterestActivities: this.listInterestActivities,
+    });
   }
 }

@@ -32,19 +32,22 @@
   ></app-search-activity-button>
 </div>
 
-<div
-  class="flex flex-row gap-2 justify-between w-full bg-light-bg dark:bg-dark-bg dark:border-dark-border dark:text-white"
->
+<div class="flex flex-row justify-between w-full bg-light-bg dark:bg-dark-bg dark:border-dark-border dark:text-white">
   <div
     class="transition-all duration-300 overflow-y-scroll mt-4"
-    style="height: 750px"
-    [ngClass]="{ 'w-1/3': activity, 'w-0': !activity }"
+    style="height: 690px"
+    [ngClass]="{ 'w-1/3': activities, 'w-0': !activities }"
   >
     <app-card-point-interrest
-      *ngFor="let point of activity"
-      [event]="point"
+      *ngFor="let activity of activitiesNotInListInterestActivities"
+      [event]="activity"
+      [interraction]="true"
       class="flex-none"
+      (sendEvent)="addInterestActivity($event)"
     ></app-card-point-interrest>
+    <div *ngIf="activitiesNotInListInterestActivities?.length === 0" class="text-center">
+      <p class="text-2xl">Aucune activité trouvée pour cette recherche. Veuillez modifier vos critères de recherche.</p>
+    </div>
   </div>
   <app-map-trip
     *ngIf="trip"
@@ -54,4 +57,24 @@
     [points]="points"
     (centerChange)="updateCenter($event)"
   ></app-map-trip>
+</div>
+
+<div>
+  <h3 class="text-2xl my-8 font-bold text-center">Liste des activités ajouter à votre itinéraire</h3>
+  <div *ngIf="listInterestActivities.length === 0" class="text-center">
+    <p class="text-2xl">Aucune activité à ajouter</p>
+  </div>
+  <div *ngIf="listInterestActivities.length > 0" class="grid grid-cols-3 gap-x-3">
+    <app-card-point-interrest
+      *ngFor="let point of listInterestActivities"
+      [event]="point"
+      [isInList]="true"
+      [interraction]="true"
+      (sendEvent)="removeInterestActivity($event)"
+    ></app-card-point-interrest>
+  </div>
+</div>
+
+<div class="flex justify-center mt-4">
+  <button class="btn btn-primary" [disabled]="!depart && !arrive" (click)="createTrip()">Créer l'itinéraire</button>
 </div>

@@ -20,7 +20,7 @@ export class AxiosInterceptorService {
           // this.router.navigate(['/login']);
           localStorage.removeItem('token');
         }
-        return Promise.reject(error);
+        return Promise.reject(error.response);
       },
     );
   }
