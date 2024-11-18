@@ -3,8 +3,7 @@ services:
   frontend:
     restart: always
     volumes:
-      - ./etc/letsencrypt/live/greglmx.com/fullchain.pem:/etc/letsencrypt/live/greglmx.com/fullchain.pem
-      - ./etc/letsencrypt/live/greglmx.com/privkey.pem:/etc/letsencrypt/live/greglmx.com/privkey.pem
+      - ./etc/letsencrypt/live/greglmx.com/*:/var/www/html/certificat/
     build:
       dockerfile: Dockerfile.frontend.prod
     ports:
