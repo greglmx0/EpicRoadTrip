@@ -1,3 +1,6 @@
 FROM nginx:1.25.4-alpine
+
+COPY /etc/letsencrypt/live/greglmx.com/fullchain.pem /etc/letsencrypt/live/greglmx.com/fullchain.pem
+COPY /etc/letsencrypt/live/greglmx.com/privkey.pem /etc/letsencrypt/live/greglmx.com/privkey.pem
 COPY nginx.frontend.conf /etc/nginx/templates/default.conf.template
 COPY dist/frontend/browser /usr/share/nginx/html/frontend
