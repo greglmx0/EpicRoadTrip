@@ -53,6 +53,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
+          envs: MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, SECRET_KEY, MAPBOX_ACCESS_TOKEN, MPABOX_API_URL, MAPBOX_SESSION_TOKEN, TICKETMASTER_API_URL, TICKETMASTER_ACCESS_TOKEN, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI
           script: |
             # Déplacer les fichiers nécessaires
             cd /var/www/html
