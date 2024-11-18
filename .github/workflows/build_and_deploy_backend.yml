@@ -53,19 +53,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          envs: MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, SECRET_KEY, MAPBOX_ACCESS_TOKEN, MPABOX_API_URL, MAPBOX_SESSION_TOKEN, TICKETMASTER_API_URL, TICKETMASTER_ACCESS_TOKEN
           script: |
-            export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-            export MYSQL_DATABASE=$MYSQL_DATABASE
-            export MYSQL_USER=$MYSQL_USER
-            export MYSQL_PASSWORD=$MYSQL_PASSWORD
-            export SECRET_KEY=$SECRET_KEY
-            export MAPBOX_ACCESS_TOKEN=$MAPBOX_ACCESS_TOKEN
-            export MPABOX_API_URL=$MPABOX_API_URL
-            export MAPBOX_SESSION_TOKEN=$MAPBOX_SESSION_TOKEN
-            export TICKETMASTER_API_URL=$TICKETMASTER_API_URL
-            export TICKETMASTER_ACCESS
-
             # Déplacer les fichiers nécessaires
             cd /var/www/html
             mv backend/prod/* . # docker-compose.yml
@@ -73,7 +61,7 @@ jobs:
             rm -rf backend/prod backend/backend
 
             # Relancer les conteneurs avec Docker Compose
-            echo "Starting backend deployment..."
-            docker compose down
+            echo "Starting docker compose for backend database and phpmyadmin..."
+            docker compose down backend phpmyadmin db
             docker compose up -d --build backend phpmyadmin db
             echo "Backend deployment completed."
