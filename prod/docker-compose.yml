@@ -2,6 +2,9 @@ version: '3.9'
 services:
   frontend:
     restart: always
+    volumes:
+      - ./etc/letsencrypt/live/greglmx.com/fullchain.pem:/etc/letsencrypt/live/greglmx.com/fullchain.pem
+      - ./etc/letsencrypt/live/greglmx.com/privkey.pem:/etc/letsencrypt/live/greglmx.com/privkey.pem
     build:
       dockerfile: Dockerfile.frontend.prod
     ports:
