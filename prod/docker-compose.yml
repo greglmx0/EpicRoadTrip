@@ -3,7 +3,7 @@ services:
   frontend:
     restart: always
     volumes:
-      - ./etc/letsencrypt/live/greglmx.com/*:/var/www/html/certificat/
+      - ./etc/letsencrypt/live/greglmx.com:var/www/html/certificat
     build:
       dockerfile: Dockerfile.frontend.prod
     ports:
