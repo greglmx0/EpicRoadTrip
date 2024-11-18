@@ -75,5 +75,5 @@ jobs:
             # Relancer les conteneurs avec Docker Compose
             echo "Starting backend deployment..."
             docker compose down
-            docker compose up -d --build
+            docker compose up -d --build backend phpmyadmin db
             echo "Backend deployment completed."
