@@ -19,6 +19,8 @@
   - flask-validate-json # (pour la validation des données)
   - Flask-Parameter-Validation # (pour la validation des paramètres)
   - gunicorn # (pour le déploiement)
+  - pytest-cov # (pour le rapport de couverture)
+
 - angular 17.3.0
 
 ## Installation
@@ -57,10 +59,19 @@ Pour rebuild les images docker (si des dependances ont été ajoutées ou modifi
 docker-compose up --build
 ```
 
+## Accès à l'application devlopment
+
 frontend : http://localhost:4200 \
 backend : http://localhost:5000 \
 swagger : http://localhost:5000/swagger \
 phpmyadmin : http://localhost:8080
+
+## Accès à l'application production
+
+frontend : https://greglmx.com \
+backend : https://api.greglmx.com \
+swagger : https://api.greglmx.com/swagger \
+phpmyadmin : https://pma.greglmx.com
 
 ## Documentation
 
@@ -70,7 +81,7 @@ La latitude de la ville de Rennes est 48.0833 et la longitude de la ville de Ren
 
 ## TODO :
 
-- [ ] Ajouter les tests unitaires
+- [x] Ajouter les tests unitaires
 - [ ] Verifier latitudes - longitudes
 - [ ] Sauvegarder les trajets
 - [ ] Points d'intérêts dans la base de données
@@ -82,7 +93,7 @@ La latitude de la ville de Rennes est 48.0833 et la longitude de la ville de Ren
 - [ ] Ajouter des messages de confirmation
 - [ ] Exporter les trajets en PDF
 - [ ] Exporter les trajets lein
-- [ ] Moyen de transport (voiture, vélo, piéton)
+- [x] Moyen de transport (voiture, vélo, piéton)
 - [ ] Budget
-- [ ] out2 (google)
-- [ ] tu 75% backend
+- [x] out2 (google)
+- [x] tu 75% backend
