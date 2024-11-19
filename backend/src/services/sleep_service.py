@@ -25,4 +25,5 @@ class sleep_service:
                 return {'message': 'An error occurred'}, response.status_code
 
         except Exception as e:
-            return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
+            print("An error occurred: ", str(e))
+            return jsonify({'message': 'Something went wrong'}), 500
