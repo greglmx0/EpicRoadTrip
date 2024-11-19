@@ -51,6 +51,6 @@ def test_get_drink_exception(mock_get):
     with app.app_context():
         result, status_code = drink_service.get_drink(LATITUDE, LONGITUDE, START_DATE, END_DATE, RADIUS)
 
-        assert result.json == jsonify({'message': 'An error occurred', 'error': 'Connection error'}).json
+        assert result.json == jsonify({'message': 'Something went wrong'}).json
         assert status_code == 500
         mock_get.assert_called_once()
