@@ -9,8 +9,10 @@ services:
     build:
       dockerfile: Dockerfile.frontend.prod
     ports:
+      - '80:80'
       - '443:443'
     expose:
+      - 80
       - 443
 
   db:
