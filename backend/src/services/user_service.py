@@ -86,14 +86,6 @@ class user_service:
         users = User.query.all()
         return jsonify([user.serialize() for user in users])
 
-    def get_user_by_id(self, id):
-        user = User.get_by_id(id)
-        if not user:
-            return None
-        if user.id == id:
-            return User.serialize(user)
-        return None
-
     def aouth2_google():
         if not request.json:
             return jsonify({'message': 'Access denied'}), 403
