@@ -5,6 +5,7 @@ from src.controllers.mapbox_controller import mapbox_controller
 from src.controllers.eat_controller import eat_controller
 from src.controllers.drink_controller import drink_controller
 from src.controllers.sleep_controller import sleep_controller
+from src.controllers.trip_controller import trip_controller
 
 routes = Blueprint("routes", __name__)
 
@@ -20,3 +21,4 @@ routes.register_blueprint(eat_controller)
 routes.register_blueprint(drink_controller)
 routes.register_blueprint(sleep_controller)
 routes.register_blueprint(mapbox_controller)
+routes.register_blueprint(trip_controller)
