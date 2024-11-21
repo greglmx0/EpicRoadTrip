@@ -16,173 +16,466 @@
         }
       }
     },
-      "/register": {
-        "post": {
-          "tags": ["User"],
-          "description": "Register a new user",
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "username",
-              "in": "formData",
-              "description": "Username of the user",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "email",
-              "in": "formData",
-              "description": "Email of the user",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "password",
-              "in": "formData",
-              "description": "Password of the user",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "201": {
-              "description": "User registered successfully"
-            },
-            "400": {
-              "description": "Invalid input"
-            },
-            "409": {
-              "description": "User already exists"
-            }
-          }
-        }
-      },
-      "/login": {
-        "post": {
+    "/register": {
+      "post": {
         "tags": ["User"],
-          "description": "Login a user",
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "email",
-              "in": "formData",
-              "description": "Email of the user",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "password",
-              "in": "formData",
-              "description": "Password of the user",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User logged in successfully"
-            },
-            "400": {
-              "description": "Invalid input"
-            },
-            "404": {
-              "description": "User not found"
-            }
+        "description": "Register a new user",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "Username of the user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Email of the user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Password of the user",
+            "required": true,
+            "type": "string"
           }
-        }
-      },
-      "/mapbox/suggest": {
-        "get": {
-        "tags": ["MapBox"],
-          "description": "Get suggestions for a location",
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "query",
-              "in": "query",
-              "description": "Query string for location",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Location suggestions"
-            },
-            "500": {
-              "description": "Internal server error"
-            }
-          }
-        }
-      },
-      "/mapbox/retrieve": {
-        "get": {
-        "tags": ["MapBox"],
-          "description": "Retrieve location details",
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "mapbox_id",
-              "in": "query",
-              "description": "Place MapBox ID of the location",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Location details"
-            },
-            "500": {
-              "description": "Internal server error"
-            }
-          }
-        }
-      },
-      "/mapbox/trip": {
-        "get": {
-        "tags": ["MapBox"],
-          "description": "Get trip itinerary",
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "depart_lat",
-              "in": "query",
-              "description": "Departure latitude",
-              "required": true,
-              "type": "number"
-            },
-            {
-              "name": "depart_lon",
-              "in": "query",
-              "description": "Departure longitude",
-              "required": true,
-              "type": "number"
-            },
-            {
-              "name": "arrive_lat",
-              "in": "query",
-              "description": "Arrival latitude",
-              "required": true,
-              "type": "number"
-            },
-            {
-              "name": "arrive_lon",
-              "in": "query",
-              "description": "Arrival longitude",
-              "required": true,
-              "type": "number"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Trip itinerary"
-            },
-            "500": {
-              "description": "Internal server error"
-            }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "User already exists"
           }
         }
       }
+    },
+    "/login": {
+      "post": {
+        "tags": ["User"],
+        "description": "Login a user",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Email of the user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Password of the user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": ["User"],
+        "description": "Logout a user",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Email of the user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/user/info": {
+      "get": {
+        "tags": ["User"],
+        "description": "Get user info",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email of the user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User info"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/mapbox/suggest": {
+      "get": {
+        "tags": ["MapBox"],
+        "description": "Get suggestions for a location",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string for location",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location suggestions"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/mapbox/retrieve": {
+      "get": {
+        "tags": ["MapBox"],
+        "description": "Retrieve location details",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "mapbox_id",
+            "in": "query",
+            "description": "Place MapBox ID of the location",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location details"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "drink": {
+      "get": {
+        "tags": ["Drink"],
+        "description": "Get drink details",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "latitute",
+            "in": "query",
+            "description": "Latitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "Longitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date of the event",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date of the event",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Drink details"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "sleep": {
+      "get": {
+        "tags": ["Sleep"],
+        "description": "Get sleep details",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "latitute",
+            "in": "query",
+            "description": "Latitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "Longitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date of the event",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date of the event",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sleep details"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "eat": {
+      "get": {
+        "tags": ["Eat"],
+        "description": "Get eat details",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "latitute",
+            "in": "query",
+            "description": "Latitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "Longitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date of the event",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date of the event",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Eat details"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "enjoy": {
+      "get": {
+        "tags": ["Enjoy"],
+        "description": "Get enjoy details",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "latitute",
+            "in": "query",
+            "description": "Latitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "Longitude of the location",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date of the event",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date of the event",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enjoy details"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/mapbox/trip": {
+      "get": {
+        "tags": ["MapBox"],
+        "description": "Get trip itinerary",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "depart_lat",
+            "in": "query",
+            "description": "Departure latitude",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "depart_lon",
+            "in": "query",
+            "description": "Departure longitude",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "arrive_lat",
+            "in": "query",
+            "description": "Arrival latitude",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "arrive_lon",
+            "in": "query",
+            "description": "Arrival longitude",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trip itinerary"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "trip": {
+      "get": {
+        "tags": ["Trip"],
+        "description": "Get trip details",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "depart_lat",
+            "in": "query",
+            "description": "Departure latitude",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "depart_lon",
+            "in": "query",
+            "description": "Departure longitude",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "arrive_lat",
+            "in": "query",
+            "description": "Arrival latitude",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "arrive_lon",
+            "in": "query",
+            "description": "Arrival longitude",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date of the event",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date of the event",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trip details"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
   }
 }
