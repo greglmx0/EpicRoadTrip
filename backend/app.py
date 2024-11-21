@@ -50,7 +50,12 @@ if app.config['DEBUG']:
     @app.before_request
     def log_request_info():
         app.logger.debug('-------------------------------')
-        # app.logger.debug('Headers: %s', request.headers)
+        app.logger.debug('URL: %s', request.url)
+        app.logger.debug('Method: %s', request.method)
+        app.logger.debug('Full path: %s', request.full_path)
+        app.logger.debug('Endpoint: %s', request.endpoint)
+        app.logger.debug('Request data: %s', request.data)
+        app.logger.debug('Request args: %s', request.args)
         app.logger.debug('Body: %s', request.get_data())
 
 if __name__ == "__main__":

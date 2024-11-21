@@ -52,6 +52,6 @@ def test_get_enjoy_exception(mock_get):
         result, status_code = enjoy_service.get_enjoy(LATITUDE, LONGITUDE, START_DATE, END_DATE)
         
         # Vérification que la réponse contient le message d'erreur approprié
-        assert result.json == jsonify({'message': 'An error occurred', 'error': 'Connection error'}).json
+        assert result.json == jsonify({'message': 'Something went wrong'}).json
         assert status_code == 500
         mock_get.assert_called_once()

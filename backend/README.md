@@ -25,3 +25,9 @@ pip install -r requirements.txt
 ```bash
 pytest
 ```
+
+### Show coverage report
+
+```bash
+coverage run -m pytest && coverage report
+```
