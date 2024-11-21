@@ -11,27 +11,27 @@ create_trip_schema = {
         },
         'depart': {
             'type': 'array',
-            'items': {'type': 'number'},
+            'items': {'type': ['number', 'integer']},
             'minItems': 2,
             'maxItems': 2
         },
         'arrive': {
             'type': 'array',
-            'items': {'type': 'number'},
+            'items':{'type': ['number', 'integer']},
             'minItems': 2,
             'maxItems': 2
         },
         'routingType': {
             'type': 'string',
-            'enum': ['walking', 'driving', 'cycling', 'transit']
+            'enum': ['walking', 'driving', 'cycling']
         },
-        'listInterestActivities': {
+        'listActivities': {
             'type': 'array',
             'items': {
                 'type': 'object',
                 'properties': {
                     'id': {'type': 'string', 'minLength': 1},
-                    'category': {'type': 'string', 'enum': ['enjoy', 'eat', 'explore']},
+                    'category': {'type': 'string', 'enum': ['enjoy', 'eat', 'drink', 'sleep']},
                     'name': {'type': 'string', 'minLength': 1},
                     'venue': {'type': 'string'},
                     'location': {'type': 'string'},
@@ -40,8 +40,8 @@ create_trip_schema = {
                     'link': {'type': 'string', 'format': 'uri'},
                     'extraLink': {'type': 'string', 'format': 'uri'},
                     'dateTime': {'type': ['string', 'null'], 'format': 'date-time'},
-                    'latitude': {'type': 'number'},
-                    'longitude': {'type': 'number'},
+                    'latitude': {'type': ['number', 'string']},
+                    'longitude': {'type': ['number', 'string']},
                     'picture': {'type': ['string', 'null'], 'format': 'uri'},
                     'priceRangeMin': {'type': ['number', 'null'], 'minimum': 0},
                     'priceRangeMax': {'type': ['number', 'null'], 'minimum': 0}
