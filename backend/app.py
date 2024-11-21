@@ -13,7 +13,7 @@ MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD') or 'no credentials found'
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = SECRET_KEY
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@db:3306/db_flask'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@db:3306/{MYSQL_DATABASE}'
@@ -41,9 +41,8 @@ migrate.init_app(app, db)
 
 with app.app_context():
     db.drop_all()
-    # create trip and activity tables
-    db.reflect()
     db.create_all()
+    print(f"Les tables créées dans la base de données {MYSQL_DATABASE}: {db.metadata.tables.keys()}")
 
 app.register_blueprint(routes)
 
