@@ -1,3 +1,26 @@
-<main class="m-0 p-0 bg-light-bg dark:bg-dark-bg text-light-paragraph dark:text-dark-paragraph">
-  <app-tab-home></app-tab-home>
-</main>
+<div class="flex justify-center items-center h-screen">
+  <div
+    class="bg-light-bg dark:bg-dark-bg text-light-headline dark:text-dark-headline p-8 rounded-md gap-4 justify-center items-center flex flex-col"
+  >
+    <div class="flex flex-col gap-4">
+      <button
+        class="btn btn-outline bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
+        routerLink="/points-of-interest"
+      >
+        Rechercher des points d'intérêt
+      </button>
+      <div class="flex justify-center items-center gap-4">
+        <hr class="w-1/4 border-t-2 border-light-paragraph dark:border-dark-paragraph" />
+        <p class="text-light -paragraph dark:text-dark-paragraph">ou</p>
+        <hr class="w-1/4 border-t-2 border-light-paragraph dark:border-dark-paragraph" />
+      </div>
+
+      <div
+        class="btn btn-outline bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
+        routerLink="/trip"
+      >
+        Préparer un voyage
+      </div>
+    </div>
+  </div>
+</div>

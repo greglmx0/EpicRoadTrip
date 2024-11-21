@@ -11,15 +11,12 @@ import ApiTrip from 'src/api/apiTrip';
   imports: [CommonModule],
 })
 export class UserTripsComponent implements OnInit {
-  constructor() {}
-
   trips: Trip[] = [];
   loading: boolean = false;
 
   async ngOnInit() {
     try {
       this.trips = (await ApiTrip.getUserTrips()) || [];
-      console.log('Trips: ', this.trips);
     } catch (error) {
       console.error('Error: ', error);
     } finally {
