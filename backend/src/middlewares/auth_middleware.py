@@ -29,7 +29,6 @@ def token_required(f):
             data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             id = data["user_id"]
             current_user = user_service.get_user_by_id(None, id)
-            print('jwt current user', current_user)
             if current_user is None:
                 return {
                     "message": "Invalid Authentication token!",

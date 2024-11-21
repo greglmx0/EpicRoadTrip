@@ -8,6 +8,7 @@ import { StyleComponent } from 'src/view/style/style.component';
 import { TripComponent } from 'src/view/trip/trip.component';
 import { PointsOfInterestComponent } from 'src/view/points-of-interest/points-of-interest.component';
 import { NavbarHomeComponent } from 'src/components/navbar-home/navbar-home.component';
+import { UserTripsComponent } from 'src/view/user-trips/user-trips.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,6 +23,7 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'trip', component: TripComponent },
       { path: 'points-of-interest', component: PointsOfInterestComponent },
+      { path: 'user-trips', component: UserTripsComponent },
     ],
   },
 
