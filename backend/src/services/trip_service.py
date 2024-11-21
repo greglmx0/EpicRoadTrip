@@ -9,15 +9,13 @@ class trip_service:
     def create_trip(user):
         try:
             payload = request.json
-            activities = payload.get('listInterestActivities')
-            print("wowowow",user.get('id'))
+            activities = payload.get('activities')
             trip = format_trip(payload, user.get('id'))
-
             trip = Trip(**trip)
             db.session.add(trip)
             db.session.commit()
 
-            for activity in activities:
+            for activity in activities or []:
                 activity = format_activity(activity, trip.id)
                 activity = Activity(**activity)
                 trip.activities.append(activity)
@@ -38,7 +36,7 @@ class trip_service:
 
         except Exception as e:
             return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
-        
+
 def format_activity(activity, trip_id):
         date_time = activity.get('dateTime')
         if date_time:
@@ -63,17 +61,19 @@ def format_activity(activity, trip_id):
             'price_range_min': activity.get('priceRangeMin'),
             'price_range_max': activity.get('priceRangeMax')
         }
-        
+
+        # delete empty keys
+        activity = {k: v for k, v in activity.items() if v is not None}
         return activity
-    
+
 def format_trip(payload, user_id):
     range = payload.get('range')
     range_start = range.get('start')
     range_end = range.get('end')
     depart = payload.get('depart')
     arrive = payload.get('arrive')
-
-    return {
+    
+    trip = {
         'user_id': user_id,
         'range_start':  datetime.strptime(range_start, '%Y-%m-%dT%H:%M:%S.%fZ'),
         'range_end':  datetime.strptime(range_end, '%Y-%m-%dT%H:%M:%S.%fZ'),
@@ -83,3 +83,7 @@ def format_trip(payload, user_id):
         'arrive_longitude': arrive[1],
         'routing_type': payload.get('routingType')
     }
+
+    # delete empty keys
+    trip = {k: v for k, v in trip.items() if v is not None}
+    return  trip

@@ -43,7 +43,7 @@ export class TripWithInterestPointsContainerComponent {
   activityType: ActivityType = 'enjoy';
   routingType: string = 'driving';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
-  listInterestActivities: any[] = [];
+  listInterestActivities: DrinkDto[] = [];
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -133,12 +133,19 @@ export class TripWithInterestPointsContainerComponent {
   }
 
   createTrip() {
+    const activitiesCleaned = this.listInterestActivities.map((activity) => {
+      return {
+        ...activity,
+        description: activity.description?.replace(/<[^>]*>?/gm, ''),
+      };
+    });
+
     const trip = new TripDto({
       range: this.range,
       depart: this.depart,
       arrive: this.arrive,
       routingType: this.routingType,
-      listActivities: this.listInterestActivities,
+      activities: activitiesCleaned,
     });
     if (!trip) {
       return;
