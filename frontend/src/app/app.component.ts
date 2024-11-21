@@ -11,6 +11,7 @@ import { AxiosInterceptorService } from '../.config/axios-interceptor.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(private axiosInterceptorService: AxiosInterceptorService) {}
+  //  constructor(private axiosInterceptorService: AxiosInterceptorService) {}
+  constructor() {}
   title = 'frontend';
 }

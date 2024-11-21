@@ -9,6 +9,8 @@ import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-p
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
 import ApiMapbox from 'src/api/mapbox';
 import DrinkDto from 'src/api/dto/drink.dto';
+import ApiTrip from 'src/api/apiTrip';
+import TripDto from 'src/api/dto/trip.dto';
 type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
 type RoutingType = 'driving' | 'walking' | 'cycling';
 @Component({
@@ -131,18 +133,16 @@ export class TripWithInterestPointsContainerComponent {
   }
 
   createTrip() {
-    console.log('createTrip');
-    // console.log('range: ', this.range);
-    // console.log('depart: ', this.depart);
-    // console.log('arrive: ', this.arrive);
-    // console.log('routingType: ', this.routingType);
-    // console.log('listInterestActivities: ', this.listInterestActivities);
-    console.log({
+    const trip = new TripDto({
       range: this.range,
       depart: this.depart,
       arrive: this.arrive,
       routingType: this.routingType,
-      listInterestActivities: this.listInterestActivities,
+      listActivities: this.listInterestActivities,
     });
+    if (!trip) {
+      return;
+    }
+    ApiTrip.createTrip(trip);
   }
 }

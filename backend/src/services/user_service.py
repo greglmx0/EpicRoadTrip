@@ -158,3 +158,11 @@ class user_service:
     def get_user_info(current_user):
         print("user_service.get_user_info", current_user)
         return jsonify(current_user)
+    
+    def get_user_by_id(self, id):
+        user = User.get_by_id(id)
+        if not user:
+            return None
+        if user.id == id:
+            return User.serialize(user)
+        return None

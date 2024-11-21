@@ -18,7 +18,7 @@ import { AxiosInterceptorService } from '../.config/axios-interceptor.service';
     MatDatepickerModule,
     AppComponent,
   ],
-  providers: [AxiosInterceptorService, { provide: HTTP_INTERCEPTORS, useClass: AxiosInterceptorService, multi: true }],
+  // providers: [AxiosInterceptorService, { provide: HTTP_INTERCEPTORS, useClass: AxiosInterceptorService, multi: true }],
   bootstrap: [],
 })
 export class AppModule {}

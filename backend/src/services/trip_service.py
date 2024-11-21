@@ -10,7 +10,8 @@ class trip_service:
         try:
             payload = request.json
             activities = payload.get('listInterestActivities')
-            trip = format_trip(payload, user)
+            print("wowowow",user.get('id'))
+            trip = format_trip(payload, user.get('id'))
 
             trip = Trip(**trip)
             db.session.add(trip)
@@ -65,7 +66,7 @@ def format_activity(activity, trip_id):
         
         return activity
     
-def format_trip(payload, user):
+def format_trip(payload, user_id):
     range = payload.get('range')
     range_start = range.get('start')
     range_end = range.get('end')
@@ -73,7 +74,7 @@ def format_trip(payload, user):
     arrive = payload.get('arrive')
 
     return {
-        'user_id': user.id,
+        'user_id': user_id,
         'range_start':  datetime.strptime(range_start, '%Y-%m-%dT%H:%M:%S.%fZ'),
         'range_end':  datetime.strptime(range_end, '%Y-%m-%dT%H:%M:%S.%fZ'),
         'depart_latitude': depart[0],

@@ -7,6 +7,8 @@ class auth {
     try {
       return await axiosInstance.post('/register', JSON.stringify({ username, email, password }));
     } catch (error: any) {
+      console.log('Error: ', error);
+
       // throw new Error(error.response.data.message);
       return {
         status: error.response.status,
