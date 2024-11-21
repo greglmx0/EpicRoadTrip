@@ -19,3 +19,12 @@ def return_error(e, status_code):
 def create_trip(current_user):
     print("trip_controller.create_trip", current_user)
     return trip_service.create_trip(current_user)
+
+@trip_controller.route("/trip", methods=["GET"])
+@token_required
+def get_trips_by_user_id(current_user):
+    return trip_service.get_trips_by_user_id(current_user.get("id"))
+
+@trip_controller.route("/trip/<id>", methods=["GET"])
+def get_trip_by_id(id):
+    return trip_service.get_trip_by_id(id)

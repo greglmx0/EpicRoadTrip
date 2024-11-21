@@ -12,7 +12,7 @@ import DrinkDto from 'src/api/dto/drink.dto';
 import ApiTrip from 'src/api/apiTrip';
 import TripDto from 'src/api/dto/trip.dto';
 type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
-type RoutingType = 'driving' | 'walking' | 'cycling';
+type routing_type = 'driving' | 'walking' | 'cycling';
 @Component({
   selector: 'app-trip-with-interest-points-container',
   standalone: true,
@@ -41,7 +41,7 @@ export class TripWithInterestPointsContainerComponent {
   points: Array<{ name: string; coordinates: number[]; description?: string }> = [];
   activities: any[] | null = null;
   activityType: ActivityType = 'enjoy';
-  routingType: string = 'driving';
+  routing_type: string = 'driving';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
   listInterestActivities: DrinkDto[] = [];
 
@@ -72,7 +72,7 @@ export class TripWithInterestPointsContainerComponent {
     console.log('searchTrip');
     if (this.depart && this.arrive) {
       try {
-        const newTrip = await ApiMapbox.getTrip(this.depart, this.arrive, this.routingType);
+        const newTrip = await ApiMapbox.getTrip(this.depart, this.arrive, this.routing_type);
         if (newTrip) {
           this.trip = null;
           this.cdr.detectChanges();
@@ -112,8 +112,8 @@ export class TripWithInterestPointsContainerComponent {
     this.activityType = event as ActivityType;
   }
 
-  setRoutingType(event: string) {
-    this.routingType = event as RoutingType;
+  setrouting_type(event: string) {
+    this.routing_type = event as routing_type;
     this.searchTrip();
   }
 
@@ -143,8 +143,10 @@ export class TripWithInterestPointsContainerComponent {
     const trip = new TripDto({
       range: this.range,
       depart: this.depart,
+      depart_name: this.trip.waypoints[0].name,
       arrive: this.arrive,
-      routingType: this.routingType,
+      arrive_name: this.trip.waypoints[1].name,
+      routing_type: this.routing_type,
       activities: activitiesCleaned,
     });
     if (!trip) {

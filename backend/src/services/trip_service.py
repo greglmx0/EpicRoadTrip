@@ -36,6 +36,14 @@ class trip_service:
 
         except Exception as e:
             return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
+        
+    def get_trips_by_user_id(user_id):
+        try:
+            trips = Trip.get_by_user_id(user_id)
+            return jsonify([trip.serialize() for trip in trips]), 200
+
+        except Exception as e:
+            return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
 
 def format_activity(activity, trip_id):
         date_time = activity.get('dateTime')
@@ -77,11 +85,13 @@ def format_trip(payload, user_id):
         'user_id': user_id,
         'range_start':  datetime.strptime(range_start, '%Y-%m-%dT%H:%M:%S.%fZ'),
         'range_end':  datetime.strptime(range_end, '%Y-%m-%dT%H:%M:%S.%fZ'),
+        'depart_name': payload.get('depart_name'),
         'depart_latitude': depart[0],
         'depart_longitude': depart[1],
+        'arrive_name': payload.get('arrive_name'),
         'arrive_latitude': arrive[0],
         'arrive_longitude': arrive[1],
-        'routing_type': payload.get('routingType')
+        'routing_type': payload.get('routing_type')
     }
 
     # delete empty keys

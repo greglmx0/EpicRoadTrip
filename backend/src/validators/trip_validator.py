@@ -21,7 +21,7 @@ create_trip_schema = {
             'minItems': 2,
             'maxItems': 2
         },
-        'routingType': {
+        'routing_type': {
             'type': 'string',
             'enum': ['walking', 'driving', 'cycling']
         },
@@ -50,5 +50,5 @@ create_trip_schema = {
             }
         }
     },
-    'required': ['range', 'depart', 'arrive', 'routingType']
+    'required': ['range', 'depart', 'arrive', 'routing_type']
 }
