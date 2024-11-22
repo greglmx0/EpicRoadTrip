@@ -18,8 +18,6 @@ export class UserTripsComponent implements OnInit {
     try {
       this.loading = true;
       this.trips = (await ApiTrip.getUserTrips()) || [];
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      // await 5 seconds before loading the trips
     } catch (error) {
       console.error('Error: ', error);
     } finally {
