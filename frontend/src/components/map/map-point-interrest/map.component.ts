@@ -21,9 +21,6 @@ export class MapComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    console.log('MapComponent', this.points);
-    console.log('MapComponent', this.lat, this.lng);
-
     if (!this.lat || !this.lng) {
       return;
     }
@@ -96,8 +93,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log('ngOnChanges', this.points);
-
     // remove the previous layer if it exists
     if (this.map?.getLayer('Rennes Points')) {
       this.map?.removeLayer('Rennes Points');

@@ -61,7 +61,7 @@ export class MapTripComponent implements OnInit {
 
       this.map?.on('mouseenter', 'Points', (e: any) => {
         if (!this.map) {
-          console.log('map is not here');
+          console.error('Map is not defined');
         }
         this.map!.getCanvas().style.cursor = 'pointer';
         const coordinates = e.features[0].geometry.coordinates.slice();
@@ -120,8 +120,6 @@ export class MapTripComponent implements OnInit {
 
   // if this.points is updated, we need to update the map
   ngOnChanges() {
-    // console.log('ngOnChanges', this.points);
-
     // remove the previous layer if it exists
     if (this.map?.getLayer('Points')) {
       this.map?.removeLayer('Points');

@@ -14,7 +14,6 @@ class ApiSleep {
         `/sleep?latitute=${latitute}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`,
       )) as any;
       const sleep = ApiSleep.convertSleepDto(responce.data?.results as any);
-      console.log('eat', sleep);
 
       return sleep;
     } catch (error: any) {

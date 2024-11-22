@@ -15,20 +15,12 @@ export class RegisterComponent {
   constructor(private router: Router) {}
 
   async register(username: string, password: string, email: string) {
-    console.log('Register');
-    console.log('Username: ' + username);
-    console.log('Password: ' + password);
-    console.log('Email: ' + email);
-
     try {
       const response = (await auth.register(username, email, password)) as any;
-      // console.log('Response: ', response);
 
       if (response.status === 201) {
-        console.log('Registered successfully');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']);
       } else {
-        console.log('Failed to register');
         this.failure = response?.data?.message;
       }
     } catch (error) {
@@ -37,16 +29,11 @@ export class RegisterComponent {
   }
 
   async loginWithGoogle() {
-    console.log('Login with Google');
     try {
       const response = (await auth.loginWithGoogle()) as any;
-      console.log('Response: ', response);
-
       if (response.status === 200) {
-        console.log('Logged in successfully');
         this.router.navigate(['/']);
       } else {
-        console.log('Failed to login');
         this.failure = response?.data?.message;
       }
     } catch (error) {

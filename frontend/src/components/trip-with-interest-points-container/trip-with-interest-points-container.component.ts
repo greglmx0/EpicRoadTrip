@@ -69,7 +69,6 @@ export class TripWithInterestPointsContainerComponent {
   }
 
   async searchTrip() {
-    console.log('searchTrip');
     if (this.depart && this.arrive) {
       try {
         const newTrip = await ApiMapbox.getTrip(this.depart, this.arrive, this.routing_type);
@@ -78,8 +77,6 @@ export class TripWithInterestPointsContainerComponent {
           this.cdr.detectChanges();
           this.trip = newTrip;
         }
-        // driving | walking | cycling
-        // console.log('trip: ', this.trip);
       } catch (error: any) {
         console.error('Error: ', error);
       }

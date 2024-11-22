@@ -44,8 +44,6 @@ export class SearchPlacesOfInterestComponent {
   async ngOnInit() {}
 
   async selectLocation(latLng: number[]) {
-    console.log('selectLocation', latLng);
-
     this.selectedLocationLatLng = { lat: latLng[1], lng: latLng[0] };
     this.lat = latLng[0];
     this.lng = latLng[1];

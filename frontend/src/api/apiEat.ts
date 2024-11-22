@@ -9,7 +9,6 @@ class ApiEat {
         `/eat?latitute=${latitute}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}`,
       )) as any;
       const eat = ApiEat.convertEatDto(responce.data?.results as any);
-      console.log('eat', eat);
 
       return eat;
     } catch (error: any) {

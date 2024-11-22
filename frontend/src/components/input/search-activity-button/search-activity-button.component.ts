@@ -35,8 +35,6 @@ export class SearchActivityButtonComponent {
 
   // retrieve = recuperer (la location subgerer)
   async searchRetrieve() {
-    console.log('searchRetrieve');
-
     this.loading = true;
 
     if (!this.selectedLocationLatLng) {

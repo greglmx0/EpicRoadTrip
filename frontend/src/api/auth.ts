@@ -7,9 +7,7 @@ class auth {
     try {
       return await axiosInstance.post('/register', JSON.stringify({ username, email, password }));
     } catch (error: any) {
-      console.log('Error: ', error);
-
-      // throw new Error(error.response.data.message);
+      console.error('Error: ', error);
       return {
         status: error.response.status,
         data: { message: error.response.data.message },
@@ -44,7 +42,6 @@ class auth {
       const redirect_uri = environment.GOOGLE_REDIRECT_URI;
       const client_id = environment.GOOGLE_CLIENT_ID;
       const url = `${uri}?scope=${scope}&response_type=${response_type}&redirect_uri=${redirect_uri}&client_id=${client_id}`;
-      console.log('Redirecting to Google login page');
 
       window.location.href = url;
       return url;
@@ -60,9 +57,6 @@ class auth {
   static async loginWithGoogleCallback(code: string) {
     try {
       const request = await axiosInstance.post('/auth/google', JSON.stringify({ code }));
-      console.log('Google Request: ', request);
-      console.log('Token: ', request?.data?.token);
-
       const token = request?.data?.token;
       if (!token) {
         throw new Error('Token not found');
@@ -71,6 +65,7 @@ class auth {
       return request;
     } catch (error: any) {
       /// throw new Error(error.response.data.message);
+      console.error('Error: ', error);
       return {
         status: error.response.status,
         data: { message: error.response.data.message },
