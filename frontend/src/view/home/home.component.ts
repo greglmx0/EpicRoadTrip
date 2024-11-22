@@ -1,4 +1,4 @@
-import type EnjoyDto from './../../api/dto/enjoy.dto';
+import type EnjoyDto from '../../dto/enjoy.dto';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

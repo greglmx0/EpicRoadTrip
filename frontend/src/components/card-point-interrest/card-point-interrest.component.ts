@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import type EnjoyDto from 'src/api/dto/enjoy.dto';
+import type EnjoyDto from 'src/dto/enjoy.dto';
 import { CommonModule } from '@angular/common';
 import { formatDate, formatTime } from 'src/utils/utils';
 import { log } from 'node:console';

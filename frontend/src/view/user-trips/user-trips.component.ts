@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import type Trip from './../../api/dto/trip.dto';
+import { RouterLink } from '@angular/router';
+import type Trip from '../../dto/trip.dto';
 import { CommonModule } from '@angular/common';
 import ApiTrip from 'src/api/apiTrip';
 
@@ -8,7 +9,7 @@ import ApiTrip from 'src/api/apiTrip';
   templateUrl: './user-trips.component.html',
   styleUrls: ['./user-trips.component.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
 })
 export class UserTripsComponent implements OnInit {
   trips: Trip[] = [];

@@ -8,9 +8,9 @@ import { MapTripComponent } from '../map/map-trip/map-trip.component';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
 import ApiMapbox from 'src/api/mapbox';
-import DrinkDto from 'src/api/dto/drink.dto';
+import DrinkDto from 'src/dto/drink.dto';
 import ApiTrip from 'src/api/apiTrip';
-import TripDto from 'src/api/dto/trip.dto';
+import TripDto from 'src/dto/trip.dto';
 type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
 type routing_type = 'driving' | 'walking' | 'cycling';
 @Component({
