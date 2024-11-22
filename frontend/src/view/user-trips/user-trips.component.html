@@ -5,8 +5,12 @@
         <h1 class="text-center light:text-light-text dark:text-dark-text text-2xl font-bold my-8">Mes voyages</h1>
       </div>
     </div>
-    <div *ngIf="trips.length <= 0" class="grid grid-cols-12 gap-4">
+    <div *ngIf="loading" class="flex justify-center items-center">
+      <span class="loading loading-spinner loading-lg text-light-button-text dark:text-dark-button-text"></span>
+    </div>
+    <div class="grid grid-cols-12 gap-4">
       <div
+        *ngIf="trips.length == 0 && !loading"
         class="card shadow-lg bg-light-main dark:bg-dark-main col-start-1 col-end-13 md:col-start-2 md:col-end-12 xl:col-start-5 xl:col-end-9"
       >
         <div class="flex justify-center items-center text-center">
@@ -16,49 +20,43 @@
           </div>
         </div>
       </div>
-      <div *ngIf="trips.length > 0" class="row">
-        <div *ngFor="let item of trips" class="row">
-          <div class="col-start-2 col-end-12">
-            <div class="card bordered shadow-lg bg-light-main dark:bg-dark-main">
-              <div class="card-body">
-                <div class="flex justify-between">
-                  <div class="flex flex-col gap-2">
-                    <div>
-                      <h2 class="card-title text-1xl">Départ: {{ item.depart_name }}</h2>
-                    </div>
-                    <div>
-                      <h2 class="card-title text-1xl">Destination: {{ item.arrive_name }}</h2>
-                    </div>
+      <div *ngFor="let item of trips" class="col-start-1 col-end-13">
+        <div class="">
+          <div class="card bordered shadow-lg bg-light-main dark:bg-dark-main">
+            <div class="card-body">
+              <div class="flex justify-between">
+                <div class="flex flex-col gap-2">
+                  <div>
+                    <h2 class="card-title text-1xl">Départ: {{ item.depart_name }}</h2>
                   </div>
-                  <div class="flex justify-center items-center">
-                    <p class="text-light-paragraph dark:text-dark-paragraph">
-                      Du {{ item.range.start | date: 'dd/MM/yyyy' }} au {{ item.range.end | date: 'dd/MM/yyyy' }}
-                    </p>
+                  <div>
+                    <h2 class="card-title text-1xl">Destination: {{ item.arrive_name }}</h2>
                   </div>
-                  <div class="flex justify-center items-center">
-                    <div *ngIf="item.activities?.length" class="text-light-paragraph dark:text-dark-paragraph">
-                      Nombre de points d'intérêt: {{ item.activities?.length }}
-                    </div>
-                    <div *ngIf="!item.activities?.length" class="text-light-paragraph dark:text-dark-paragraph">
-                      Aucun point d'intérêt pour ce voyage
-                    </div>
+                </div>
+                <div class="flex justify-center items-center">
+                  <p class="text-light-paragraph dark:text-dark-paragraph">
+                    Du {{ item.range.start | date: 'dd/MM/yyyy' }} au {{ item.range.end | date: 'dd/MM/yyyy' }}
+                  </p>
+                </div>
+                <div class="flex justify-center items-center">
+                  <div *ngIf="item.activities?.length" class="text-light-paragraph dark:text-dark-paragraph">
+                    Nombre de points d'intérêt: {{ item.activities?.length }}
                   </div>
-                  <div class="flex justify-center items-center">
-                    <a
-                      class="btn btn-outline btn-square bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
-                      >Voir</a
-                    >
-                    <!-- [routerLink]="['/trip', item.id]" -->
+                  <div *ngIf="!item.activities?.length" class="text-light-paragraph dark:text-dark-paragraph">
+                    Aucun point d'intérêt pour ce voyage
                   </div>
+                </div>
+                <div class="flex justify-center items-center">
+                  <a
+                    class="btn btn-outline btn-square bg-light-button dark:bg-dark-button text-light-button-text dark:text-dark-button-text"
+                    >Voir</a
+                  >
+                  <!-- [routerLink]="['/trip', item.id]" -->
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="loading" class="flex justify-center items-center h-screen">
-        <span class="loading loading-spinner loading-lg text-light-button-text dark:text-dark-button-text"></span>
       </div>
     </div>
   </div>
