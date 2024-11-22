@@ -1,7 +1,7 @@
 import { url } from 'node:inspector';
 import axiosInstance from '../.config/axios';
-import type { Event } from './dto/drink.dto';
-import DrinkDto from './dto/drink.dto';
+import type { Event } from '../dto/drink.dto';
+import DrinkDto from '../dto/drink.dto';
 
 class ApiDrink {
   static async getDrink(

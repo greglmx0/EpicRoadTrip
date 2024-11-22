@@ -1,6 +1,7 @@
 import type { Event } from './enjoy.dto';
 
 class TripDto {
+  id: string;
   range: { start: string; end: string };
   depart_name: string;
   depart: [number, number];
@@ -10,6 +11,7 @@ class TripDto {
   activities?: Array<Event>;
 
   constructor(data: any) {
+    this.id = data.id;
     this.range = data.range;
     this.depart_name = data.depart_name;
     this.depart = data.depart;

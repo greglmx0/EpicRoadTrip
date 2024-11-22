@@ -1,6 +1,6 @@
 import axiosInstance from '../.config/axios';
-import type { Event } from './dto/eat.dto';
-import EatDto from './dto/eat.dto';
+import type { Event } from '../dto/eat.dto';
+import EatDto from '../dto/eat.dto';
 
 class ApiEat {
   static async getEat(latitute: number, longitude: number, start_date: string, end_date: string): Promise<EatDto[]> {

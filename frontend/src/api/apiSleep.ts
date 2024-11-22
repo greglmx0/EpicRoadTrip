@@ -1,6 +1,6 @@
 import axiosInstance from '../.config/axios';
-import type { Event } from './dto/sleep.dto';
-import SleepDto from './dto/sleep.dto';
+import type { Event } from '../dto/sleep.dto';
+import SleepDto from '../dto/sleep.dto';
 
 class ApiSleep {
   static async getSleep(

@@ -1,6 +1,6 @@
 import axiosInstance from '../.config/axios';
-import type { Event } from './dto/enjoy.dto';
-import EnjoyDto from './dto/enjoy.dto';
+import type { Event } from '../dto/enjoy.dto';
+import EnjoyDto from '../dto/enjoy.dto';
 
 class ApiEnjoy {
   static async getEnjoy(

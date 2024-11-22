@@ -1,6 +1,6 @@
 import axiosInstance from '../.config/axios';
-import type { Event } from './dto/travel.dto';
-import TravelDto from './dto/travel.dto';
+import type { Event } from '../dto/travel.dto';
+import TravelDto from '../dto/travel.dto';
 
 class ApiTravel {
   static async getTravel(

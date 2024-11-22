@@ -1,6 +1,6 @@
 import axiosInstance from '../.config/axios';
-import type Event from './dto/drink.dto';
-import type TripDto from './dto/trip.dto';
+import type Event from '../dto/drink.dto';
+import type TripDto from '../dto/trip.dto';
 
 class ApiTrip {
   static async createTrip(trip: TripDto): Promise<TripDto | void> {
