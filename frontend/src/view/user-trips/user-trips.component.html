@@ -2,20 +2,18 @@
   <div class="light:bg-light-surface dark:bg-dark-surface">
     <div class="row">
       <div class="gap-4 col-start-2 col-end-12">
-        <h1 class="text-center light:text-light-text dark:text-dark-text text-2xl font-bold my-8">Mes voyagesss</h1>
+        <h1 class="text-center light:text-light-text dark:text-dark-text text-2xl font-bold my-8">Mes voyages</h1>
       </div>
     </div>
-    <!-- <div *ngIf="trips === []" class="row">
-      <div class="col-start-2 col-end-12">
-        <div class="card bordered shadow-lg bg-light-main dark:bg-dark-main">
-          <div class="card-body">
-            <div class="flex justify-center items-center">
-              <p class="text-light -paragraph dark:text-dark-paragraph">Aucun voyage enregistré</p>
-            </div>
+    <div *ngIf="trips.length <= 0" class="row">
+      <div class="card bordered shadow-lg bg-light-main dark:bg-dark-main">
+        <div class="card-body">
+          <div class="flex justify-center items-center text-center">
+            <p class="text-light-paragraph dark:text-dark-paragraph">Aucun voyage enregistré</p>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <div *ngIf="trips.length > 0" class="row">
       <div *ngFor="let item of trips" class="row">
         <div class="col-start-2 col-end-12">
