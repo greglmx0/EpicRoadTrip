@@ -13,5 +13,5 @@ import { AxiosInterceptorService } from '../.config/axios-interceptor.service';
 export class AppComponent {
   //  constructor(private axiosInterceptorService: AxiosInterceptorService) {}
   constructor() {}
-  title = 'frontend';
+  title = 'EpicRoadTrip';
 }
