@@ -1,5 +1,5 @@
-<div class="flex flex-row gap-2">
-  <div *ngFor="let key of typePointOfInterest" class="m-2">
+<div class="flex flex-row gap-2 justify-center items-center">
+  <div *ngFor="let key of typePointOfInterest" class="m-2 hidden md:flex">
     <input
       type="radio"
       [name]="radioName"
@@ -11,9 +11,21 @@
     />
     <label
       for="{{ radioName + '-' + key.id }}"
-      class="select-none cursor-pointer rounded-lg border-2 border-light-stroke dark:border-dark-stroke py-3 px-6 font-bold text-light-button dark:text-dark-button transition-colors duration-200 ease-in-out peer-checked:bg-light-button dark:peer-checked:bg-dark-button peer-checked:text-light-button-text dark:peer-checked:text-dark-button-text peer-checked:border-light-stroke dark:peer-checked:border-dark-stroke"
+      class="select-none cursor-pointer rounded-lg border-2 border-light-stroke dark:border-dark-stroke py-2 px-4 font-bold text-light-button dark:text-dark-button transition-colors duration-200 ease-in-out peer-checked:bg-light-button dark:peer-checked:bg-dark-button peer-checked:text-light-button-text dark:peer-checked:text-dark-button-text peer-checked:border-light-stroke dark:peer-checked:border-dark-stroke"
     >
       {{ key.label }}
     </label>
   </div>
+  <label class="md:hidden form-control w-full mx-2">
+    <div class="label">
+      <span class="label-text">Choisissez un type d'activité:</span>
+    </div>
+    <select
+      class="select select-bordered w-full bg-light-bg dark:bg-dark-bg text-light-paragraph dark:text-dark-paragraph border-light-stroke dark:border-dark-stroke"
+    >
+      <option *ngFor="let key of typePointOfInterest" (click)="selectType(key.value)">
+        {{ key.label }}
+      </option>
+    </select>
+  </label>
 </div>

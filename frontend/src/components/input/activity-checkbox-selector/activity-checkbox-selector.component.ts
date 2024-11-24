@@ -19,12 +19,12 @@ export class ActivityCheckboxSelectorComponent {
     {
       id: 1,
       value: 'enjoy',
-      label: 'Enjoy',
+      label: 'Evenements',
     },
     {
       id: 2,
       value: 'sleep',
-      label: 'Sleep',
+      label: 'Dormir',
     },
     // {
     //   id: 3,
@@ -34,16 +34,16 @@ export class ActivityCheckboxSelectorComponent {
     {
       id: 4,
       value: 'eat',
-      label: 'Eat',
+      label: 'Manger',
     },
     {
       id: 5,
       value: 'drink',
-      label: 'Drink',
+      label: 'Boire',
     },
   ];
 
-  selectType() {
-    this.sendType.emit(this.selectedType);
+  selectType(event: string = this.selectedType) {
+    this.sendType.emit(event);
   }
 }
