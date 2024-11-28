@@ -1,5 +1,5 @@
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { InputAddressSuggestionComponent } from '../input/input-address-suggestion/input-address-suggestion.component';
 import { SearchActivityButtonComponent } from '../input/search-activity-button/search-activity-button.component';
 import { ActivityCheckboxSelectorComponent } from '../input/activity-checkbox-selector/activity-checkbox-selector.component';
@@ -7,12 +7,16 @@ import { RoutingCheckboxSelectorComponent } from '../input/routing-checkbox-sele
 import { MapTripComponent } from '../map/map-trip/map-trip.component';
 import { AppDateRangePicker } from '../datepicker/date-range-picker/date-range-picker.component';
 import { CardPointInterrestComponent } from '../card-point-interrest/card-point-interrest.component';
+import { Router } from '@angular/router';
 import ApiMapbox from 'src/api/mapbox';
 import DrinkDto from 'src/dto/drink.dto';
 import ApiTrip from 'src/api/apiTrip';
 import TripDto from 'src/dto/trip.dto';
+import auth from 'src/api/auth';
+
 type ActivityType = 'enjoy' | 'sleep' | 'travel' | 'eat' | 'drink';
 type routing_type = 'driving' | 'walking' | 'cycling';
+
 @Component({
   selector: 'app-trip-with-interest-points-container',
   standalone: true,
@@ -29,7 +33,7 @@ type routing_type = 'driving' | 'walking' | 'cycling';
     RoutingCheckboxSelectorComponent,
   ],
 })
-export class TripWithInterestPointsContainerComponent {
+export class TripWithInterestPointsContainerComponent implements OnInit {
   depart: [lat: number, lon: number] | null = null;
   arrive: [lat: number, lon: number] | null = null;
   trip: any | null = {
@@ -44,8 +48,25 @@ export class TripWithInterestPointsContainerComponent {
   routing_type: string = 'driving';
   range: { start: Date; end: Date } = { start: new Date(), end: new Date() };
   listInterestActivities: DrinkDto[] = [];
+  user: any;
+  userConnected: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+  ) {}
+
+  async ngOnInit() {
+    console.log('TripWithInterestPointsContainerComponent');
+
+    try {
+      const responce = await auth.getUserInfo();
+      if (responce.status === 200) {
+        const user = responce.data;
+        this.userConnected = true;
+      }
+    } catch (error) {}
+  }
 
   selectedDeparture(event: any) {
     this.depart = event as [lat: number, lon: number];
@@ -129,7 +150,7 @@ export class TripWithInterestPointsContainerComponent {
     this.listInterestActivities = this.listInterestActivities.filter((activity) => activity !== event);
   }
 
-  createTrip() {
+  async createTrip() {
     const activitiesCleaned = this.listInterestActivities.map((activity) => {
       return {
         ...activity,
@@ -149,6 +170,13 @@ export class TripWithInterestPointsContainerComponent {
     if (!trip) {
       return;
     }
-    ApiTrip.createTrip(trip);
+    try {
+      const newTrip = await ApiTrip.createTrip(trip);
+      if (newTrip) {
+        this.router.navigate(['/user-trips']);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    }
   }
 }

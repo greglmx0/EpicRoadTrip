@@ -88,6 +88,7 @@ export class InputAddressSuggestionComponent {
   clearSelectedLocation() {
     this.selectedLocation = null;
     this.selectedLocationText = '';
+    this.searchInputValue = '';
     this.clearAddress.emit();
   }
 }

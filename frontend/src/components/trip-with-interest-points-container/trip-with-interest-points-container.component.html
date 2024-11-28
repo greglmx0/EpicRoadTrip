@@ -75,6 +75,9 @@
   </div>
 </div>
 
-<div class="flex justify-center mt-4">
+<div class="flex justify-center mt-4" *ngIf="userConnected">
   <button class="btn btn-primary" [disabled]="!depart && !arrive" (click)="createTrip()">Créer l'itinéraire</button>
+</div>
+<div class="flex justify-center mt-4" *ngIf="!userConnected">
+  <p class="text-2xl">Connectez-vous pour sauvegarder votre itinéraire !</p>
 </div>
