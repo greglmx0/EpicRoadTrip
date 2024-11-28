@@ -253,28 +253,32 @@
             "in": "query",
             "description": "Latitude of the location",
             "required": true,
-            "type": "number"
+            "type": "number",
+            "example": 37.7749
           },
           {
             "name": "longitude",
             "in": "query",
             "description": "Longitude of the location",
             "required": true,
-            "type": "number"
+            "type": "number",
+            "example": -122.4194
           },
           {
             "name": "start_date",
             "in": "query",
             "description": "Start date of the event",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "2019-01-01"
           },
           {
             "name": "end_date",
             "in": "query",
             "description": "End date of the event",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "2019-01-01"
           }
         ],
         "responses": {
