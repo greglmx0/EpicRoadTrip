@@ -1,8 +1,22 @@
-# T-WEB-800
+# EpicRoadTrip
+
+EpicRoadTrip is a full-stack web application that helps users plan trips with points of interest. The project features a modern Angular frontend and a Flask backend, with Docker support for easy deployment. Users can search for activities, create and save itineraries, and manage their trips. The application supports authentication (including Google login), interactive maps, and both light and dark themes. The backend uses a MySQL database and provides a REST API documented with Swagger.
+
+Main features:
+
+Search for nearby activities and points of interest
+Plan and save custom itineraries
+User authentication (email/password & Google)
+Responsive design with light/dark mode
+Interactive maps (Mapbox)
+REST API with Swagger documentation
+Dockerized for development and production
+Tech stack: Angular 17, Tailwind CSS, Flask, SQLAlchemy, MySQL, Docker
 
 ## stack technique utilisée :
 
 - flask
+
   - flask # (le framework)
   - pathlib # (pour la gestion des chemins)
   - python-dotenv # (pour les variables d'environnement)
